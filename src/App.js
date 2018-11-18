@@ -5,18 +5,6 @@ import { BrowserRouter as Router, Link } from 'react-router-dom'
 import routes from './routes';
 
 class App extends React.Component {
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
-  }
-
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
-  }
-
   render() {
     return (
       <Router>

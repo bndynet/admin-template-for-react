@@ -1,25 +1,25 @@
-import Home from './components/Home';
-import Callback from './components/Callback';
-import Login from './components/Login';
+import HomeComponent from './app/home/HomeComponent';
+import CallbackComponent from './app/user/CallbackComponent';
+import LoginComponent from './app/user/LoginComponent';
+import LogoutComponent from './app/user/LogoutComponent';
 
 const routes = [
     {
         path: '/',
         exact: true,
-        component: Login,
-    },
-    { 
-        path: '/home',
-        exact: true,
-        component: Home,
+        component: HomeComponent,
     },
     {
         path: '/login',
-        component: Login,
+        component: LoginComponent,
+    },
+    {
+        path: '/logout',
+        component: LogoutComponent,
     },
     {
         path: '/callback',
-        component: Callback,
+        component: CallbackComponent,
     }
 ];
 

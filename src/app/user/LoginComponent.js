@@ -12,10 +12,10 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Redirect} from 'react-router-dom';
 
-import { connect } from "react-redux";
-import userService from '../redux/UserService';
+import { connect } from 'react-redux';
+import userActions from './actions';
+import store from '../../redux/store';
 
 const styles = theme => ({
   main: {
@@ -49,9 +49,10 @@ const styles = theme => ({
   },
 });
 
-class Login extends React.Component {
+class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             username: 'Bendy',
             password: 'Pwd',
@@ -62,9 +63,8 @@ class Login extends React.Component {
     }
 
     onLogin() {
-        userService.login(this.state.username, this.state.password).then(() => {
-            this.props.history.push('/home');
-        });
+        store.dispatch(userActions.login(this.state.username, this.state.password));
+        this.props.history.push('/');
     };
 
     render() {
@@ -109,14 +109,18 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
+LoginComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
+    return null;
+}
+
+function mapDispatchToProps() {
     return {
-        userService
+        userActions,
     };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Login));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginComponent));

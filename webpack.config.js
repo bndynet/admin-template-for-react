@@ -55,4 +55,8 @@ module.exports = {
         ],
     },
     plugins: [htmlPlugin, copyPlugin],
+
+    devServer: {
+        historyApiFallback: true
+    },
 };

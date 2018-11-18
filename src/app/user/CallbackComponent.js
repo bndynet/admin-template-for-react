@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Callback extends React.Component {
+class CallbackComponent extends React.Component {
   render() {
     return (
       <div>Loading...</div>
@@ -8,4 +8,4 @@ class Callback extends React.Component {
   }
 }
 
-export default Callback;
+export default CallbackComponent;
