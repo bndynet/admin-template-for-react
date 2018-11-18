@@ -1,0 +1,53 @@
+{
+  "name": "admin-template-for-react",
+  "version": "1.0.0",
+  "description": "Admin template for react",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bndynet/admin-template-for-react.git"
+  },
+  "keywords": [
+    "admin",
+    "template",
+    "react",
+    "material",
+    "design"
+  ],
+  "author": "Bendy Zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bndynet/admin-template-for-react/issues"
+  },
+  "homepage": "https://github.com/bndynet/admin-template-for-react#readme",
+  "dependencies": {
+    "@material-ui/core": "^3.5.1",
+    "@material-ui/icons": "^3.0.1",
+    "auth0-js": "^9.8.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "react-router-config": "^4.4.0-beta.6",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^1.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
