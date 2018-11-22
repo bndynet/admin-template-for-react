@@ -7,7 +7,8 @@ const htmlPlugin = new HtmlWebPackPlugin({
     filename: './index.html',
 });
 const copyPlugin = new CopyWebpackPlugin([
-    { from: './src/user.json' }
+    { from: './src/user.json' },
+    { from: './assets' }
 ]);
 
 module.exports = {
