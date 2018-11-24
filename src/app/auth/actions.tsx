@@ -1,12 +1,10 @@
-import { ACTION_LOGIN, ACTION_LOGOUT } from './actionTypes';
+import { ACTION_LOGIN, ACTION_LOGOUT, ACTION_LOGIN_SUCCESS } from './actionTypes';
 
 function login(username, password) {
     return {
         type: ACTION_LOGIN,
-        playload: {
-            username,
-            password
-        }
+        username: username,
+        password: password,
     };
 }
 

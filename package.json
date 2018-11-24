@@ -28,13 +28,15 @@
     "@material-ui/core": "^3.5.1",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
+    "github-markdown-css": "^2.10.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-markdown": "^4.0.3",
     "react-redux": "^5.1.1",
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

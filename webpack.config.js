@@ -84,6 +84,8 @@ module.exports = {
         }),
         new CopyWebpackPlugin([{
             from: './assets',
+        }, {
+            from: './README.md',
         }]),
         new WebpackAutoInject({
             SHORT: 'By ' + app.author,

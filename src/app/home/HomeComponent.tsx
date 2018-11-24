@@ -4,39 +4,52 @@ import { connect } from 'react-redux';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import * as ReactMarkdown from 'react-markdown';
 
-import userActions from '../user/actions';
+import { ACTION_README_GET } from './actionTypes';
+import { ACTION_LOGOUT } from '../auth/actionTypes';
 
 const styles = (theme: Theme) =>
     createStyles({
-        "@global": {
+        '@global': {
             body: {
                 backgroundImage: 'url(images/bg.jpg)',
                 backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
-                color: '#efefef',
-                textShadow: '2px 2px 5px #333333',
+                color: '#dddddd',
+                textShadow: '2px 2px 5px #333333'
+            },
+            '.markdown-body a': {
+                color: '#ffffff',
+                textDecoration: 'underline',
             }
         },
         main: {
-            maxWidth: 645,
+            maxWidth: 845,
             marginLeft: 'auto',
             marginRight: 'auto'
         },
-        button: {
-            marginTop: theme.spacing.unit,
-            marginBottom: theme.spacing.unit
-        }
+        fab: {
+            position: 'fixed',
+            right: theme.spacing.unit * 2,
+            bottom: theme.spacing.unit * 2,
+            fontSize: 24,
+            fontWeight: 700,
+            '&.disabled': {
+                color: '#ffffff',
+            }
+        },
     });
 
 interface HomeComponentProps {
     history: any;
     classes: any;
     user: any;
+    readme: string;
     onLogout(): void;
+    onGetReadme(): void;
 }
 
 interface HomeComponentState {
@@ -53,6 +66,10 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
         this.state = {
             logoutDelay: null
         };
+    }
+
+    componentWillMount() {
+        this.props.onGetReadme();
     }
 
     handleLogout() {
@@ -80,27 +97,32 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
     render() {
         const { classes } = this.props;
         const btn = this.props.user ? (
-            <Button size='large' disabled={!!this.state.logoutDelay} className={classes.button} onClick={this.handleLogout} color='secondary' variant='contained'>
-                { this.state.logoutDelay && this.state.logoutDelay > 0 ? `Log out ` + this.state.logoutDelay + 's' : `Log out`}
-            </Button>
+            <Tooltip title={this.props.user.username}>
+                <Button
+                    disabled={!!this.state.logoutDelay}
+                    classes={{root: classes.fab, disabled: 'disabled'}} 
+                    onClick={this.handleLogout}
+                    color='secondary'
+                    variant='fab'>
+                    {this.state.logoutDelay && this.state.logoutDelay > 0 ? (
+                        this.state.logoutDelay
+                    ) : (
+                        this.props.user.username[0]
+                    )}
+                </Button>
+            </Tooltip>
         ) : (
-            <Button size='large' className={classes.button} onClick={this.handleLogin} color='primary' variant='contained'>
-                Log in
-            </Button>
+            <Tooltip title='Log in'>
+                <Button classes={{root: classes.fab, disabled: 'disabled'}} onClick={this.handleLogin} color='primary' variant='fab'>
+                    <AccountCircleIcon />
+                </Button>
+            </Tooltip>
         );
         return (
             <div className={classes.body}>
                 <main className={classes.main}>
-                    <Typography gutterBottom variant='h3' component='h1' color='inherit'>
-                        Hello {(this.props.user && this.props.user.username) || 'World'}!
-                    </Typography>
-                    <Typography gutterBottom component='p' color='inherit'>
-                        This is a project for React, React Redux, and package using Webpack.
-                    </Typography>
+                    <ReactMarkdown source={this.props.readme} className={'markdown-body'} />
                     {btn}
-                    <Typography component='div' color='inherit'>
-                        <ReactMarkdown source={'# Admin Template'}></ReactMarkdown>
-                    </Typography>
                 </main>
             </div>
         );
@@ -109,14 +131,18 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
 
 function mapStateToProps(state) {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        readme: state.home.readme
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
     return {
         onLogout: () => {
-            dispatch(userActions.logout());
+            dispatch({ type: ACTION_LOGOUT });
+        },
+        onGetReadme: () => {
+            dispatch({ type: ACTION_README_GET });
         }
     };
 }

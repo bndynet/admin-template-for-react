@@ -1,9 +1,17 @@
 import { createStore, applyMiddleware, combineReducers, StoreCreator, Store } from 'redux';
 import { logger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 
-import { userApp } from '../app/user/reducers';
+import rootReducer from './reducer';
+import rootSaga from './saga';
 
-const store: Store<any, any> = createStore(userApp, applyMiddleware(logger));
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+const store: Store<any, any> = createStore(rootReducer, applyMiddleware(logger, sagaMiddleware));
+
+// then run the saga
+sagaMiddleware.run(rootSaga);
 
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener

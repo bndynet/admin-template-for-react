@@ -1,7 +1,7 @@
 import HomeComponent from './app/home/HomeComponent';
-import CallbackComponent from './app/user/CallbackComponent';
-import LoginComponent from './app/user/LoginComponent';
-import LogoutComponent from './app/user/LogoutComponent';
+import CallbackComponent from './app/auth/CallbackComponent';
+import LoginComponent from './app/auth/LoginComponent';
+import LogoutComponent from './app/auth/LogoutComponent';
 
 const routes = [
     {

@@ -39,7 +39,9 @@ const styles = (theme: Theme) =>
         },
         avatar: {
             margin: theme.spacing.unit,
-            backgroundColor: theme.palette.secondary.main
+            backgroundColor: theme.palette.secondary.main,
+            width: 100,
+            height: 100,
         },
         form: {
             width: '100%',
@@ -59,21 +61,24 @@ interface LoginComponentProps {
 interface LoginComponentState {
     username: string;
     password: string;
+    rememberMe: boolean;
 }
 
 class LoginComponent extends React.Component<LoginComponentProps, LoginComponentState> {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'Bendy',
-            password: 'Pwd'
+            username: '',
+            password: '',
+            rememberMe: true
         };
         this.onLogin = this.onLogin.bind(this);
     }
 
-    onLogin() {
+    onLogin(event) {
         this.props.onLogin(this.state.username, this.state.password);
         this.props.history.push('/');
+        event.preventDefault();
     }
 
     render() {
@@ -83,29 +88,52 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
                 <CssBaseline />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockIcon />
+                        <LockIcon fontSize='large' />
                     </Avatar>
                     <Typography component='h1' variant='h5'>
                         Sign in
                     </Typography>
                     <form className={classes.form}>
                         <FormControl margin='normal' required fullWidth>
-                            <InputLabel htmlFor='email'>Username</InputLabel>
+                            <InputLabel htmlFor='username'>Username</InputLabel>
                             <Input
                                 id='username'
                                 name='username'
+                                type='text'
                                 autoComplete='username'
                                 autoFocus
-                                value={this.state.username}
+                                onChange={(e) => {
+                                    this.setState({ username: e.target.value });
+                                }}
                             />
                         </FormControl>
                         <FormControl margin='normal' required fullWidth>
                             <InputLabel htmlFor='password'>Password</InputLabel>
-                            <Input name='password' type='password' id='password' autoComplete='current-password' />
+                            <Input
+                                name='password'
+                                type='password'
+                                id='password'
+                                autoComplete='current-password'
+                                onChange={(e) => {
+                                    this.setState({ password: e.target.value });
+                                }}
+                            />
                         </FormControl>
-                        <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    value='remember'
+                                    color='primary'
+                                    checked={this.state.rememberMe}
+                                    onChange={(e, v) => {
+                                        this.setState({ rememberMe: v });
+                                    }}
+                                />
+                            }
+                            label='Remember me'
+                        />
                         <Button
-                            type='button'
+                            type='submit'
                             fullWidth
                             variant='contained'
                             color='primary'
