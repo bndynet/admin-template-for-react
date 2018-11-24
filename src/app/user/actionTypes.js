@@ -1,3 +1,0 @@
-export const ACTION_LOGIN = 'USER_LOGIN';
-export const ACTION_LOGOUT = 'USER_LOGOUT';
-export const ACTION_GET_AUTHUSER = 'USER_AUTHUSER';

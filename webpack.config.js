@@ -1,63 +1,124 @@
 const path = require('path');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-
-const htmlPlugin = new HtmlWebPackPlugin({
-    template: './src/index.html',
-    filename: './index.html',
-});
-const copyPlugin = new CopyWebpackPlugin([
-    { from: './src/user.json' },
-    { from: './assets' }
-]);
+const webpack = require('webpack');
+const app = require("./package.json");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PrintTimeWebpackPlugin = require('print-time-webpack');
+const WebpackAutoInject = require('webpack-auto-inject-version');
 
 module.exports = {
-    entry: {
-        main: "./src/index.js",
-    },
+    entry: './src/index.tsx',
+    performance: {
+        hints: false
+    }, // disable to show warnings about performance
     output: {
-        path: path.resolve('dist'),
-        filename: '[name].[contenthash].bundle.js',
+        filename: '[name].[chunkhash].js',
+        path: path.resolve(__dirname, 'dist'),
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".scss", "css"]
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
-            },
-            {
-                test: /\.css$/,
+                test: /\.(png|jpg|gif)$/,
                 use: [{
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: "[name]_[local]_[hash:base64]",
-                            sourceMap: true,
-                            minimize: true
-                        }
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192
                     }
-                ]
+                }]
+            }, {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [{
+                    loader: 'url-loader',
+                }]
+            }, {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            }, {
+                test: /\.scss$/,
+                use: ["style-loader", "css-loader", "sass-loader"]
+            }, {
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader"
+            }, {
+                enforce: "pre",
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: "babel-loader",
+                }],
             },
             {
-                test: /\.(html)$/,
-                use: {
-                  loader: 'html-loader',
-                  options: {
-                    attrs: [':data-src']
-                  }
-                }
-              },
-        ],
+                test: /\.html$/,
+                use: [{
+                    loader: "html-loader"
+                }]
+            }
+        ]
     },
-    plugins: [htmlPlugin, copyPlugin],
-
-    devServer: {
-        historyApiFallback: true
+    plugins: [
+        new PrintTimeWebpackPlugin(),
+        new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: './src/index.html',
+        }),
+        new webpack.DefinePlugin({
+            APP_NAME: JSON.stringify(app.name),
+            APP_VERSION: JSON.stringify(app.version),
+            APP_BUILD: JSON.stringify(Date.now()),
+        }),
+        new webpack.BannerPlugin({
+            banner: app.name + ' ' + app.version,
+        }),
+        new webpack.ProvidePlugin({
+            // _: 'lodash',
+            // $: 'jquery',
+            // jQuery: 'jquery',
+            // 'window.jQuery': 'jquery',
+            // moment: 'moment/moment.js',
+            React: 'react',
+            ReactDOM: 'react-dom',
+        }),
+        new CopyWebpackPlugin([{
+            from: './src/index.html',
+        }, {
+            from: './assets',
+        }]),
+        new WebpackAutoInject({
+            PACKAGE_JSON_PATH: './package.json',
+            components: {
+                InjectAsComment: true
+            },
+            componentsOptions: {
+                InjectAsComment: {
+                    tag: 'Build version: {version} - {date}',
+                    dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+                }
+            }
+        })
+    ],
+    optimization: {
+        splitChunks: {
+            chunks: "async",
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                }
+            }
+        }
     },
 };

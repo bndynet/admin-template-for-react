@@ -7,19 +7,19 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: HomeComponent,
+        component: HomeComponent
     },
     {
         path: '/login',
-        component: LoginComponent,
+        component: LoginComponent
     },
     {
         path: '/logout',
-        component: LogoutComponent,
+        component: LogoutComponent
     },
     {
         path: '/callback',
-        component: CallbackComponent,
+        component: CallbackComponent
     }
 ];
 
