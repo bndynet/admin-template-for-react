@@ -4,26 +4,27 @@ import { connect } from 'react-redux';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+
+import * as ReactMarkdown from 'react-markdown';
 
 import userActions from '../user/actions';
 
-const imgMain = '/images/bg.jpg';
 const styles = (theme: Theme) =>
     createStyles({
-        card: {
+        "@global": {
+            body: {
+                backgroundImage: 'url(images/bg.jpg)',
+                backgroundRepeat: 'none',
+                paddingTop: theme.spacing.unit * 8,
+                color: '#efefef',
+                textShadow: '2px 2px 5px #333333',
+            }
+        },
+        main: {
             maxWidth: 645,
-            marginTop: theme.spacing.unit * 8,
             marginLeft: 'auto',
             marginRight: 'auto'
-        },
-        media: {
-            height: 340
         },
         button: {
             marginTop: theme.spacing.unit,
@@ -79,29 +80,29 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
     render() {
         const { classes } = this.props;
         const btn = this.props.user ? (
-            <Button disabled={!!this.state.logoutDelay} className={classes.button} onClick={this.handleLogout} color='secondary' variant='outlined'>
+            <Button size='large' disabled={!!this.state.logoutDelay} className={classes.button} onClick={this.handleLogout} color='secondary' variant='contained'>
                 { this.state.logoutDelay && this.state.logoutDelay > 0 ? `Log out ` + this.state.logoutDelay + 's' : `Log out`}
             </Button>
         ) : (
-            <Button className={classes.button} onClick={this.handleLogin} color='primary' variant='outlined'>
+            <Button size='large' className={classes.button} onClick={this.handleLogin} color='primary' variant='contained'>
                 Log in
             </Button>
         );
         return (
-            <Card className={classes.card}>
-                <CardActionArea>
-                    <CardMedia className={classes.media} image={imgMain} />
-                    <CardContent>
-                        <Typography gutterBottom variant='h5' component='h2'>
-                            Hello {(this.props.user && this.props.user.username) || 'World'}!
-                        </Typography>
-                        <Typography component='p'>
-                            This is a project for React, React Redux, and package using Webpack.
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>{btn}</CardActions>
-            </Card>
+            <div className={classes.body}>
+                <main className={classes.main}>
+                    <Typography gutterBottom variant='h3' component='h1' color='inherit'>
+                        Hello {(this.props.user && this.props.user.username) || 'World'}!
+                    </Typography>
+                    <Typography gutterBottom component='p' color='inherit'>
+                        This is a project for React, React Redux, and package using Webpack.
+                    </Typography>
+                    {btn}
+                    <Typography component='div' color='inherit'>
+                        <ReactMarkdown source={'# Admin Template'}></ReactMarkdown>
+                    </Typography>
+                </main>
+            </div>
         );
     }
 }
