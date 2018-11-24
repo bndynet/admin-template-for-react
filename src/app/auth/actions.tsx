@@ -1,23 +1,22 @@
-import { ACTION_LOGIN, ACTION_LOGOUT, ACTION_LOGIN_SUCCESS } from './actionTypes';
+import { ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT, ACTION_LOGOUT_SUCCESS } from './actionTypes';
 
-function login(username, password) {
-    return {
-        type: ACTION_LOGIN,
+const authActions = {
+    login: (username, password, rememberMe) => ({
+        type: ACTION_LOGIN_REQUEST,
         username: username,
         password: password,
-    };
-}
-
-function logout() {
-    return {
-        type: ACTION_LOGOUT,
-        playload: null
-    };
-}
-
-const userActions = {
-    login,
-    logout
+        rememberMe: rememberMe,
+    }),
+    loginSuccess: (user) => ({
+        type: ACTION_LOGIN_SUCCESS,
+        user: user,
+    }),
+    logout: () => ({
+        type: ACTION_LOGOUT
+    }),
+    logoutSuccess: () => ({
+        type: ACTION_LOGOUT_SUCCESS,
+    }),
 };
 
-export default userActions;
+export default authActions;

@@ -15,7 +15,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import userActions from './actions';
+import authActions from './actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -156,8 +156,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
     return {
-        onLogin: (username: string, password: string) => {
-            dispatch(userActions.login(username, password));
+        onLogin: (username: string, password: string, rememberMe: boolean) => {
+            dispatch(authActions.login(username, password, rememberMe));
         }
     };
 }

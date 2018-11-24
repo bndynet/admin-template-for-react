@@ -1,4 +1,4 @@
-import { ACTION_LOGIN, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT } from './actionTypes';
+import { ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT } from './actionTypes';
 
 const initialState = {
     user: null
@@ -7,9 +7,9 @@ const initialState = {
 export function auth(state = initialState, action) {
     let user = null;
     switch (action.type) {
-        case ACTION_LOGIN:
-            user = action.playload;
-            return { ...state, user };
+        case ACTION_LOGIN_REQUEST:
+            const loading = true;
+            return { ...state, loading };
         case ACTION_LOGIN_SUCCESS:
             user = action.user;
             return { ...state, user };

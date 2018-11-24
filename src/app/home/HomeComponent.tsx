@@ -8,8 +8,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import * as ReactMarkdown from 'react-markdown';
 
-import { ACTION_README_GET } from './actionTypes';
-import { ACTION_LOGOUT } from '../auth/actionTypes';
+import authActions from '../auth/actions';
+import homeActions from './actions';
+import globalActions from '../global/actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -132,18 +133,19 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
 function mapStateToProps(state) {
     return {
         user: state.auth.user,
-        readme: state.home.readme
+        readme: state.home.readme,
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
+    let s = false;
     return {
         onLogout: () => {
-            dispatch({ type: ACTION_LOGOUT });
+            dispatch(authActions.logout());
         },
         onGetReadme: () => {
-            dispatch({ type: ACTION_README_GET });
-        }
+            dispatch(homeActions.getReadme());
+        },
     };
 }
 
