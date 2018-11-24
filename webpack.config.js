@@ -63,7 +63,7 @@ module.exports = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             inject: true,
-            template: './src/index.html',
+            template: './assets/index.html',
         }),
         new webpack.DefinePlugin({
             APP_NAME: JSON.stringify(app.name),
@@ -83,18 +83,19 @@ module.exports = {
             ReactDOM: 'react-dom',
         }),
         new CopyWebpackPlugin([{
-            from: './src/index.html',
-        }, {
             from: './assets',
         }]),
         new WebpackAutoInject({
+            SHORT: 'By ' + app.author,
+            SILENT: false,
             PACKAGE_JSON_PATH: './package.json',
+            PACKAGE_JSON_INDENT: 4,
             components: {
                 InjectAsComment: true
             },
             componentsOptions: {
                 InjectAsComment: {
-                    tag: 'Build version: {version} - {date}',
+                    tag: 'v{version} - {date}',
                     dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
                 }
             }

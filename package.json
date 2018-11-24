@@ -2,7 +2,7 @@
   "name": "admin-template-for-react",
   "version": "1.0.0",
   "description": "Admin template for react",
-  "main": "src/index.js",
+  "main": "src/index.tsx",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",
@@ -13,11 +13,10 @@
     "url": "git+https://github.com/bndynet/admin-template-for-react.git"
   },
   "keywords": [
-    "admin",
-    "template",
+    "admin template",
+    "material design",
     "react",
-    "material",
-    "design"
+    "react redux"
   ],
   "author": "Bendy Zhang",
   "license": "MIT",
@@ -46,12 +45,12 @@
     "@types/redux-logger": "^3.0.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.4",
-    "clean-webpack-plugin": "^0.1.19",
+    "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.9.0",
     "eslint-plugin-react": "^7.8.2",
-    "file-loader": "^1.1.11",
+    "file-loader": "^2.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.0",
@@ -64,7 +63,7 @@
     "typescript": "^3.1.6",
     "url-loader": "^1.0.1",
     "webpack": "^4.26.0",
-    "webpack-auto-inject-version": "^1.1.0",
+    "webpack-auto-inject-version": "^1.2.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.2"

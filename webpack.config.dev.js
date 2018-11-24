@@ -5,6 +5,7 @@ module.exports = merge(globalConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        historyApiFallback: true
     }
 });
