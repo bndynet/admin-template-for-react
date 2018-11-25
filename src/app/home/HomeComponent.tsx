@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
     createStyles({
         '@global': {
             body: {
-                backgroundImage: 'url(images/bg.jpg)',
+                // backgroundImage: 'url(images/bg.jpg)',
                 backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
                 color: '#dddddd',
@@ -50,6 +50,7 @@ interface HomeComponentProps {
     user: any;
     readme: string;
     onLogout(): void;
+    onPreLogout(): void;
     onGetReadme(): void;
 }
 
@@ -77,6 +78,7 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
         this.setState({
             logoutDelay: 5
         });
+        this.props.onPreLogout();
         this.interval = setInterval(() => {
             const delay = this.state.logoutDelay - 1;
             this.setState({
@@ -142,6 +144,14 @@ function mapDispatchToProps(dispatch: Dispatch<Action>) {
     return {
         onLogout: () => {
             dispatch(authActions.logout());
+        },
+        onPreLogout: () => {
+            dispatch(globalActions.notify({
+                message: 'Logging out...',
+                variant: 'info',
+                duration: 5000,
+                placement: 'bottom left',
+            }));
         },
         onGetReadme: () => {
             dispatch(homeActions.getReadme());

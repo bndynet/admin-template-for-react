@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import authActions from './actions';
+import globalActions from '../global/actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -55,7 +56,7 @@ const styles = (theme: Theme) =>
 interface LoginComponentProps {
     history: any;
     classes: any;
-    onLogin: (username: string, password: string) => void;
+    onLogin: (username: string, password: string) => boolean;
 }
 
 interface LoginComponentState {
@@ -76,8 +77,9 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
     }
 
     onLogin(event) {
-        this.props.onLogin(this.state.username, this.state.password);
-        this.props.history.push('/');
+        if (this.props.onLogin(this.state.username, this.state.password)) {
+            this.props.history.push('/admin');
+        }
         event.preventDefault();
     }
 
@@ -156,9 +158,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
     return {
-        onLogin: (username: string, password: string, rememberMe: boolean) => {
+        onLogin: (username: string, password: string, rememberMe: boolean): boolean => {
+            if (!username || !password) {
+                dispatch(globalActions.notify({
+                    message: 'Please enter your username and password!',
+                    variant: 'error',
+                    placement: 'bottom center',
+                }));
+                return false;
+            }
             dispatch(authActions.login(username, password, rememberMe));
-        }
+            return true;
+        },
     };
 }
 

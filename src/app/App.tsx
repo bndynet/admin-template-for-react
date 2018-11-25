@@ -9,7 +9,7 @@ import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/co
 
 import routes from '../routes';
 import { AppComponentProps, AppComponentState } from './app.d';
-import { stat } from 'fs';
+import Notification from './global/Notification';
 
 const theme = createMuiTheme({
     typography: {
@@ -27,7 +27,13 @@ const styles = (theme: Theme) =>
         }
     });
 
-class AppComponent extends React.Component<AppComponentProps, AppComponentState> {
+class AppComponent extends React.Component<{
+    classes?: any, 
+    loading: boolean, 
+    showNotification: boolean,
+    notification: any,
+    }, AppComponentState> {
+
     constructor(props) {
         super(props);
     }
@@ -40,13 +46,14 @@ class AppComponent extends React.Component<AppComponentProps, AppComponentState>
                 <Router>
                     <main>{renderRoutes(routes)}</main>
                 </Router>
+                <Notification></Notification>
             </MuiThemeProvider>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.global.loading
+    loading: state.global.loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
