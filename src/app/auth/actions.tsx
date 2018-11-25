@@ -1,4 +1,4 @@
-import { ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT, ACTION_LOGOUT_SUCCESS } from './actionTypes';
+import { ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT_REQUEST, ACTION_LOGOUT_SUCCESS } from './actionTypes';
 
 const authActions = {
     login: (username, password, rememberMe) => ({
@@ -12,7 +12,7 @@ const authActions = {
         user: user,
     }),
     logout: () => ({
-        type: ACTION_LOGOUT
+        type: ACTION_LOGOUT_REQUEST,
     }),
     logoutSuccess: () => ({
         type: ACTION_LOGOUT_SUCCESS,

@@ -1,5 +1,6 @@
+import { delay } from 'redux-saga';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ACTION_LOGIN_SUCCESS, ACTION_LOGIN_REQUEST } from './actionTypes';
+import { ACTION_LOGIN_REQUEST, ACTION_LOGOUT_REQUEST } from './actionTypes';
 import ajax from '../../helpers/ajax';
 import globalActions from '../global/actions';
 import authActions from './actions';
@@ -22,12 +23,11 @@ function* login(action) {
 
 function* logout(action) {
     try {
-        // effects(call, put):
-        // trigger off the code that we want to call that is asynchronous
-        // and also dispatched the result from that asynchrous code.
         yield put(globalActions.showLoading());
+        // request backend to terminate session
+        yield call(delay, 5000);
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
-        yield put({ type: ACTION_LOGIN_SUCCESS, user: response.data });
+        yield put(authActions.logoutSuccess());
         yield put(globalActions.hideLoading());
     } catch (e) {
         console.log(e);
@@ -40,6 +40,7 @@ function* authSaga() {
     // takeEvery:
     // listen for certain actions that are going to be dispatched and take them and run through our worker saga.
     yield takeLatest(ACTION_LOGIN_REQUEST, login);
+    yield takeLatest(ACTION_LOGOUT_REQUEST, logout);
 }
 
 export default authSaga;
