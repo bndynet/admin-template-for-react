@@ -42,7 +42,7 @@ const styles = (theme: Theme) =>
             margin: theme.spacing.unit,
             backgroundColor: theme.palette.secondary.main,
             width: 100,
-            height: 100,
+            height: 100
         },
         form: {
             width: '100%',
@@ -150,27 +150,25 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        user: state.auth.user
-    };
-}
+const mapStateToProps = (state) => ({
+    user: state.auth.user
+});
 
-function mapDispatchToProps(dispatch: Dispatch<Action>) {
-    return {
-        onLogin: (username: string, password: string, rememberMe: boolean): boolean => {
-            if (!username || !password) {
-                dispatch(globalActions.notify({
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    onLogin: (username: string, password: string, rememberMe: boolean): boolean => {
+        if (!username || !password) {
+            dispatch(
+                globalActions.notify({
                     message: 'Please enter your username and password!',
                     variant: 'error',
-                    placement: 'bottom center',
-                }));
-                return false;
-            }
-            dispatch(authActions.login(username, password, rememberMe));
-            return true;
-        },
-    };
-}
+                    placement: 'bottom center'
+                })
+            );
+            return false;
+        }
+        dispatch(authActions.login(username, password, rememberMe));
+        return true;
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginComponent));

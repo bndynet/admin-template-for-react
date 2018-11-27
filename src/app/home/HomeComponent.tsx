@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactMarkdown from 'react-markdown';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 
@@ -6,7 +7,6 @@ import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import * as ReactMarkdown from 'react-markdown';
 
 import authActions from '../auth/actions';
 import homeActions from './actions';
@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
     createStyles({
         '@global': {
             body: {
-                // backgroundImage: 'url(images/bg.jpg)',
+                backgroundImage: 'url(images/bg.jpg)',
                 backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
                 color: '#dddddd',
@@ -24,7 +24,7 @@ const styles = (theme: Theme) =>
             },
             '.markdown-body a': {
                 color: '#ffffff',
-                textDecoration: 'underline',
+                textDecoration: 'underline'
             }
         },
         main: {
@@ -39,9 +39,9 @@ const styles = (theme: Theme) =>
             fontSize: 24,
             fontWeight: 700,
             '&.disabled': {
-                color: '#ffffff',
+                color: '#ffffff'
             }
-        },
+        }
     });
 
 interface HomeComponentProps {
@@ -103,7 +103,7 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
             <Tooltip title={this.props.user.username}>
                 <Button
                     disabled={!!this.state.logoutDelay}
-                    classes={{root: classes.fab, disabled: 'disabled'}} 
+                    classes={{ root: classes.fab, disabled: 'disabled' }}
                     onClick={this.handleLogout}
                     color='secondary'
                     variant='fab'>
@@ -116,7 +116,11 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
             </Tooltip>
         ) : (
             <Tooltip title='Log in'>
-                <Button classes={{root: classes.fab, disabled: 'disabled'}} onClick={this.handleLogin} color='primary' variant='fab'>
+                <Button
+                    classes={{ root: classes.fab, disabled: 'disabled' }}
+                    onClick={this.handleLogin}
+                    color='primary'
+                    variant='fab'>
                     <AccountCircleIcon />
                 </Button>
             </Tooltip>
@@ -132,31 +136,28 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        user: state.auth.user,
-        readme: state.home.readme,
-    };
-}
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    readme: state.home.readme
+});
 
-function mapDispatchToProps(dispatch: Dispatch<Action>) {
-    let s = false;
-    return {
-        onLogout: () => {
-            dispatch(authActions.logout());
-        },
-        onPreLogout: () => {
-            dispatch(globalActions.notify({
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    onLogout: () => {
+        dispatch(authActions.logout());
+    },
+    onPreLogout: () => {
+        dispatch(
+            globalActions.notify({
                 message: 'Logging out...',
                 variant: 'info',
                 duration: 5000,
-                placement: 'bottom left',
-            }));
-        },
-        onGetReadme: () => {
-            dispatch(homeActions.getReadme());
-        },
-    };
-}
+                placement: 'bottom left'
+            })
+        );
+    },
+    onGetReadme: () => {
+        dispatch(homeActions.getReadme());
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HomeComponent));
