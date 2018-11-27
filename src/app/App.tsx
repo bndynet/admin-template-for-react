@@ -13,7 +13,7 @@ import Notification from './global/Notification';
 
 const theme = createMuiTheme({
     typography: {
-        useNextVariants: true
+        useNextVariants: true,
     }
 });
 
@@ -23,7 +23,8 @@ const styles = (theme: Theme) =>
             position: 'fixed',
             top: 0,
             left: 0,
-            width: '100%'
+            width: '100%',
+            zIndex: 2000,
         }
     });
 

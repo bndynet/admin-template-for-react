@@ -1,17 +1,36 @@
-import { createStore, applyMiddleware, combineReducers, StoreCreator, Store } from 'redux';
-import { logger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { createStore, applyMiddleware, compose, Store } from 'redux';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router/immutable'
 
-import rootReducer from './reducer';
 import rootSaga from './saga';
+import { createRootReducer } from './reducer';
 
-// create the saga middleware
-const sagaMiddleware = createSagaMiddleware();
+export const history = createBrowserHistory();
 
-const store: Store<any, any> = createStore(rootReducer, applyMiddleware(logger, sagaMiddleware));
+const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const appRootReducer = createRootReducer(history);
+const appSagaMiddleware = createSagaMiddleware();
+const appRouterMiddleware = routerMiddleware(history);
+
+const middlewares = [appRouterMiddleware, appSagaMiddleware];
+
+// Middlewarees only in development
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`);
+  middlewares.push(logger);
+}
+
+const store: Store<any, any> = createStore(
+    appRootReducer, 
+    composeEnhancer(applyMiddleware(...middlewares))
+);
 
 // then run the saga
-sagaMiddleware.run(rootSaga);
+appSagaMiddleware.run(rootSaga);
+
+// For reducers hot reloading
+store.replaceReducer(appRootReducer);
 
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener
@@ -21,14 +40,3 @@ const unsubscribe: any = store.subscribe(() => console.debug(store.getState()));
 //unsubscribe();
 
 export default store;
-
-// Log only in development
-// const middlewares = [];
-
-// if (process.env.NODE_ENV === `development`) {
-//   const { logger } = require(`redux-logger`);
-
-//   middlewares.push(logger);
-// }
-
-// const store = compose(applyMiddleware(...middlewares))(createStore)(reducer);

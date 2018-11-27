@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
