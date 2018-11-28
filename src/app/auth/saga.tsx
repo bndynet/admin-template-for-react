@@ -1,6 +1,6 @@
 import { delay } from 'redux-saga';
 import { push } from 'connected-react-router';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest} from 'redux-saga/effects';
 import { ACTION_LOGIN_REQUEST, ACTION_LOGOUT_REQUEST } from './actionTypes';
 import ajax from '../../helpers/ajax';
 import globalActions from '../global/actions';
@@ -16,8 +16,6 @@ function* login(action) {
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
         yield put(authActions.loginSuccess(response.data));
         yield put(globalActions.hideLoading());
-        // TODO: the following code does not trigger the redirect, 
-        // Because https://github.com/supasate/connected-react-router/issues/159#issuecomment-433062081
         yield put(push('/admin'));
     } catch (e) {
         console.log(e);

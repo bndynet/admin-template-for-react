@@ -1,19 +1,20 @@
 import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware, compose, Store } from 'redux';
-import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router/immutable'
+import { routerMiddleware } from 'connected-react-router';
 
 import rootSaga from './saga';
 import { createRootReducer } from './reducer';
-
-export const history = createBrowserHistory();
+import history from './history';
 
 const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const appRootReducer = createRootReducer(history);
 const appSagaMiddleware = createSagaMiddleware();
 const appRouterMiddleware = routerMiddleware(history);
 
-const middlewares = [appRouterMiddleware, appSagaMiddleware];
+const middlewares = [
+  appRouterMiddleware, 
+  appSagaMiddleware
+];
 
 // Middlewarees only in development
 if (process.env.NODE_ENV === `development`) {
@@ -29,14 +30,13 @@ const store: Store<any, any> = createStore(
 // then run the saga
 appSagaMiddleware.run(rootSaga);
 
-// For reducers hot reloading
-store.replaceReducer(appRootReducer);
+if (process.env.NODE_ENV === `development`) {
+  // Every time the state changes, log it
+  // Note that subscribe() returns a function for unregistering the listener
+  const unsubscribe: any = store.subscribe(() => console.debug(store.getState()));
 
-// Every time the state changes, log it
-// Note that subscribe() returns a function for unregistering the listener
-const unsubscribe: any = store.subscribe(() => console.debug(store.getState()));
-
-// Stop listening to state updates
-//unsubscribe();
+  // Stop listening to state updates
+  //unsubscribe();
+}
 
 export default store;

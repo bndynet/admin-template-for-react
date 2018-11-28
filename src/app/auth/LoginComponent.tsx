@@ -78,7 +78,7 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
 
     onLogin(event) {
         if (this.props.onLogin(this.state.username, this.state.password)) {
-            this.props.history.push('/admin');
+            // this.props.history.push('/admin');
         }
         event.preventDefault();
     }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { renderRoutes } from 'react-router-config';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
 
@@ -10,6 +10,7 @@ import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/co
 import routes from '../routes';
 import { AppComponentProps, AppComponentState } from './app.d';
 import Notification from './global/Notification';
+import history from '../redux/history';
 
 const theme = createMuiTheme({
     typography: {
@@ -44,7 +45,7 @@ class AppComponent extends React.Component<{
         return (
             <MuiThemeProvider theme={theme}>
                 <LinearProgress hidden={!this.props.loading} color='secondary' className={classes.progressBar} />
-                <Router>
+                <Router history={history}>
                     <main>{renderRoutes(routes)}</main>
                 </Router>
                 <Notification></Notification>
