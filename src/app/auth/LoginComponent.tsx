@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
         },
         avatar: {
             margin: theme.spacing.unit,
-            backgroundColor: theme.palette.secondary.dark,
+            backgroundColor: theme.palette.secondary.main,
             width: 100,
             height: 100,
             fontSize: 110,

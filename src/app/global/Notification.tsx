@@ -6,14 +6,13 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import globalActions from './actions';
+import appTheme from '../../theme';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -25,25 +24,25 @@ const variantIcon = {
 const notificationContentStyles = (theme: Theme) =>
     createStyles({
         success: {
-            backgroundColor: green[600],
+            backgroundColor: appTheme.palette.success,
             opacity: 0.95,
             paddingLeft: theme.spacing.unit * 2,
             paddingRight: theme.spacing.unit * 5,
         },
         error: {
-            backgroundColor: theme.palette.error.dark,
+            backgroundColor: theme.palette.error.main,
             opacity: 0.95,
             paddingLeft: theme.spacing.unit * 2,
             paddingRight: theme.spacing.unit * 5,
         },
         info: {
-            backgroundColor: '#000000', //theme.palette.primary.dark,
+            backgroundColor: theme.palette.type === 'light' ? theme.palette.common.black : theme.palette.common.white,
             opacity: 0.8,
             paddingLeft: theme.spacing.unit * 2,
             paddingRight: theme.spacing.unit * 5,
         },
         warning: {
-            backgroundColor: amber[700],
+            backgroundColor: appTheme.palette.warning,
             opacity: 0.95,
             paddingLeft: theme.spacing.unit * 2,
             paddingRight: theme.spacing.unit * 5,

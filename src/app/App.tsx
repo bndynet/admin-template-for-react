@@ -9,19 +9,17 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress, CircularProgress, Typography } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import routes from '../routes';
 import { AppComponentState } from './app.d';
+import routes from '../routes';
 import Notification from './global/Notification';
 import history from '../redux/history';
+import config from '../config';
+import appTheme from '../theme';
 
-const theme = createMuiTheme({
-    typography: {
-        useNextVariants: true
-    }
-});
-
-const styles = (theme: Theme) =>
-    createStyles({
+const styles = (theme: Theme) => {
+    console.log(theme);
+    console.log(theme.palette.type == 'light');
+    return createStyles({
         progressBar: {
             position: 'fixed',
             top: 0,
@@ -39,14 +37,14 @@ const styles = (theme: Theme) =>
             justifyContent: 'center',
             width: '100%',
             height: '100vh',
-            backgroundColor: fade(theme.palette.common.white, 0.8),
+            backgroundColor: fade(appTheme.palette.type === 'light' ? theme.palette.common.white : theme.palette.common.black, 0.6),
             zIndex: 9999,
         },
         overlayClose: {
             display: 'none',
         },
         circularProgressContainer: {
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: appTheme.palette.type === 'light' ? theme.palette.common.white : theme.palette.common.black,
             padding: theme.spacing.unit * 2,
             borderStyle: 'solid',
             borderWidth: 2,
@@ -73,6 +71,8 @@ const styles = (theme: Theme) =>
         }
     });
 
+}
+
 class AppComponent extends React.Component<
     {
         classes?: any;
@@ -91,7 +91,7 @@ class AppComponent extends React.Component<
     render() {
         const { classes } = this.props;
         return (
-            <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={appTheme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
                 <Router history={history}>
                     <main>{renderRoutes(routes)}</main>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,11 +19,11 @@ const styles = (theme: Theme) =>
                 backgroundImage: 'url(images/bg.jpg)',
                 backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
-                color: '#dddddd',
-                textShadow: '2px 2px 5px #333333'
+                color: theme.palette.grey[50],
+                textShadow: `2px 2px 5px ${theme.palette.grey[50]}`,
             },
             '.markdown-body a': {
-                color: '#ffffff',
+                color: theme.palette.common.white,
                 textDecoration: 'underline'
             }
         },
@@ -40,7 +39,7 @@ const styles = (theme: Theme) =>
             fontSize: 24,
             fontWeight: 700,
             '&.disabled': {
-                color: '#ffffff'
+                color: theme.palette.common.white,
             }
         },
         forkMe: {

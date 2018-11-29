@@ -16,8 +16,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import pink from '@material-ui/core/colors/pink';
-import common from '@material-ui/core/colors/common';
 
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
@@ -52,7 +50,7 @@ const styles = (theme: Theme) =>
             margin: 0,
             width: 30,
             height: 30,
-            backgroundColor: pink[500]
+            backgroundColor: theme.palette.secondary.main,
         },
         avatarMenu: {
             minWidth: 160
@@ -92,9 +90,8 @@ const styles = (theme: Theme) =>
             alignItems: 'center',
             justifyContent: 'flex-end',
             borderTopWidth: 1,
-            borderTopColor: 'rgba(0, 0, 0, 0.12)',
+            borderTopColor: theme.palette.divider,
             borderTopStyle: 'solid',
-            backgroundColor: common.white,
             padding: theme.spacing.unit / 2,
             width: drawerWidth - 1,
             minHeight: 'inherit',
@@ -137,7 +134,9 @@ const styles = (theme: Theme) =>
             fontSize: '11px',
             top: -5,
             right: -5,
-            border: '2px solid #3f51b5'
+            borderWidth: 2,
+            borderStyle: 'solid',
+            borderColor: theme.palette.error.main,
         }
     });
 
