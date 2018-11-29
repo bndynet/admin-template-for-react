@@ -17,6 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import pink from '@material-ui/core/colors/pink';
+import common from '@material-ui/core/colors/common';
 
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
@@ -93,8 +94,9 @@ const styles = (theme: Theme) =>
             borderTopWidth: 1,
             borderTopColor: 'rgba(0, 0, 0, 0.12)',
             borderTopStyle: 'solid',
+            backgroundColor: common.white,
             padding: theme.spacing.unit / 2,
-            width: drawerWidth,
+            width: drawerWidth - 1,
             minHeight: 'inherit',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
@@ -103,9 +105,9 @@ const styles = (theme: Theme) =>
         },
         drawerPaperFooterClose: {
             justifyContent: 'center',
-            width: theme.spacing.unit * 5,
+            width: theme.spacing.unit * 5 - 1,
             [theme.breakpoints.up('sm')]: {
-                width: theme.spacing.unit * 7
+                width: theme.spacing.unit * 7 - 1,
             }
         },
         content: {

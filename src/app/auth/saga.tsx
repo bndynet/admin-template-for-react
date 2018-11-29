@@ -6,13 +6,13 @@ import ajax from '../../helpers/ajax';
 import globalActions from '../global/actions';
 import authActions from './actions';
 
-// 1. our worker saga
 function* login(action) {
     try {
         // effects(call, put):
         // trigger off the code that we want to call that is asynchronous
         // and also dispatched the result from that asynchrous code.
-        yield put(globalActions.showLoading());
+        yield put(globalActions.showLoading('Logging in...'));
+        yield call(delay, 3000);
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
         yield put(authActions.loginSuccess(response.data));
         yield put(globalActions.hideLoading());
@@ -25,9 +25,9 @@ function* login(action) {
 
 function* logout(action) {
     try {
-        yield put(globalActions.showLoading());
+        yield put(globalActions.showLoading('Logging out...'));
         // request backend to terminate session
-        yield call(delay, 5000);
+        yield call(delay, 3000);
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
         yield put(authActions.logoutSuccess());
         yield put(globalActions.hideLoading());
@@ -38,7 +38,6 @@ function* logout(action) {
     }
 }
 
-// 2. our watcher saga: spawn a new task on each ACTION
 function* authSaga() {
     // takeEvery:
     // listen for certain actions that are going to be dispatched and take them and run through our worker saga.

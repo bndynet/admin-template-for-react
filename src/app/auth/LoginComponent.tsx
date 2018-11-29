@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockIcon from '@material-ui/icons/LockOutlined';
+import AccountCircleRounded from '@material-ui/icons/AccountCircleRounded';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
@@ -40,9 +40,10 @@ const styles = (theme: Theme) =>
         },
         avatar: {
             margin: theme.spacing.unit,
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.secondary.dark,
             width: 100,
-            height: 100
+            height: 100,
+            fontSize: 110,
         },
         form: {
             width: '100%',
@@ -77,9 +78,7 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
     }
 
     onLogin(event) {
-        if (this.props.onLogin(this.state.username, this.state.password)) {
-            // this.props.history.push('/admin');
-        }
+        this.props.onLogin(this.state.username, this.state.password);
         event.preventDefault();
     }
 
@@ -90,7 +89,7 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
                 <CssBaseline />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockIcon fontSize='large' />
+                        <AccountCircleRounded fontSize='inherit' />
                     </Avatar>
                     <Typography component='h1' variant='h5'>
                         Sign in
