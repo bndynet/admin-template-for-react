@@ -9,7 +9,6 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress, CircularProgress, Typography } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import { AppComponentState } from './app.d';
 import routes from '../routes';
 import Notification from './global/Notification';
 import history from '../redux/history';
@@ -25,7 +24,7 @@ const styles = (theme: Theme) => {
             zIndex: 2000
         },
         overlay: {
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
             display: 'flex',
@@ -35,10 +34,10 @@ const styles = (theme: Theme) => {
             width: '100%',
             height: '100vh',
             backgroundColor: fade(ifTheme(theme.palette.common.white, theme.palette.common.black), 0.5),
-            zIndex: 9999,
+            zIndex: 9999
         },
         overlayClose: {
-            display: 'none',
+            display: 'none'
         },
         circularProgressContainer: {
             backgroundColor: ifTheme(theme.palette.common.white, theme.palette.common.black),
@@ -46,40 +45,37 @@ const styles = (theme: Theme) => {
             borderStyle: 'solid',
             borderWidth: 2,
             borderColor: fade(theme.palette.primary.main, 0.2),
-            textAlign: 'center',
+            textAlign: 'center'
         },
         circularProgressWrapper: {
             position: 'relative',
             display: 'inline-block',
-            margin: theme.spacing.unit * 2,
+            margin: theme.spacing.unit * 2
         },
         circularProgressDeterminate: {
-            color: fade(theme.palette.primary.main, 0.2),
+            color: fade(theme.palette.primary.main, 0.2)
         },
         circularProgressIndeterminate: {
             color: theme.palette.primary.main,
             animationDuration: '600ms',
             position: 'absolute',
-            left: 0,
+            left: 0
         },
         circularProgressText: {
             display: 'block',
-            textAlign: 'center',
+            textAlign: 'center'
         }
     });
-}
+};
 
-class AppComponent extends React.Component<
-    {
-        classes?: any;
-        loading: boolean;
-        loadingText: string;
-        requesting: boolean;
-        showNotification: boolean;
-        notification: any;
-    },
-    AppComponentState
-> {
+class AppComponent extends React.Component<{
+    classes?: any;
+    loading: boolean;
+    loadingText: string;
+    requesting: boolean;
+    showNotification: boolean;
+    notification: any;
+}> {
     constructor(props) {
         super(props);
     }
@@ -97,12 +93,12 @@ class AppComponent extends React.Component<
                     <div className={classes.circularProgressContainer}>
                         <div className={classes.circularProgressWrapper}>
                             <CircularProgress
-                                variant="determinate"
+                                variant='determinate'
                                 value={100}
                                 className={classes.circularProgressDeterminate}
                                 size={48}
                                 thickness={4}
-                                />
+                            />
                             <CircularProgress
                                 variant='indeterminate'
                                 disableShrink
@@ -111,7 +107,10 @@ class AppComponent extends React.Component<
                                 thickness={4}
                             />
                         </div>
-                        <Typography classes={{root: classes.circularProgressText}}> {this.props.loadingText} </Typography>
+                        <Typography classes={{ root: classes.circularProgressText }}>
+                            {' '}
+                            {this.props.loadingText}{' '}
+                        </Typography>
                     </div>
                 </div>
             </MuiThemeProvider>
@@ -122,7 +121,7 @@ class AppComponent extends React.Component<
 const mapStateToProps = (state) => ({
     loading: state.global.loading,
     loadingText: state.global.loadingText,
-    requesting: state.global.requesting,
+    requesting: state.global.requesting
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});

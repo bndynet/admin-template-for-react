@@ -12,8 +12,6 @@ import { Theme, createStyles, withStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
     createStyles({
         listItem: {
-            paddingTop: theme.spacing.unit,
-            paddingBottom: theme.spacing.unit,
             paddingLeft: 18,
         },
         listItemIcon: {},

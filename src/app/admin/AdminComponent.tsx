@@ -2,6 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
+import { Router } from 'react-router-dom';
 import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,9 +19,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
+import history from '../../redux/history';
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
 import appTheme from '../../theme';
+import routes from './routes';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -116,6 +120,13 @@ const styles = (theme: Theme) =>
                 width: 0,
             }
         },
+        copyright: {
+            flex: 1,
+            paddingLeft: theme.spacing.unit,
+        },
+        copyrightHidden: {
+            display: 'none',
+        },
         content: {
             flexGrow: 1,
             paddingTop: appTheme.headerHeight,
@@ -136,7 +147,7 @@ const styles = (theme: Theme) =>
             right: -5,
             borderWidth: 2,
             borderStyle: 'solid',
-            borderColor: theme.palette.error.main,
+            borderColor: theme.palette.primary.main,
         }
     });
 
@@ -210,7 +221,7 @@ class AdminComponent extends React.Component<
                             anchorEl={avatarMenuAnchor}
                             open={Boolean(avatarMenuAnchor)}
                             onClose={this.handleAvatarMenuClose}>
-                            <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                            <MenuItem dense={true} onClick={this.handleLogout}>Logout</MenuItem>
                         </Menu>
                     </Toolbar>
                 </AppBar>
@@ -221,7 +232,7 @@ class AdminComponent extends React.Component<
                     }}
                     open={this.state.largeMainMenu}>
                     <Divider />
-                    <List>
+                    <List dense={true}>
                         <AdminMenuComponent />
                     </List>
                     <div
@@ -229,6 +240,9 @@ class AdminComponent extends React.Component<
                             classes.drawerPaperFooter,
                             !this.state.largeMainMenu && classes.drawerPaperFooterClose
                         )}>
+                        <Typography variant='caption' className={classNames(classes.copyright, !this.state.largeMainMenu && classes.copyrightHidden)}>
+                            &copy; 2018 BNDY-NET
+                        </Typography>
                         <IconButton className={classes.iconButton} onClick={this.handleDrawerToggle}>
                             {this.state.largeMainMenu ? (
                                 <ChevronLeftIcon fontSize='small' />
@@ -238,7 +252,11 @@ class AdminComponent extends React.Component<
                         </IconButton>
                     </div>
                 </Drawer>
-                <main className={classes.content} />
+                <main className={classes.content}>
+                    <Router history={history}>
+                        {renderRoutes(routes)}
+                    </Router>
+                </main>
             </div>
         );
     }
