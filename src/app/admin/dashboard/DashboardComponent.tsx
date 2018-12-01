@@ -42,7 +42,8 @@ const styles = (theme: Theme) => (
 const renderAlert = (props) => {
     return (
         <Grid item xs={6}>
-            <Alert title='OK' message='dddd' variant={props.variant} shadow={props.shadow} square={props.square} closeable={props.closeable}/>
+            <Alert title='Alert Title' message='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam. '
+             variant={props.variant} shadow={props.shadow} square={props.square} closeable={props.closeable}/>
         </Grid>
     );
 };
@@ -53,7 +54,7 @@ class DashboardComponent extends React.Component<{
     render() {
         const { classes } = this.props;
         return (
-            <div>
+            <div data-name='top'>
                 <ContentHeader title='Dashboard' navigation={{
                     'Home': '/home',
                     'Dashboard': '/admin/dashboard',
@@ -62,12 +63,13 @@ class DashboardComponent extends React.Component<{
                 <Typography component="div" className={classes.chartContainer}>
                     <SimpleLineChart />
                 </Typography>
-
+                
+                <ContentHeader title='Alerts'></ContentHeader>
                 <Grid container spacing={16 as GridSpacing}>
-                    {renderAlert({variant: 'info', square: true, closeable: true, shadow: 0})}
-                    {renderAlert({variant: 'success', square: true, closeable: true, shadow: 0})}
-                    {renderAlert({variant: 'warning', square: false, closeable: false, shadow: 3})}
-                    {renderAlert({variant: 'error', square: false, closeable: false, shadow: 3})}
+                    {renderAlert({variant: 'info', square: true, closeable: false })}
+                    {renderAlert({variant: 'success', square: true, closeable: false })}
+                    {renderAlert({variant: 'warning', square: false, closeable: true, shadow: 3})}
+                    {renderAlert({variant: 'error', square: false, closeable: true, shadow: 3})}
                 </Grid>
             </div>
         );

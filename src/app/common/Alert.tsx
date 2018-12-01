@@ -17,20 +17,24 @@ const styles = (theme: Theme) =>
         },
         header: {
             display: 'flex',
-            marginBottom: theme.spacing.unit
         },
         icon: {
-            marginRight: theme.spacing.unit,
+            marginRight: theme.spacing.unit / 2,
             position: 'relative',
-            marginTop: 5
+            marginTop: 4,
+            fontSize: '1.2em',
         },
         title: {
-            flex: 1
+            flex: 1,
+            paddingRight: 24,
+        },
+        message: {
+            marginLeft: 2,
         },
         close: {
             position: 'absolute',
-            top: 0,
-            right: 0,
+            top: 4,
+            right: 4,
         }
     });
 
@@ -67,13 +71,13 @@ class Alert extends React.Component<
             <Collapse in={!this.state.close}>
                 <Paper className={classNames(classes.root, classes[variant])} elevation={shadow} square={square}>
                     {title && (
-                        <Typography className={classes.header} variant='h6' component='h3' color='inherit'>
+                        <Typography className={classes.header} variant='subtitle1' component='h3' color='inherit'>
                             <Icon className={classes.icon} />
                             <span className={classes.title}>{title}</span>
                         </Typography>
                     )}
                     {message && (
-                        <Typography component='p' color='inherit'>
+                        <Typography className={classes.message} component='p' color='inherit'>
                             {message}
                         </Typography>
                     )}
