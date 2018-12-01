@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress, CircularProgress, Typography } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
@@ -13,12 +13,9 @@ import { AppComponentState } from './app.d';
 import routes from '../routes';
 import Notification from './global/Notification';
 import history from '../redux/history';
-import config from '../config';
-import appTheme from '../theme';
+import appTheme, { ifTheme } from '../theme';
 
 const styles = (theme: Theme) => {
-    console.log(theme);
-    console.log(theme.palette.type == 'light');
     return createStyles({
         progressBar: {
             position: 'fixed',
@@ -37,14 +34,14 @@ const styles = (theme: Theme) => {
             justifyContent: 'center',
             width: '100%',
             height: '100vh',
-            backgroundColor: fade(appTheme.palette.type === 'light' ? theme.palette.common.white : theme.palette.common.black, 0.6),
+            backgroundColor: fade(ifTheme(theme.palette.common.white, theme.palette.common.black), 0.5),
             zIndex: 9999,
         },
         overlayClose: {
             display: 'none',
         },
         circularProgressContainer: {
-            backgroundColor: appTheme.palette.type === 'light' ? theme.palette.common.white : theme.palette.common.black,
+            backgroundColor: ifTheme(theme.palette.common.white, theme.palette.common.black),
             padding: theme.spacing.unit * 2,
             borderStyle: 'solid',
             borderWidth: 2,
@@ -70,7 +67,6 @@ const styles = (theme: Theme) => {
             textAlign: 'center',
         }
     });
-
 }
 
 class AppComponent extends React.Component<

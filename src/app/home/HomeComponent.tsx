@@ -20,7 +20,7 @@ const styles = (theme: Theme) =>
                 backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
                 color: theme.palette.grey[50],
-                textShadow: `2px 2px 5px ${theme.palette.grey[50]}`,
+                textShadow: `1px 1px 2px ${theme.palette.grey[50]}`,
             },
             '.markdown-body a': {
                 color: theme.palette.common.white,

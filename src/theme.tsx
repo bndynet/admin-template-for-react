@@ -8,17 +8,6 @@ import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
 import { PaletteType } from '@material-ui/core';
 
-export interface IAppPalette extends Palette {
-    success: string;
-    warning: string;
-}
-
-export interface IAppTheme extends Theme {
-    palette: IAppPalette;
-    headerHeight: number;
-    sidebarWidth: number;
-}
-
 // default theme at https://material-ui.com/customization/default-theme/
 const themeConfig = {
     typography: {
@@ -39,6 +28,21 @@ const themeConfig = {
     sidebarWidth: 220,
 }
 
+export interface IAppPalette extends Palette {
+    success: string;
+    warning: string;
+}
+
+export interface IAppTheme extends Theme {
+    palette: IAppPalette;
+    headerHeight: number;
+    sidebarWidth: number;
+}
+
 const appTheme: IAppTheme = createMuiTheme(themeConfig) as IAppTheme;
 
 export default appTheme;
+
+export const ifTheme = (lightResult: any, darkResult: any): any => (
+    themeConfig.palette.type === 'light' ? lightResult : darkResult
+);
