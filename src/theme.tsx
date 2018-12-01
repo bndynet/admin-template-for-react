@@ -15,7 +15,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
 
 // default theme at https://material-ui.com/customization/default-theme/
-const themeConfig = {
+export const themeConfig = {
     typography: {
         useNextVariants: true,
     },
@@ -47,12 +47,12 @@ export interface IAppTheme extends Theme {
     sidebarWidth: number;
 }
 
-const appTheme: IAppTheme = createMuiTheme(themeConfig) as IAppTheme;
+// const appTheme: IAppTheme = createMuiTheme(themeConfig) as IAppTheme;
 
-export default appTheme;
+// export default appTheme;
 
-export const ifTheme = (lightResult: any, darkResult: any): any => (
-    themeConfig.palette.type === 'light' ? lightResult : darkResult
+export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any => (
+    theme.palette.type === 'light' ? lightResult : darkResult
 );
 
 export const variantIcon = {
@@ -62,21 +62,21 @@ export const variantIcon = {
     info: InfoIcon
 };
 
-export const variantColor = {
+export const variantColor = (theme: Theme) => ({
     success: {
-        color: appTheme.palette.common.white,
-        backgroundColor: appTheme.palette.success
+        color: theme.palette.common.white,
+        backgroundColor: themeConfig.palette.success
     },
     error: {
-        color: appTheme.palette.common.white,
-        backgroundColor: appTheme.palette.error.main
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.error.main
     },
     info: {
-        color: appTheme.palette.common.white,
-        backgroundColor: appTheme.palette.info,
+        color: theme.palette.common.white,
+        backgroundColor: themeConfig.palette.info,
     },
     warning: {
-        color: appTheme.palette.common.white,
-        backgroundColor: appTheme.palette.warning
+        color: theme.palette.common.white,
+        backgroundColor: themeConfig.palette.warning
     }
-}
+});

@@ -6,6 +6,7 @@ export const ACTION_NOTIFIER_SHOW = 'G_NOTIFIER_SHOW';
 export const ACTION_NOTIFIER_HIDE = 'G_NOTIFIER_HIDE';
 export const ACTION_REQUESTING_SHOW = 'G_REQUESTING_SHOW';
 export const ACTION_REQUESTING_HIDE = 'G_REQUESTING_HIDE';
+export const ACTION_THEME_CHANGE = 'G_THEME_CHANGE';
 
 export const global = (state = { loading: false }, action) => {
     switch (action.type) {
@@ -25,6 +26,10 @@ export const global = (state = { loading: false }, action) => {
             return { ...state, showNotifier: true, notifierOptions };
         case ACTION_NOTIFIER_HIDE:
             return { ...state, showNotifier: false };
+
+        case ACTION_THEME_CHANGE:
+            return {...state, theme: action.theme };
+
         default:
             return state;
     }
@@ -81,7 +86,12 @@ const globalActions = {
         },
     }),
     unnotify: () => ({
-        type: ACTION_NOTIFIER_HIDE
+        type: ACTION_NOTIFIER_HIDE,
+    }),
+
+    changeTheme: (theme) => ({
+        type: ACTION_THEME_CHANGE,
+        theme: theme,
     }),
 };
 

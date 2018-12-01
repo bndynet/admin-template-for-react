@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CssBaseline, Paper, Typography, Theme, createStyles, withStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircleOutlined';
-import appTheme from '../../theme';
+import { themeConfig } from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -17,7 +17,7 @@ const styles = (theme: Theme) =>
         },
         icon: {
             marginBottom: theme.spacing.unit * 2,
-            color: appTheme.palette.success,
+            color: themeConfig.palette.success,
             width: 80,
             height: 80
         },

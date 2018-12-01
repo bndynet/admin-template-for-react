@@ -15,6 +15,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
+import Switch from '@material-ui/core/Switch';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -22,8 +23,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import history from '../../redux/history';
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
-import appTheme from '../../theme';
+import { themeConfig } from '../../theme';
 import routes from './routes';
+import globalActions from '../global/actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -35,7 +37,7 @@ const styles = (theme: Theme) =>
             flexDirection: 'row'
         },
         brand: {
-            height: appTheme.headerHeight,
+            height: themeConfig.headerHeight,
             flex: 1,
             display: 'flex',
             alignItems: 'center',
@@ -62,7 +64,7 @@ const styles = (theme: Theme) =>
         },
         toolbar: {
             paddingRight: theme.spacing.unit * 2,
-            minHeight: appTheme.headerHeight,
+            minHeight: themeConfig.headerHeight,
         },
         avatar: {
             margin: 0,
@@ -75,10 +77,10 @@ const styles = (theme: Theme) =>
         },
         drawerPaper: {
             position: 'relative',
-            paddingTop: appTheme.headerHeight,
+            paddingTop: themeConfig.headerHeight,
             paddingBottom: 45,
             whiteSpace: 'nowrap',
-            width: appTheme.sidebarWidth,
+            width: themeConfig.sidebarWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
@@ -105,7 +107,7 @@ const styles = (theme: Theme) =>
             borderTopWidth: 1,
             borderTopColor: theme.palette.divider,
             borderTopStyle: 'solid',
-            width: appTheme.sidebarWidth - 1,
+            width: themeConfig.sidebarWidth - 1,
             overflow: 'hidden',
             minHeight: 'inherit',
             padding: theme.spacing.unit / 2,
@@ -130,7 +132,7 @@ const styles = (theme: Theme) =>
         },
         content: {
             flexGrow: 1,
-            paddingTop: appTheme.headerHeight,
+            paddingTop: themeConfig.headerHeight,
             paddingBottom: theme.spacing.unit,
             paddingLeft: theme.spacing.unit * 3,
             paddingRight: theme.spacing.unit * 3,
@@ -153,14 +155,14 @@ const styles = (theme: Theme) =>
     });
 
 class AdminComponent extends React.Component<
-    { user: any; classes: any; history: any; onLogout: () => void },
+    { user: any; classes: any; history: any; isDarkTheme: boolean, onLogout: () => void, onThemeChange: (toDark: boolean) => void },
     { largeMainMenu: boolean; avatarMenuAnchor: any }
 > {
     constructor(props) {
         super(props);
         this.state = {
             largeMainMenu: true,
-            avatarMenuAnchor: null
+            avatarMenuAnchor: null,
         };
     }
 
@@ -170,6 +172,10 @@ class AdminComponent extends React.Component<
 
     handleAvatarClick = (e) => {
         this.setState({ avatarMenuAnchor: e.currentTarget });
+    };
+
+    handleThemeChange = (e) => {
+        this.props.onThemeChange(!this.props.isDarkTheme);
     };
 
     handleAvatarMenuClose = () => {
@@ -183,7 +189,7 @@ class AdminComponent extends React.Component<
 
     render() {
         const { avatarMenuAnchor } = this.state;
-        const { classes } = this.props;
+        const { classes, isDarkTheme } = this.props;
         const user = this.props.user || {};
         return (
             <div className={classes.root}>
@@ -202,6 +208,11 @@ class AdminComponent extends React.Component<
                         </IconButton>
                     </div>
                     <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
+                    <Switch
+                        checked={isDarkTheme}
+                        onChange={this.handleThemeChange}
+                        color="default"
+                        />
                         <IconButton color='inherit'>
                             <Badge badgeContent={4} color='secondary' classes={{ badge: classes.badge }}>
                                 <NotificationsIcon />
@@ -264,12 +275,20 @@ class AdminComponent extends React.Component<
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user
+    user: state.auth.user,
+    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === 'dark',
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     onLogout: () => {
         dispatch(authActions.logout());
+    },
+    onThemeChange: (toDark: boolean) => {
+        dispatch(globalActions.changeTheme({
+            palette: {
+                type: toDark ? 'dark' : 'light',
+            }
+        }));
     }
 });
 

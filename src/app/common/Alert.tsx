@@ -9,7 +9,7 @@ import { variantIcon, variantColor } from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({
-        ...variantColor,
+        ...variantColor(theme),
         root: {
             position: 'relative',
             padding: `${theme.spacing.unit * 1.5} ${theme.spacing.unit * 2}`,
