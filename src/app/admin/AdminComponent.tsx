@@ -108,6 +108,7 @@ const styles = (theme: Theme) =>
             width: appTheme.sidebarWidth - 1,
             overflow: 'hidden',
             minHeight: 'inherit',
+            padding: theme.spacing.unit / 2,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen

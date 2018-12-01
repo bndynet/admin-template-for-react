@@ -11,19 +11,15 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import authActions from '../auth/actions';
 import homeActions from './actions';
 import globalActions from '../global/actions';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
     createStyles({
         '@global': {
             body: {
-                backgroundImage: 'url(images/bg.jpg)',
-                backgroundRepeat: 'none',
                 paddingTop: theme.spacing.unit * 8,
-                color: theme.palette.grey[50],
-                textShadow: `1px 1px 2px ${theme.palette.grey[50]}`,
             },
             '.markdown-body a': {
-                color: theme.palette.common.white,
                 textDecoration: 'underline'
             }
         },
@@ -134,7 +130,7 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
             <div className={classes.body}>
                 <a href="https://github.com/bndynet/admin-template-for-react">
                     <img className={classes.forkMe}
-                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" />
+                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
                     </a>
                 <main className={classes.main}>
                     <ReactMarkdown source={this.props.readme} className={'markdown-body'} />
