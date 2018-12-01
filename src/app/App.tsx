@@ -10,9 +10,10 @@ import { Theme, createStyles, withStyles, LinearProgress, CircularProgress, Typo
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import routes from '../routes';
-import Notification from './global/Notification';
+import Notifier, { NotifierOptions } from './common/Notifier';
 import history from '../redux/history';
 import appTheme, { ifTheme } from '../theme';
+import globalActions from './global/actions';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -73,22 +74,23 @@ class AppComponent extends React.Component<{
     loading: boolean;
     loadingText: string;
     requesting: boolean;
-    showNotification: boolean;
-    notification: any;
+    showNotifier: boolean;
+    onCloseNotifier: () => void;
+    notifierOptions: NotifierOptions;
 }> {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, notifierOptions, showNotifier } = this.props;
         return (
             <MuiThemeProvider theme={appTheme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
                 <Router history={history}>
                     <main>{renderRoutes(routes)}</main>
                 </Router>
-                <Notification />
+                <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
                 <div className={classNames(classes.overlay, !this.props.loading && classes.overlayClose)}>
                     <div className={classes.circularProgressContainer}>
                         <div className={classes.circularProgressWrapper}>
@@ -121,9 +123,13 @@ class AppComponent extends React.Component<{
 const mapStateToProps = (state) => ({
     loading: state.global.loading,
     loadingText: state.global.loadingText,
-    requesting: state.global.requesting
+    requesting: state.global.requesting,
+    notifierOptions: state.global.notifierOptions,
+    showNotifier: state.global.showNotifier,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    onCloseNotifier: () => (dispatch(globalActions.unnotify())),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppComponent));

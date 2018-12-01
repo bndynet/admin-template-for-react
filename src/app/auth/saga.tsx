@@ -27,9 +27,9 @@ function* logout(action) {
     try {
         yield put(globalActions.showLoading('Logging out...'));
         // request backend to terminate session
-        yield call(delay, 3000);
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
         yield put(authActions.logoutSuccess());
+        yield call(delay, 3000);
         yield put(globalActions.hideLoading());
         yield put(push('/logout'));
     } catch (e) {

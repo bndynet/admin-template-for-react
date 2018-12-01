@@ -93,7 +93,6 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
             if (delay <= 0) {
                 clearInterval(this.interval);
                 this.props.onLogout();
-                this.props.history.push('/logout');
                 return;
             }
         }, 1000);

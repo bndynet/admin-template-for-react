@@ -189,7 +189,7 @@ class AdminComponent extends React.Component<
                 <CssBaseline />
                 <AppBar position='absolute' className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Typography className={classNames(classes.brandTitle, !this.state.largeMainMenu && classes.brandTitleHidden)} variant='h5' component='h1'>
+                        <Typography onClick={() => history.push('/')} className={classNames(classes.brandTitle, !this.state.largeMainMenu && classes.brandTitleHidden)} variant='h5' component='h1'>
                             ADMIN REACT
                         </Typography>
                         <IconButton

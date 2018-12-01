@@ -1,7 +1,9 @@
+import { NotifierOptions } from "../common/Notifier";
+
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
-export const ACTION_NOTIFICATION_SHOW = 'G_NOTIFICATION_SHOW';
-export const ACTION_NOTIFICATION_HIDE = 'G_NOTIFICATION_HIDE';
+export const ACTION_NOTIFIER_SHOW = 'G_NOTIFIER_SHOW';
+export const ACTION_NOTIFIER_HIDE = 'G_NOTIFIER_HIDE';
 export const ACTION_REQUESTING_SHOW = 'G_REQUESTING_SHOW';
 export const ACTION_REQUESTING_HIDE = 'G_REQUESTING_HIDE';
 
@@ -18,11 +20,11 @@ export const global = (state = { loading: false }, action) => {
         case ACTION_REQUESTING_HIDE:
             return { ...state, requesting: false};
 
-        case ACTION_NOTIFICATION_SHOW:
-            const notificaton = action.notification;
-            return { ...state, showNotification: true, notificaton };
-        case ACTION_NOTIFICATION_HIDE:
-            return { ...state, showNotification: false };
+        case ACTION_NOTIFIER_SHOW:
+            const notifierOptions = action.notifierOptions;
+            return { ...state, showNotifier: true, notifierOptions };
+        case ACTION_NOTIFIER_HIDE:
+            return { ...state, showNotifier: false };
         default:
             return state;
     }
@@ -46,40 +48,40 @@ const globalActions = {
         type: ACTION_REQUESTING_HIDE,
     }),
 
-    notify: (notification: {message: string, variant?: string, duration?: number, placement?: string}) => ({
-        type: ACTION_NOTIFICATION_SHOW,
-        notification: notification,
+    notify: (notifierOptions: NotifierOptions) => ({
+        type: ACTION_NOTIFIER_SHOW,
+        notifierOptions: notifierOptions,
     }),
     notifyInfo: (message: string) => ({
-        type: ACTION_NOTIFICATION_SHOW,
-        notification: {
+        type: ACTION_NOTIFIER_SHOW,
+        notifierOptions: {
             message: message,
             variant: 'info',
         },
     }),
     notifySuccess: (message: string) => ({
-        type: ACTION_NOTIFICATION_SHOW,
-        notification: {
+        type: ACTION_NOTIFIER_SHOW,
+        notifierOptions: {
             message: message,
             variant: 'success',
         },
     }),
     notifyWarning: (message: string) => ({
-        type: ACTION_NOTIFICATION_SHOW,
-        notification: {
+        type: ACTION_NOTIFIER_SHOW,
+        notifierOptions: {
             message: message,
             variant: 'warning',
         },
     }),
     notifyError: (message: string) => ({
-        type: ACTION_NOTIFICATION_SHOW,
-        notification: {
+        type: ACTION_NOTIFIER_SHOW,
+        notifierOptions: {
             message: message,
             variant: 'error',
         },
     }),
-    hideNotification: () => ({
-        type: ACTION_NOTIFICATION_HIDE
+    unnotify: () => ({
+        type: ACTION_NOTIFIER_HIDE
     }),
 };
 
