@@ -17,6 +17,11 @@ import globalActions from './global/actions';
 
 const styles = (theme: Theme) => {
     return createStyles({
+        '@global': {
+            '.recharts-tooltip-label': {
+                color: theme.palette.common.black,
+            },
+        },
         progressBar: {
             position: 'fixed',
             top: 0,

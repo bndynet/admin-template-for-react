@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
+import { ifTheme } from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -19,14 +20,18 @@ const styles = (theme: Theme) =>
             display: 'flex',
             '& > *': {
                 alignSelf: 'flex-end',
-                textDecoration: 'none'
+                color: theme.palette.text.primary,
+                textDecoration: 'none',
             },
             '& > *:not(:last-child):after': {
                 content: '">"',
                 display: 'inline-block',
                 marginLeft: 5,
                 marginRight: 5
-            }
+            },
+            '& > span': {
+                color: theme.palette.text.disabled,
+            },
         },
         chartContainer: {}
     });

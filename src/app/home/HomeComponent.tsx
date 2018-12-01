@@ -18,9 +18,12 @@ const styles = (theme: Theme) =>
         '@global': {
             body: {
                 paddingTop: theme.spacing.unit * 8,
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.background.default,
             },
             '.markdown-body a': {
-                textDecoration: 'underline'
+                color: theme.palette.text.primary,
+                textDecoration: 'underline',
             }
         },
         main: {
