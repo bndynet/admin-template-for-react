@@ -15,6 +15,8 @@ export interface IAppPalette extends Palette {
 
 export interface IAppTheme extends Theme {
     palette: IAppPalette;
+    headerHeight: number;
+    sidebarWidth: number;
 }
 
 // default theme at https://material-ui.com/customization/default-theme/
@@ -32,7 +34,9 @@ const themeConfig = {
         success: green[500],
         warning: amber[500],
         // end custom colors
-    }
+    },
+    headerHeight: 60,
+    sidebarWidth: 220,
 }
 
 const appTheme: IAppTheme = createMuiTheme(themeConfig) as IAppTheme;

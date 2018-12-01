@@ -20,6 +20,9 @@ const styles = (theme: Theme) =>
             color: appTheme.palette.success,
             width: 80,
             height: 80
+        },
+        textColor: {
+            color: theme.palette.text.primary,
         }
     });
 
@@ -35,11 +38,11 @@ class LogoutComponent extends React.Component<LogoutComponentProps> {
                 <CssBaseline />
                 <Paper className={classes.paper}>
                     <CheckCircleIcon className={classes.icon} />
-                    <Typography gutterBottom component='h1' variant='h6' color='inherit'>
+                    <Typography gutterBottom component='h1' variant='h6'>
                         You have logged out successfully.
                     </Typography>
-                    <Typography color='inherit' variant='body1'>
-                        <Link to='/'>Go home</Link>
+                    <Typography variant='body1'>
+                        <Link className={classes.textColor} to='/'>Go home</Link>
                     </Typography>
                 </Paper>
             </main>

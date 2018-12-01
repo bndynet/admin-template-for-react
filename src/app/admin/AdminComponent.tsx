@@ -19,9 +19,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
-
-const drawerWidth = 220;
-const headerHeight = 60;
+import appTheme from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -33,18 +31,34 @@ const styles = (theme: Theme) =>
             flexDirection: 'row'
         },
         brand: {
-            height: headerHeight,
+            height: appTheme.headerHeight,
             flex: 1,
             display: 'flex',
             alignItems: 'center',
             paddingLeft: theme.spacing.unit * 2
         },
+        menuButton: {
+            display: 'none',
+            marginLeft: 12,
+            marginRight: 36,
+        },
+        menuButtonShow: {
+            [theme.breakpoints.down('sm')]: {
+                display: 'inherit',
+                marginLeft: 0,
+            }
+        },
         brandTitle: {
             color: '#ffffff'
         },
+        brandTitleHidden: {
+            [theme.breakpoints.down('sm')]: {
+                display: 'none',
+            }
+        },
         toolbar: {
             paddingRight: theme.spacing.unit * 2,
-            minHeight: headerHeight
+            minHeight: appTheme.headerHeight,
         },
         avatar: {
             margin: 0,
@@ -55,18 +69,12 @@ const styles = (theme: Theme) =>
         avatarMenu: {
             minWidth: 160
         },
-        menuButton: {
-            marginLeft: 12,
-            marginRight: 36
-        },
-        title: {
-            flexGrow: 1
-        },
         drawerPaper: {
             position: 'relative',
-            paddingTop: headerHeight,
+            paddingTop: appTheme.headerHeight,
+            paddingBottom: 45,
             whiteSpace: 'nowrap',
-            width: drawerWidth,
+            width: appTheme.sidebarWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
@@ -78,9 +86,9 @@ const styles = (theme: Theme) =>
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen
             }),
-            width: theme.spacing.unit * 5,
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing.unit * 7
+            width: theme.spacing.unit * 7,
+            [theme.breakpoints.down('sm')]: {
+                width: 0,
             }
         },
         drawerPaperFooter: {
@@ -89,11 +97,12 @@ const styles = (theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            backgroundColor: theme.palette.background.paper,
             borderTopWidth: 1,
             borderTopColor: theme.palette.divider,
             borderTopStyle: 'solid',
-            padding: theme.spacing.unit / 2,
-            width: drawerWidth - 1,
+            width: appTheme.sidebarWidth - 1,
+            overflow: 'hidden',
             minHeight: 'inherit',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
@@ -102,28 +111,19 @@ const styles = (theme: Theme) =>
         },
         drawerPaperFooterClose: {
             justifyContent: 'center',
-            width: theme.spacing.unit * 5 - 1,
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing.unit * 7 - 1,
+            width: theme.spacing.unit * 7 - 1,
+            [theme.breakpoints.down('sm')]: {
+                width: 0,
             }
         },
         content: {
             flexGrow: 1,
-            paddingTop: headerHeight,
+            paddingTop: appTheme.headerHeight,
             paddingBottom: theme.spacing.unit,
             paddingLeft: theme.spacing.unit * 3,
             paddingRight: theme.spacing.unit * 3,
             height: '100vh',
             overflow: 'auto'
-        },
-        chartContainer: {
-            marginLeft: -22
-        },
-        tableContainer: {
-            height: 320
-        },
-        h5: {
-            marginBottom: theme.spacing.unit * 2
         },
         iconButton: {
             padding: theme.spacing.unit
@@ -178,14 +178,14 @@ class AdminComponent extends React.Component<
                 <CssBaseline />
                 <AppBar position='absolute' className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Typography className={classes.brandTitle} variant='h5' component='h1'>
+                        <Typography className={classNames(classes.brandTitle, !this.state.largeMainMenu && classes.brandTitleHidden)} variant='h5' component='h1'>
                             ADMIN REACT
                         </Typography>
                         <IconButton
                             color='inherit'
                             aria-label='Open drawer'
                             onClick={this.handleDrawerToggle}
-                            className={classes.menuButton}>
+                            className={classNames(classes.menuButton, !this.state.largeMainMenu && classes.menuButtonShow)}>
                             <MenuIcon />
                         </IconButton>
                     </div>
