@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { CssBaseline, Paper, Typography, Theme, createStyles, withStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircleOutlined';
 import { themeConfig } from '../../theme';
+import Panel from '../common/Panel';
 
 const styles = (theme: Theme) =>
     createStyles({
-        paper: {
+        panel: {
             marginTop: theme.spacing.unit * 8,
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -36,7 +37,7 @@ class LogoutComponent extends React.Component<LogoutComponentProps> {
         return (
             <main>
                 <CssBaseline />
-                <Paper className={classes.paper}>
+                <Panel variant='success' className={classes.panel}>
                     <CheckCircleIcon className={classes.icon} />
                     <Typography gutterBottom component='h1' variant='h6'>
                         You have logged out successfully.
@@ -44,7 +45,7 @@ class LogoutComponent extends React.Component<LogoutComponentProps> {
                     <Typography variant='body1'>
                         <Link className={classes.textColor} to='/'>Go home</Link>
                     </Typography>
-                </Paper>
+                </Panel>
             </main>
         );
     }

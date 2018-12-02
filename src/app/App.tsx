@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
 import _merge from 'lodash-es/merge';
 
-import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
 
 import routes from '../routes';
@@ -17,7 +17,6 @@ import Loading from './common/Loading';
 import { themeConfig } from '../theme';
 
 const styles = (theme: Theme) => {
-    // console.log(theme);
     return createStyles({
         '@global': {
             a: {
@@ -53,8 +52,6 @@ class AppComponent extends React.Component<{
 
     render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
-        console.debug('ddd');
-        console.debug(theme);
         return (
             <MuiThemeProvider theme={theme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />

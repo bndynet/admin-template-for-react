@@ -76,3 +76,18 @@ export const variantColor = (theme: Theme) => ({
         backgroundColor: themeConfig.palette.warning
     }
 });
+
+export const variantBorderColor = (theme: Theme) => ({
+    success: {
+        borderColor: themeConfig.palette.success,
+    },
+    error: {
+        borderColor: theme.palette.error.main,
+    },
+    info: {
+        borderColor: themeConfig.palette.info,
+    },
+    warning: {
+        borderColor: themeConfig.palette.warning,
+    }
+});
