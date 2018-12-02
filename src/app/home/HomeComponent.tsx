@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,18 +13,19 @@ import authActions from '../auth/actions';
 import homeActions from './actions';
 import globalActions from '../global/actions';
 import { Typography } from '@material-ui/core';
+import spacing from '@material-ui/core/styles/spacing';
 
 const styles = (theme: Theme) =>
     createStyles({
         '@global': {
             body: {
-                paddingTop: theme.spacing.unit * 8,
+                paddingTop: theme.spacing.unit * 4,
                 color: theme.palette.text.primary,
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: theme.palette.background.default
             },
             '.markdown-body a': {
                 color: theme.palette.text.primary,
-                textDecoration: 'underline',
+                textDecoration: 'underline'
             }
         },
         main: {
@@ -38,14 +40,20 @@ const styles = (theme: Theme) =>
             fontSize: 24,
             fontWeight: 700,
             '&.disabled': {
-                color: theme.palette.common.white,
+                color: theme.palette.common.white
             }
         },
         forkMe: {
             position: 'absolute',
             top: 0,
             right: 0,
-            border: 0,
+            border: 0
+        },
+        linkButton: {
+            '& button': {
+                marginRight: theme.spacing.unit,
+                marginBottom: theme.spacing.unit * 4,
+            }
         }
     });
 
@@ -129,13 +137,27 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
                 </Button>
             </Tooltip>
         );
+
         return (
             <div className={classes.body}>
-                <a href="https://github.com/bndynet/admin-template-for-react">
-                    <img className={classes.forkMe}
-                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
-                    </a>
+                <a href='https://github.com/bndynet/admin-template-for-react'>
+                    <img
+                        className={classes.forkMe}
+                        src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png'
+                        alt='Fork me on GitHub'
+                    />
+                </a>
                 <main className={classes.main}>
+                    <Link to='/login' className={classes.linkButton}>
+                        <Button variant='outlined'>
+                            <Typography>Log in</Typography>
+                        </Button>
+                    </Link>
+                    <Link to='/admin' className={classes.linkButton}>
+                        <Button variant='outlined'>
+                            <Typography>Admin Panel</Typography>
+                        </Button>
+                    </Link>
                     <ReactMarkdown source={this.props.readme} className={'markdown-body'} />
                     {btn}
                 </main>

@@ -17,9 +17,12 @@ import Loading from './common/Loading';
 import { themeConfig } from '../theme';
 
 const styles = (theme: Theme) => {
-    console.log(theme);
+    // console.log(theme);
     return createStyles({
         '@global': {
+            a: {
+                color: theme.palette.text.primary,
+            },
             '.recharts-tooltip-label': {
                 color: theme.palette.common.black,
             },
@@ -50,6 +53,8 @@ class AppComponent extends React.Component<{
 
     render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
+        console.debug('ddd');
+        console.debug(theme);
         return (
             <MuiThemeProvider theme={theme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
@@ -67,7 +72,7 @@ class AppComponent extends React.Component<{
 
 const mapStateToProps = (state) => {
     const clientTheme = state.global.theme;
-    const finalTheme = _merge({}, themeConfig, clientTheme);
+    const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
     return {
         loading: state.global.loading,
         loadingText: state.global.loadingTxt,
@@ -82,4 +87,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     onCloseNotifier: () => (dispatch(globalActions.unnotify())),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme()(withStyles(styles)(AppComponent)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppComponent));

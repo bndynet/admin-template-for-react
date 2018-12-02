@@ -1,4 +1,4 @@
-import { Theme, createMuiTheme } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
 import { Palette } from '@material-ui/core/styles/createPalette';
 
 import indigo from '@material-ui/core/colors/indigo';
@@ -46,10 +46,6 @@ export interface IAppTheme extends Theme {
     headerHeight: number;
     sidebarWidth: number;
 }
-
-// const appTheme: IAppTheme = createMuiTheme(themeConfig) as IAppTheme;
-
-// export default appTheme;
 
 export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any => (
     theme.palette.type === 'light' ? lightResult : darkResult

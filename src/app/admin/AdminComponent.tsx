@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
-import { Router } from 'react-router-dom';
+import { Router, Link } from 'react-router-dom';
 import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -203,16 +203,18 @@ class AdminComponent extends React.Component<
                 <CssBaseline />
                 <AppBar position='absolute' className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Typography
-                            onClick={() => history.push('/')}
-                            className={classNames(
-                                classes.brandTitle,
-                                !this.state.largeMainMenu && classes.brandTitleHidden
-                            )}
-                            variant='h5'
-                            component='h1'>
-                            ADMIN REACT
-                        </Typography>
+                        <Link to='/'>
+                            <Typography
+                                className={classNames(
+                                    'clickable',
+                                    classes.brandTitle,
+                                    !this.state.largeMainMenu && classes.brandTitleHidden
+                                )}
+                                variant='h5'
+                                component='h1'>
+                                ADMIN REACT
+                            </Typography>
+                        </Link>
                         <IconButton
                             color='inherit'
                             aria-label='Open drawer'
@@ -275,7 +277,7 @@ class AdminComponent extends React.Component<
                                 classes.copyright,
                                 !this.state.largeMainMenu && classes.copyrightHidden
                             )}>
-                            &copy; 2018 BNDY-NET
+                            &copy; 2018 <a href='http://bndy.net' target='_blank'>BNDY-NET</a>
                         </Typography>
                         <IconButton className={classes.iconButton} onClick={this.handleDrawerToggle}>
                             {this.state.largeMainMenu ? (

@@ -1,13 +1,13 @@
 
 import * as React from 'react';
 
-import SimpleLineChart from './SimpleLineChart';
 import Typography from '@material-ui/core/Typography';
 import { GridSpacing } from "@material-ui/core/Grid";
 import { Theme, createStyles, withStyles, Grid } from '@material-ui/core';
 
 import ContentHeader from '../../common/ContentHeader';
 import Alert from '../../common/Alert';
+import SimpleLineChart from './SimpleLineChart';
 
 const styles = (theme: Theme) => (
     createStyles({
@@ -56,9 +56,8 @@ class DashboardComponent extends React.Component<{
         return (
             <div data-name='top'>
                 <ContentHeader title='Dashboard' navigation={{
-                    'Home': '/home',
-                    'Dashboard': '/admin/dashboard',
-                    'Current': '',
+                    'Home': '/',
+                    'Dashboard': '',
                 }}></ContentHeader>
                 <Typography component="div" className={classes.chartContainer}>
                     <SimpleLineChart />
