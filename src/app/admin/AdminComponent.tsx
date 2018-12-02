@@ -46,12 +46,12 @@ const styles = (theme: Theme) =>
         menuButton: {
             display: 'none',
             marginLeft: 12,
-            marginRight: 36,
+            marginRight: 36
         },
         menuButtonShow: {
             [theme.breakpoints.down('sm')]: {
                 display: 'inherit',
-                marginLeft: 0,
+                marginLeft: 0
             }
         },
         brandTitle: {
@@ -59,18 +59,18 @@ const styles = (theme: Theme) =>
         },
         brandTitleHidden: {
             [theme.breakpoints.down('sm')]: {
-                display: 'none',
+                display: 'none'
             }
         },
         toolbar: {
             paddingRight: theme.spacing.unit * 2,
-            minHeight: themeConfig.headerHeight,
+            minHeight: themeConfig.headerHeight
         },
         avatar: {
             margin: 0,
             width: 30,
             height: 30,
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.secondary.main
         },
         avatarMenu: {
             minWidth: 160
@@ -94,7 +94,7 @@ const styles = (theme: Theme) =>
             }),
             width: theme.spacing.unit * 7,
             [theme.breakpoints.down('sm')]: {
-                width: 0,
+                width: 0
             }
         },
         drawerPaperFooter: {
@@ -120,15 +120,15 @@ const styles = (theme: Theme) =>
             justifyContent: 'center',
             width: theme.spacing.unit * 7 - 1,
             [theme.breakpoints.down('sm')]: {
-                width: 0,
+                width: 0
             }
         },
         copyright: {
             flex: 1,
-            paddingLeft: theme.spacing.unit,
+            paddingLeft: theme.spacing.unit
         },
         copyrightHidden: {
-            display: 'none',
+            display: 'none'
         },
         content: {
             flexGrow: 1,
@@ -150,19 +150,26 @@ const styles = (theme: Theme) =>
             right: -5,
             borderWidth: 2,
             borderStyle: 'solid',
-            borderColor: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main
         }
     });
 
 class AdminComponent extends React.Component<
-    { user: any; classes: any; history: any; isDarkTheme: boolean, onLogout: () => void, onThemeChange: (toDark: boolean) => void },
+    {
+        user: any;
+        classes: any;
+        history: any;
+        isDarkTheme: boolean;
+        onLogout: () => void;
+        onThemeChange: (toDark: boolean) => void;
+    },
     { largeMainMenu: boolean; avatarMenuAnchor: any }
 > {
     constructor(props) {
         super(props);
         this.state = {
             largeMainMenu: true,
-            avatarMenuAnchor: null,
+            avatarMenuAnchor: null
         };
     }
 
@@ -196,23 +203,31 @@ class AdminComponent extends React.Component<
                 <CssBaseline />
                 <AppBar position='absolute' className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Typography onClick={() => history.push('/')} className={classNames(classes.brandTitle, !this.state.largeMainMenu && classes.brandTitleHidden)} variant='h5' component='h1'>
+                        <Typography
+                            onClick={() => history.push('/')}
+                            className={classNames(
+                                classes.brandTitle,
+                                !this.state.largeMainMenu && classes.brandTitleHidden
+                            )}
+                            variant='h5'
+                            component='h1'>
                             ADMIN REACT
                         </Typography>
                         <IconButton
                             color='inherit'
                             aria-label='Open drawer'
                             onClick={this.handleDrawerToggle}
-                            className={classNames(classes.menuButton, !this.state.largeMainMenu && classes.menuButtonShow)}>
+                            className={classNames(
+                                classes.menuButton,
+                                !this.state.largeMainMenu && classes.menuButtonShow
+                            )}>
                             <MenuIcon />
                         </IconButton>
                     </div>
                     <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
-                    <Switch
-                        checked={isDarkTheme}
-                        onChange={this.handleThemeChange}
-                        color="default"
-                        />
+                        <Tooltip title='Change theme to Light/Dark'>
+                            <Switch checked={isDarkTheme} onChange={this.handleThemeChange} color='default' />
+                        </Tooltip>
                         <IconButton color='inherit'>
                             <Badge badgeContent={4} color='secondary' classes={{ badge: classes.badge }}>
                                 <NotificationsIcon />
@@ -233,7 +248,9 @@ class AdminComponent extends React.Component<
                             anchorEl={avatarMenuAnchor}
                             open={Boolean(avatarMenuAnchor)}
                             onClose={this.handleAvatarMenuClose}>
-                            <MenuItem dense={true} onClick={this.handleLogout}>Logout</MenuItem>
+                            <MenuItem dense={true} onClick={this.handleLogout}>
+                                Logout
+                            </MenuItem>
                         </Menu>
                     </Toolbar>
                 </AppBar>
@@ -252,7 +269,12 @@ class AdminComponent extends React.Component<
                             classes.drawerPaperFooter,
                             !this.state.largeMainMenu && classes.drawerPaperFooterClose
                         )}>
-                        <Typography variant='caption' className={classNames(classes.copyright, !this.state.largeMainMenu && classes.copyrightHidden)}>
+                        <Typography
+                            variant='caption'
+                            className={classNames(
+                                classes.copyright,
+                                !this.state.largeMainMenu && classes.copyrightHidden
+                            )}>
                             &copy; 2018 BNDY-NET
                         </Typography>
                         <IconButton className={classes.iconButton} onClick={this.handleDrawerToggle}>
@@ -265,9 +287,7 @@ class AdminComponent extends React.Component<
                     </div>
                 </Drawer>
                 <main className={classes.content}>
-                    <Router history={history}>
-                        {renderRoutes(routes)}
-                    </Router>
+                    <Router history={history}>{renderRoutes(routes)}</Router>
                 </main>
             </div>
         );
@@ -276,7 +296,7 @@ class AdminComponent extends React.Component<
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === 'dark',
+    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === 'dark'
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -284,11 +304,13 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         dispatch(authActions.logout());
     },
     onThemeChange: (toDark: boolean) => {
-        dispatch(globalActions.changeTheme({
-            palette: {
-                type: toDark ? 'dark' : 'light',
-            }
-        }));
+        dispatch(
+            globalActions.changeTheme({
+                palette: {
+                    type: toDark ? 'dark' : 'light'
+                }
+            })
+        );
     }
 });
 

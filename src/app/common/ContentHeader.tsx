@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
-import { ifTheme } from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({

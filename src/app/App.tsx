@@ -3,7 +3,7 @@ import { renderRoutes } from 'react-router-config';
 import { Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
-import * as _ from 'lodash';
+import _merge from 'lodash-es/merge';
 
 import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
@@ -67,8 +67,7 @@ class AppComponent extends React.Component<{
 
 const mapStateToProps = (state) => {
     const clientTheme = state.global.theme;
-    // TODO: combine clientTheme to themeConfig
-    const finalTheme = _.merge({}, themeConfig, clientTheme);
+    const finalTheme = _merge({}, themeConfig, clientTheme);
     return {
         loading: state.global.loading,
         loadingText: state.global.loadingTxt,
