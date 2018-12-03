@@ -15,9 +15,7 @@ const panelStyles = (theme: Theme) =>
         ...variantBorderColor(theme),
         root: {
             borderTopStyle: 'solid',
-            IconButton: {
-                padding: 0
-            }
+            marginBottom: theme.spacing.unit * 2,
         },
         header: {
             paddingLeft: theme.spacing.unit,
@@ -63,6 +61,14 @@ class Panel extends React.Component<
 
     render() {
         const { classes, className, title, bodyPadding, actions } = this.props;
+        const actionEls = [];
+        if (actions) {
+            actions.forEach((action, index) => {
+                actionEls.push(
+                    <span key={index}>{action}</span>
+                );
+            });
+        }
         return (
             <Collapse in={this.state.open}>
                 <Paper className={classNames(classes.root, classes[this.props.variant], className)}>
@@ -80,7 +86,7 @@ class Panel extends React.Component<
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.headerToolbox}>
-                                {actions && actions.forEach((action, index) => <span key={index}>{action}</span>)}
+                                {actionEls}
                                 {this.props.minimizeable && (
                                     <IconButton
                                         className={classes.headerToolboxButton}

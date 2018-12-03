@@ -91,7 +91,7 @@ class DashboardComponent extends React.Component<{
                     {renderPanel({variant: 'success'})}
                     {renderPanel({variant: 'warning', closeable: true, minimizeable: true})}
                     {renderPanel({variant: 'error', closeable: true, minimizeable: true, actions: [
-                        <IconButton onClick={() => alert('aaa')}>
+                        <IconButton className={classes.panelIconButton} onClick={() => alert('Help')}>
                             <HelpIcon fontSize='small'></HelpIcon>
                         </IconButton>
                     ]})}

@@ -271,14 +271,15 @@ class AdminComponent extends React.Component<
                             classes.drawerPaperFooter,
                             !this.state.largeMainMenu && classes.drawerPaperFooterClose
                         )}>
-                        <Typography
-                            variant='caption'
+                        <a
                             className={classNames(
                                 classes.copyright,
                                 !this.state.largeMainMenu && classes.copyrightHidden
-                            )}>
-                            &copy; 2018 <a href='http://bndy.net' target='_blank'>BNDY-NET</a>
-                        </Typography>
+                            )}
+                            href='http://bndy.net'
+                            target='_blank'>
+                            <Typography variant='caption'>&copy; 2018 BNDY-NET</Typography>
+                        </a>
                         <IconButton className={classes.iconButton} onClick={this.handleDrawerToggle}>
                             {this.state.largeMainMenu ? (
                                 <ChevronLeftIcon fontSize='small' />
