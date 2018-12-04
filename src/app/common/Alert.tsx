@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
         icon: {
             marginRight: theme.spacing.unit / 2,
             position: 'relative',
-            marginTop: 4,
+            marginTop: 3,
             fontSize: '1.2em',
         },
         title: {
