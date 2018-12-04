@@ -67,10 +67,12 @@ const styles = (theme: Theme) =>
             minHeight: themeConfig.headerHeight
         },
         avatar: {
-            margin: 0,
-            width: 30,
-            height: 30,
-            backgroundColor: theme.palette.secondary.main
+            marginLeft: theme.spacing.unit * 1.5,
+            width: '2.6rem',
+            height: '2.6rem',
+            backgroundColor: theme.palette.secondary.main,
+            cursor: 'pointer',
+            fontSize: '2rem',
         },
         avatarMenu: {
             minWidth: 160
@@ -92,7 +94,7 @@ const styles = (theme: Theme) =>
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen
             }),
-            width: theme.spacing.unit * 7,
+            width: theme.spacing.unit * 6,
             [theme.breakpoints.down('sm')]: {
                 width: 0
             }
@@ -118,11 +120,12 @@ const styles = (theme: Theme) =>
         },
         drawerPaperFooterClose: {
             justifyContent: 'center',
-            width: theme.spacing.unit * 7 - 1,
+            width: theme.spacing.unit * 6 - 1,
             [theme.breakpoints.down('sm')]: {
                 width: 0
             }
         },
+
         copyright: {
             flex: 1,
             paddingLeft: theme.spacing.unit
@@ -178,6 +181,10 @@ class AdminComponent extends React.Component<
     };
 
     handleAvatarClick = (e) => {
+        if (!this.props.user) {
+            history.push('/login');
+            return;
+        } 
         this.setState({ avatarMenuAnchor: e.currentTarget });
     };
 
@@ -232,18 +239,18 @@ class AdminComponent extends React.Component<
                         </Tooltip>
                         <IconButton color='inherit'>
                             <Badge badgeContent={4} color='secondary' classes={{ badge: classes.badge }}>
-                                <NotificationsIcon />
+                                <NotificationsIcon fontSize='large' />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            color='inherit'
-                            aria-owns={avatarMenuAnchor ? 'avatar-menu' : undefined}
-                            aria-haspopup='true'
-                            onClick={this.handleAvatarClick}>
-                            <Tooltip title={user.username || 'Not logged in'}>
-                                <Avatar className={classes.avatar}>{user.username && user.username[0]}</Avatar>
-                            </Tooltip>
-                        </IconButton>
+                        <Tooltip title={user.username || 'Not logged in'}>
+                            <Avatar
+                                aria-owns={avatarMenuAnchor ? 'avatar-menu' : undefined}
+                                aria-haspopup='true'
+                                className={classes.avatar}
+                                onClick={this.handleAvatarClick}>
+                                {user.username && user.username[0]}
+                            </Avatar>
+                        </Tooltip>
                         <Menu
                             id='avatar-menu'
                             classes={{ paper: classes.avatarMenu }}
@@ -263,7 +270,7 @@ class AdminComponent extends React.Component<
                     }}
                     open={this.state.largeMainMenu}>
                     <Divider />
-                    <List dense={true}>
+                    <List>
                         <AdminMenuComponent />
                     </List>
                     <div

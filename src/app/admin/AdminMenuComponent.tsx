@@ -12,14 +12,16 @@ import { Theme, createStyles, withStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
     createStyles({
         listItem: {
-            paddingLeft: 18,
+            paddingLeft: 16,
         },
-        listItemIcon: {},
+        listItemIcon: {
+            marginRight: 14,
+        },
         listItemTextRoot: {
-            paddingLeft: 2,
+            paddingLeft: 0,
         },
         listItemTextPrimary: {
-            fontSize: 14,
+            fontSize: '0.875rem',
         }
     });
 
@@ -30,7 +32,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any }, {}> {
             <div>
                 <ListItem className={classes.listItem} button>
                     <ListItemIcon>
-                        <DashboardIcon fontSize='small' />
+                        <DashboardIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{ root: classes.listItemTextRoot, primary: classes.listItemTextPrimary }}
@@ -39,7 +41,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any }, {}> {
                 </ListItem>
                 <ListItem className={classes.listItem} button>
                     <ListItemIcon>
-                        <ShoppingCartIcon fontSize='small' />
+                        <ShoppingCartIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{ root: classes.listItemTextRoot, primary: classes.listItemTextPrimary }}
@@ -48,7 +50,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any }, {}> {
                 </ListItem>
                 <ListItem className={classes.listItem} button>
                     <ListItemIcon>
-                        <PeopleIcon fontSize='small' />
+                        <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{ root: classes.listItemTextRoot, primary: classes.listItemTextPrimary }}
@@ -57,7 +59,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any }, {}> {
                 </ListItem>
                 <ListItem className={classes.listItem} button>
                     <ListItemIcon>
-                        <BarChartIcon fontSize='small' />
+                        <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{ root: classes.listItemTextRoot, primary: classes.listItemTextPrimary }}
@@ -66,7 +68,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any }, {}> {
                 </ListItem>
                 <ListItem className={classes.listItem} button>
                     <ListItemIcon>
-                        <LayersIcon fontSize='small' />
+                        <LayersIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{ root: classes.listItemTextRoot, primary: classes.listItemTextPrimary }}

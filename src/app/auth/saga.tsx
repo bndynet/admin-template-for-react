@@ -28,8 +28,8 @@ function* logout(action) {
         yield put(globalActions.showLoading('Logging out...'));
         // request backend to terminate session
         const response = yield call(ajax.get, '/user.json?username=' + action.username);
-        yield put(authActions.logoutSuccess());
         yield call(delay, 3000);
+        yield put(authActions.logoutSuccess());
         yield put(globalActions.hideLoading());
         yield put(push('/logout'));
     } catch (e) {

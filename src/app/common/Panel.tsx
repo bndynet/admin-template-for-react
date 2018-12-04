@@ -15,21 +15,23 @@ const panelStyles = (theme: Theme) =>
         ...variantBorderColor(theme),
         root: {
             borderTopStyle: 'solid',
-            marginBottom: theme.spacing.unit * 2,
+            marginBottom: theme.spacing.unit * 2
         },
         header: {
-            paddingLeft: theme.spacing.unit,
-            paddingRight: theme.spacing.unit,
-            borderBottom: `solid 1px ${theme.palette.divider}`,
-            width: '100%',
-            margin: 0
+            display: 'flex',
+            padding: `${theme.spacing.unit / 2} ${theme.spacing.unit} ${theme.spacing.unit / 2} ${theme.spacing.unit *
+                1.5}`,
+            borderBottom: `solid 1px ${theme.palette.divider}`
         },
         headerForCollapsed: {
             borderBottom: 'none'
         },
+        headerTitle: {
+            flex: 1
+        },
         headerToolbox: {
-            textAlign: 'right',
-            paddingRight: 0
+            display: 'flex',
+            alignItems: 'center'
         },
         headerToolboxButton: getPanelIconButtonStyle(theme),
         body: {
@@ -63,9 +65,12 @@ class Panel extends React.Component<
         const { classes, className, title, bodyPadding, actions } = this.props;
         const actionEls = [];
         if (actions) {
-            actions.forEach((action, index) => {
+            actions.forEach((action: any, index) => {
                 actionEls.push(
-                    <span key={index}>{action}</span>
+                    React.cloneElement(action, {
+                        key: `ACTION-${index}`,
+                        className: action.type === IconButton ? classes.headerToolboxButton : ''
+                    })
                 );
             });
         }
@@ -73,40 +78,32 @@ class Panel extends React.Component<
             <Collapse in={this.state.open}>
                 <Paper className={classNames(classes.root, classes[this.props.variant], className)}>
                     {title && (
-                        <Grid
-                            container
-                            spacing={8}
+                        <div
                             className={classNames(
                                 classes.header,
                                 this.state.collapsedDone && classes.headerForCollapsed
                             )}>
-                            <Grid item xs={6}>
-                                <Typography variant='subtitle1' component='h4'>
-                                    {title}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6} className={classes.headerToolbox}>
+                            <Typography className={classes.headerTitle} variant='subtitle1' component='h4'>
+                                {title}
+                            </Typography>
+                            <div className={classes.headerToolbox}>
                                 {actionEls}
                                 {this.props.minimizeable && (
                                     <IconButton
                                         className={classes.headerToolboxButton}
                                         onClick={() => this.setState({ collapsed: !this.state.collapsed })}>
-                                        {this.state.collapsed ? (
-                                            <AddIcon fontSize='small' />
-                                        ) : (
-                                            <RemoveIcon fontSize='small' />
-                                        )}
+                                        {this.state.collapsed ? <AddIcon /> : <RemoveIcon />}
                                     </IconButton>
                                 )}
                                 {this.props.closeable && (
                                     <IconButton
                                         className={classes.headerToolboxButton}
                                         onClick={() => this.setState({ open: false })}>
-                                        <CloseIcon fontSize='small' />
+                                        <CloseIcon />
                                     </IconButton>
                                 )}
-                            </Grid>
-                        </Grid>
+                            </div>
+                        </div>
                     )}
                     <Collapse
                         in={!this.state.collapsed}

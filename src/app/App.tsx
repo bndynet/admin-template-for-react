@@ -20,7 +20,7 @@ const styles = (theme: Theme) => {
     return createStyles({
         '@global': {
             a: {
-                color: theme.palette.text.primary,
+                color: 'inherit',
             },
             '.recharts-tooltip-label': {
                 color: theme.palette.common.black,
@@ -70,13 +70,15 @@ class AppComponent extends React.Component<{
 const mapStateToProps = (state) => {
     const clientTheme = state.global.theme;
     const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
+    const muiFinalTheme = createMuiTheme(finalTheme);
+    console.debug(muiFinalTheme);
     return {
         loading: state.global.loading,
         loadingText: state.global.loadingTxt,
         requesting: state.global.requesting,
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
-        theme: createMuiTheme(finalTheme),
+        theme: muiFinalTheme,
     };
 };
 

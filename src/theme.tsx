@@ -17,10 +17,47 @@ import WarningIcon from '@material-ui/icons/Warning';
 // default theme at https://material-ui.com/customization/default-theme/
 export const themeConfig = {
     typography: {
-        useNextVariants: true,
+        useNextVariants: true
+    },
+    overrides: {
+        // Name of the component
+        MuiSvgIcon: {
+            root: {
+                fontSize: '1rem',
+            },
+            fontSizeSmall: {
+                fontSize: '0.875rem',
+            },
+            fontSizeLarge: {
+                fontSize: '1.5rem',
+            },
+        },
+        MuiList: {
+            padding: {
+                paddingTop: 4,
+                paddingBottom: 4,
+            }
+        },
+        MuiListItem: {
+            root: {
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingLeft: 16,
+                paddingRight: 16,
+                '&$dense': {
+                    fontSize: '0.875rem',
+                },
+            },
+            dense: {
+                paddingTop: 4,
+                paddingBottom: 4,
+                paddingLeft: 8,
+                paddingRight: 8,
+            }
+        },
     },
     palette: {
-        type: 'light' as PaletteType,  // or dark
+        type: 'light' as PaletteType, // or dark
         primary: indigo,
         secondary: pink,
         error: red,
@@ -28,12 +65,12 @@ export const themeConfig = {
         // custom colors
         info: lightBlue[500],
         success: green[500],
-        warning: amber[700],
+        warning: amber[700]
         // end custom colors
     },
     headerHeight: 60,
-    sidebarWidth: 220,
-}
+    sidebarWidth: 200
+};
 
 export interface IAppPalette extends Palette {
     info: string;
@@ -47,9 +84,8 @@ export interface IAppTheme extends Theme {
     sidebarWidth: number;
 }
 
-export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any => (
-    theme.palette.type === 'light' ? lightResult : darkResult
-);
+export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any =>
+    theme.palette.type === 'light' ? lightResult : darkResult;
 
 export const variantIcon = {
     success: CheckCircleIcon,
@@ -69,7 +105,7 @@ export const variantColor = (theme: Theme) => ({
     },
     info: {
         color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.info,
+        backgroundColor: themeConfig.palette.info
     },
     warning: {
         color: theme.palette.common.white,
@@ -79,15 +115,15 @@ export const variantColor = (theme: Theme) => ({
 
 export const variantBorderColor = (theme: Theme) => ({
     success: {
-        borderColor: themeConfig.palette.success,
+        borderColor: themeConfig.palette.success
     },
     error: {
-        borderColor: theme.palette.error.main,
+        borderColor: theme.palette.error.main
     },
     info: {
-        borderColor: themeConfig.palette.info,
+        borderColor: themeConfig.palette.info
     },
     warning: {
-        borderColor: themeConfig.palette.warning,
+        borderColor: themeConfig.palette.warning
     }
 });
