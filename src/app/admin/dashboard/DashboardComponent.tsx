@@ -44,7 +44,7 @@ const styles = (theme: Theme) =>
 
 const renderCard = (props) => {
     return (
-        <Grid item xs={3}>
+        <Grid item md={3} xs={6}>
             <MiniCard title='150' description='New Orders' {...props} links={[['Home', '/'], ['More info', '/admin/dashboard']]} icon={<ShoppingCartIcon />}/>
         </Grid>
     );
@@ -52,7 +52,7 @@ const renderCard = (props) => {
 
 const renderAlert = (props) => {
     return (
-        <Grid item xs={6}>
+        <Grid item sm={6}>
             <Alert
                 title='Alert Title'
                 message='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam. '
@@ -67,7 +67,7 @@ const renderAlert = (props) => {
 
 const renderPanel = (props) => {
     return (
-        <Grid item xs={6}>
+        <Grid item sm={6}>
             <Panel
                 title='Panel Title'
                 variant={props.variant}

@@ -122,7 +122,8 @@ const styles = (theme: Theme) =>
             justifyContent: 'center',
             width: theme.spacing.unit * 6 - 1,
             [theme.breakpoints.down('sm')]: {
-                width: 0
+                width: 0,
+                padding: 0,
             }
         },
 
