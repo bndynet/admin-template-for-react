@@ -8,7 +8,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import ContentHeader from '../../common/ContentHeader';
 import Alert from '../../common/Alert';
-import Panel, { getPanelIconButtonStyle } from '../../common/Panel';
+import Panel from '../../common/Panel';
 import SimpleLineChart from './SimpleLineChart';
 import MiniCard from '../../common/MiniCard';
 import Tag from '../../common/Tag';
@@ -38,8 +38,6 @@ const styles = (theme: Theme) =>
             }
         },
         chartContainer: {},
-
-        panelIconButton: getPanelIconButtonStyle(theme)
     });
 
 const renderCard = (props) => {
