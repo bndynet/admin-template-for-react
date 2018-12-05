@@ -69,7 +69,8 @@ export const themeConfig = {
         // end custom colors
     },
     headerHeight: 60,
-    sidebarWidth: 200
+    sidebarWidth: 200,
+    sidebarWidthMini: 56,
 };
 
 export interface IAppPalette extends Palette {
@@ -82,6 +83,7 @@ export interface IAppTheme extends Theme {
     palette: IAppPalette;
     headerHeight: number;
     sidebarWidth: number;
+    sidebarWidthMini: number;
 }
 
 export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any =>

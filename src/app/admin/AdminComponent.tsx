@@ -9,7 +9,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -82,19 +81,19 @@ const styles = (theme: Theme) =>
             paddingTop: themeConfig.headerHeight,
             paddingBottom: 45,
             whiteSpace: 'nowrap',
-            width: themeConfig.sidebarWidth,
+            width: themeConfig.sidebarWidth + 1,   // include right border width
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
             })
         },
         drawerPaperClose: {
-            overflowX: 'hidden',
+            overflowY: 'inherit',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen
             }),
-            width: theme.spacing.unit * 6,
+            width: themeConfig.sidebarWidthMini + 1,    // include right border width
             [theme.breakpoints.down('sm')]: {
                 width: 0
             }
@@ -109,7 +108,7 @@ const styles = (theme: Theme) =>
             borderTopWidth: 1,
             borderTopColor: theme.palette.divider,
             borderTopStyle: 'solid',
-            width: themeConfig.sidebarWidth - 1,
+            width: themeConfig.sidebarWidth,
             overflow: 'hidden',
             minHeight: 'inherit',
             padding: theme.spacing.unit / 2,
@@ -120,7 +119,7 @@ const styles = (theme: Theme) =>
         },
         drawerPaperFooterClose: {
             justifyContent: 'center',
-            width: theme.spacing.unit * 6 - 1,
+            width: themeConfig.sidebarWidthMini,
             [theme.breakpoints.down('sm')]: {
                 width: 0,
                 padding: 0,
@@ -271,9 +270,7 @@ class AdminComponent extends React.Component<
                     }}
                     open={this.state.largeMainMenu}>
                     <Divider />
-                    <List>
-                        <AdminMenuComponent />
-                    </List>
+                    <AdminMenuComponent mini={!this.state.largeMainMenu} />
                     <div
                         className={classNames(
                             classes.drawerPaperFooter,
