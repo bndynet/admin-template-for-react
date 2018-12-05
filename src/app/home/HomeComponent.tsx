@@ -13,7 +13,6 @@ import authActions from '../auth/actions';
 import homeActions from './actions';
 import globalActions from '../global/actions';
 import { Typography } from '@material-ui/core';
-import spacing from '@material-ui/core/styles/spacing';
 
 const styles = (theme: Theme) =>
     createStyles({

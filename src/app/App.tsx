@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { renderRoutes } from 'react-router-config';
-import { Router } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
 import { Dispatch, Action } from 'redux';
 import _merge from 'lodash-es/merge';
 
@@ -10,7 +9,6 @@ import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/co
 
 import routes from '../routes';
 import Notifier, { NotifierOptions } from './common/Notifier';
-import history from '../redux/history';
 import globalActions from './global/actions';
 import Overlay from './common/Overlay';
 import Loading from './common/Loading';
@@ -36,7 +34,7 @@ const styles = (theme: Theme) => {
     });
 };
 
-class AppComponent extends React.Component<{
+interface AppComponentProps {
     classes?: any;
     loading: boolean;
     loadingText: string;
@@ -45,7 +43,8 @@ class AppComponent extends React.Component<{
     notifierOptions: NotifierOptions;
     theme: any;
     onCloseNotifier: () => void;
-}> {
+}
+class AppComponent extends React.Component<AppComponentProps> {
     constructor(props) {
         super(props);
     }
@@ -55,13 +54,11 @@ class AppComponent extends React.Component<{
         return (
             <MuiThemeProvider theme={theme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
-                <Router history={history}>
-                    <main>{renderRoutes(routes)}</main>
-                </Router>
                 <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
                 <Overlay open={this.props.loading}>
                     <Loading loadingText='Loading...' />
                 </Overlay>
+                {renderRoutes(routes)}
             </MuiThemeProvider>
         );
     }

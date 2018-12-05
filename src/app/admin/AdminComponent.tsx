@@ -2,8 +2,9 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import { renderRoutes } from 'react-router-config';
-import { Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -19,12 +20,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-import history from '../../redux/history';
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
 import { themeConfig } from '../../theme';
 import routes from './routes';
 import globalActions from '../global/actions';
+import { Path, LocationState } from 'history';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -163,6 +164,7 @@ class AdminComponent extends React.Component<
         classes: any;
         history: any;
         isDarkTheme: boolean;
+        push: (path: string) => void;
         onLogout: () => void;
         onThemeChange: (toDark: boolean) => void;
     },
@@ -182,7 +184,7 @@ class AdminComponent extends React.Component<
 
     handleAvatarClick = (e) => {
         if (!this.props.user) {
-            history.push('/login');
+            this.props.push('/login');
             return;
         } 
         this.setState({ avatarMenuAnchor: e.currentTarget });
@@ -295,7 +297,7 @@ class AdminComponent extends React.Component<
                     </div>
                 </Drawer>
                 <main className={classes.content}>
-                    <Router history={history}>{renderRoutes(routes)}</Router>
+                    {renderRoutes(routes)}
                 </main>
             </div>
         );
@@ -308,6 +310,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    push: (path: string) => {
+        dispatch(push(path));
+    },
     onLogout: () => {
         dispatch(authActions.logout());
     },
