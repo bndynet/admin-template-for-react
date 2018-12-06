@@ -56,7 +56,20 @@ const menus = [
                 icon: <BarChartIcon />,
                 text: 'Reports',
                 description: '',
-                link: '',
+                children: [
+                    {
+                        icon: <BarChartIcon />,
+                        text: 'Menu 3-1',
+                    },
+                    {
+                        icon: <BarChartIcon />,
+                        text: 'Menu 3-2',
+                    },
+                    {
+                        icon: <BarChartIcon />,
+                        text: 'Menu 3-3',
+                    },
+                ]
             },
             {
                 icon: <LayersIcon />,

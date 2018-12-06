@@ -15,17 +15,17 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
-import Switch from '@material-ui/core/Switch';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
+import BrightnessLowIcon from '@material-ui/icons/BrightnessLow';
 
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
 import { themeConfig } from '../../theme';
 import routes from './routes';
 import globalActions from '../global/actions';
-import { Path, LocationState } from 'history';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -44,20 +44,21 @@ const styles = (theme: Theme) =>
             paddingLeft: theme.spacing.unit * 2
         },
         menuButton: {
-            display: 'none',
-            marginLeft: 12,
-            marginRight: 36
-        },
-        menuButtonShow: {
+            padding: theme.spacing.unit,
+            transform: 'scale(1.5)',
             [theme.breakpoints.down('sm')]: {
                 display: 'inherit',
                 marginLeft: 0
-            }
+            },
+        },
+        menuButtonHidden: {
+            display: 'none',
+            [theme.breakpoints.down('sm')]: {
+                display: 'inherit',
+            },
         },
         brandTitle: {
-            color: '#ffffff'
-        },
-        brandTitleHidden: {
+            color: '#ffffff',
             [theme.breakpoints.down('sm')]: {
                 display: 'none'
             }
@@ -190,7 +191,7 @@ class AdminComponent extends React.Component<
         this.setState({ avatarMenuAnchor: e.currentTarget });
     };
 
-    handleThemeChange = (e) => {
+    handleThemeChange = () => {
         this.props.onThemeChange(!this.props.isDarkTheme);
     };
 
@@ -212,12 +213,11 @@ class AdminComponent extends React.Component<
                 <CssBaseline />
                 <AppBar position='absolute' className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Link to='/'>
+                        <Link to='/' hidden={!this.state.largeMainMenu}>
                             <Typography
                                 className={classNames(
                                     'clickable',
                                     classes.brandTitle,
-                                    !this.state.largeMainMenu && classes.brandTitleHidden
                                 )}
                                 variant='h5'
                                 component='h1'>
@@ -228,16 +228,15 @@ class AdminComponent extends React.Component<
                             color='inherit'
                             aria-label='Open drawer'
                             onClick={this.handleDrawerToggle}
-                            className={classNames(
-                                classes.menuButton,
-                                !this.state.largeMainMenu && classes.menuButtonShow
-                            )}>
+                            className={classNames(classes.menuButton, this.state.largeMainMenu && classes.menuButtonHidden)}>
                             <MenuIcon />
                         </IconButton>
                     </div>
                     <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
-                        <Tooltip title='Change theme to Light/Dark'>
-                            <Switch checked={isDarkTheme} onChange={this.handleThemeChange} color='default' />
+                        <Tooltip title='Toggle light/dark theme'>
+                            <IconButton color='inherit' onClick={() => this.handleThemeChange()}>
+                                {isDarkTheme ? <BrightnessLowIcon fontSize='large' /> : <BrightnessHighIcon fontSize='large' /> }
+                            </IconButton>
                         </Tooltip>
                         <IconButton color='inherit'>
                             <Badge badgeContent={4} color='secondary' classes={{ badge: classes.badge }}>
