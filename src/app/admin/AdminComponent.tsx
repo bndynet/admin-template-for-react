@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { renderRoutes } from 'react-router-config';
 import { Link } from 'react-router-dom';
-import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem } from '@material-ui/core';
+import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem, withWidth } from '@material-ui/core';
+import { isWidthUp } from '@material-ui/core/withWidth';
+import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -168,6 +170,7 @@ class AdminComponent extends React.Component<
         classes: any;
         history: any;
         isDarkTheme: boolean;
+        width: Breakpoint;
         push: (path: string) => void;
         onLogout: () => void;
         onThemeChange: (toDark: boolean) => void;
@@ -177,7 +180,7 @@ class AdminComponent extends React.Component<
     constructor(props) {
         super(props);
         this.state = {
-            largeMainMenu: true,
+            largeMainMenu: isWidthUp('sm', this.props.width),
             avatarMenuAnchor: null
         };
     }
@@ -329,4 +332,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AdminComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withWidth()(AdminComponent)));
