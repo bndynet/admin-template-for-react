@@ -17,6 +17,12 @@ const menus = [
         link: '/'
     },
     {
+        icon: <DashboardIcon />,
+        text: 'Dashboard',
+        description: '',
+        link: '/admin/dashboard'
+    },
+    {
         icon: <ScheduleIcon />,
         text: 'Real-Time',
         description: '',

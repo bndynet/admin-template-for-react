@@ -87,7 +87,10 @@ const styles = (theme: Theme) =>
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
-            })
+            }),
+            [theme.breakpoints.down('sm')]: {
+                position: 'fixed',
+            },
         },
         drawerPaperClose: {
             overflowY: 'inherit',
