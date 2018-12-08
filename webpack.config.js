@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
-const WebpackAutoInject = require('webpack-auto-inject-version');
+const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -71,9 +71,6 @@ module.exports = {
             APP_VERSION: JSON.stringify(app.version),
             APP_BUILD: JSON.stringify(Date.now()),
         }),
-        new webpack.BannerPlugin({
-            banner: app.name + ' ' + app.version,
-        }),
         new webpack.ProvidePlugin({
             // _: 'lodash',
             // $: 'jquery',
@@ -88,21 +85,7 @@ module.exports = {
         }, {
             from: './README.md',
         }]),
-        new WebpackAutoInject({
-            SHORT: 'By ' + app.author,
-            SILENT: false,
-            PACKAGE_JSON_PATH: './package.json',
-            PACKAGE_JSON_INDENT: 4,
-            components: {
-                InjectAsComment: true
-            },
-            componentsOptions: {
-                InjectAsComment: {
-                    tag: 'v{version} - {date}',
-                    dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
-                }
-            }
-        })
+        new HeaderInjectionWebpackPlugin(),
     ],
     optimization: {
         splitChunks: {

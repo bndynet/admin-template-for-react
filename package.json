@@ -45,6 +45,7 @@
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
+    "@bndynet/header-injection-webpack-plugin": "^4.0.1",
     "@types/classnames": "^2.2.6",
     "@types/lodash-es": "^4.17.1",
     "@types/react": "^16.7.7",
@@ -74,7 +75,6 @@
     "typescript": "^3.1.6",
     "url-loader": "^1.0.1",
     "webpack": "^4.26.0",
-    "webpack-auto-inject-version": "^1.2.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.2"
