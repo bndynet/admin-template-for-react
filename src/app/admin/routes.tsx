@@ -1,4 +1,5 @@
 import DashboardComponent from './dashboard/DashboardComponent';
+import MarkdownComponent from './markdown/MarkdownComponent';
 const routes = [
     {
         path: '/admin',
@@ -9,6 +10,11 @@ const routes = [
         path: '/admin/dashboard',
         exact: true,
         component: DashboardComponent
+    },
+    {
+        path: '/admin/markdown',
+        exact: true,
+        component: MarkdownComponent, 
     },
 ];
 

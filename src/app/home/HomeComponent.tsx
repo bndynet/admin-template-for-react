@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import authActions from '../auth/actions';
 import homeActions from './actions';
 import globalActions from '../global/actions';
-import { Typography } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
     createStyles({

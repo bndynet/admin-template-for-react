@@ -8,6 +8,7 @@ import DnsIcon from '@material-ui/icons/Dns';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
+import InputIcon from '@material-ui/icons/Input';
 
 const menus = [
     {
@@ -21,6 +22,12 @@ const menus = [
         text: 'Dashboard',
         description: '',
         link: '/admin/dashboard'
+    },
+    {
+        icon: <InputIcon />,
+        text: 'Markdown Editor',
+        description: '',
+        link: '/admin/markdown'
     },
     {
         icon: <ScheduleIcon />,
