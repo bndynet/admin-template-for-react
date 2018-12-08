@@ -31,6 +31,14 @@ import globalActions from '../global/actions';
 
 const styles = (theme: Theme) =>
     createStyles({
+        '@global': {
+            body: {
+                color: theme.palette.text.primary,
+            },
+            '.markdown-body pre': {
+                backgroundColor: theme.palette.background.paper,
+            }
+        },
         root: {
             display: 'flex'
         },
