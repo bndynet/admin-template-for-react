@@ -56,7 +56,7 @@ class AppComponent extends React.Component<AppComponentProps> {
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
                 <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
                 <Overlay open={this.props.loading}>
-                    <Loading loadingText='Loading...' />
+                    <Loading loadingText={this.props.loadingText} />
                 </Overlay>
                 {renderRoutes(routes)}
             </MuiThemeProvider>
@@ -68,10 +68,9 @@ const mapStateToProps = (state) => {
     const clientTheme = state.global.theme;
     const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
     const muiFinalTheme = createMuiTheme(finalTheme);
-    console.debug(muiFinalTheme);
     return {
         loading: state.global.loading,
-        loadingText: state.global.loadingTxt,
+        loadingText: state.global.loadingText,
         requesting: state.global.requesting,
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,

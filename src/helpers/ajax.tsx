@@ -13,26 +13,32 @@ export type AjaxOptions = {
 };
 export class Ajax {
     static buildOptions(options: AjaxOptions): AxiosRequestConfig {
-        let config: AxiosRequestConfig;
+        if (!options) return null;
 
-        if (!options) return config;
-
+        let config: AxiosRequestConfig = {};
         if (options.baseURL) {
             config.baseURL = options.baseURL;
         }
         if (options.headerAuthorization) {
-            config.headers.common['Authorization'] =
-                typeof options.headerAuthorization === 'string'
-                    ? options.headerAuthorization
-                    : options.headerAuthorization();
+            if (!config.headers) config.headers = {};
+            if (!config.headers.common) config.headers.common = {};
+            const authorization = typeof options.headerAuthorization === 'string'
+                ? options.headerAuthorization
+                : options.headerAuthorization();
+            config.headers.common['Authorization'] = authorization;
         }
         if (options.headers) {
+            if (!config.headers) config.headers = {};
+            if (!config.headers.common) config.headers.common = {};
             for (let key in options.headers) {
                 config.headers.common[key] = options.headers[key];
             }
         }
         if (options.isPostForm) {
-            config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            if (!config.headers) config.headers = {};
+            // if (!config.headers.common) config.headers.common = {};
+            // config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
         }
 
         return config;
@@ -42,34 +48,57 @@ export class Ajax {
         axios.defaults = _merge({}, axios.defaults, Ajax.buildOptions(options));
     }
 
-    options: AjaxOptions;
-    instance: AxiosInstance;
-
-    constructor(options?: AjaxOptions) {
-        this.options = options;
-        this.instance = this.options ? axios.create(Ajax.buildOptions(options)) : axios.create();
+    static instance(options?: AjaxOptions) : AxiosInstance {
+        const result: AxiosInstance = options ? axios.create(Ajax.buildOptions(options)) : axios.create();
 
         if (options) {
             if (options.onRequest || options.onRequestError) {
-                this.instance.interceptors.request.use(
+                result.interceptors.request.use(
                     options.onRequest || ((config: AxiosRequestConfig) => config),
                     options.onRequestError || ((error: any) => Promise.reject(error))
                 );
             }
             if (options.onResponse || options.onResponseError) {
-                this.instance.interceptors.response.use(
+                result.interceptors.response.use(
                     options.onResponse || ((response: any) => response),
                     options.onResponseError || ((error: any) => Promise.reject(error))
                 );
             }
         }
+
+        return result;
     }
 
-    get = (url: string): AxiosPromise => this.instance.get(url) as AxiosPromise;
-    post = (url: string, data: any): AxiosPromise => this.instance.post(url, data);
-    remove = (url: string): AxiosPromise => this.instance.delete(url);
-    put = (url: string, data: any): AxiosPromise => this.instance.put(url, data);
-    patch = (url: string, data: any): AxiosPromise => this.instance.patch(url, data);
+    options: AjaxOptions;
+
+    constructor(options?: AjaxOptions) {
+        this.options = options;
+    }
+
+    instance = (): AxiosInstance => Ajax.instance(this.options);
+
+    get = (url: string): AxiosPromise => {
+        return this.instance().get(url) as AxiosPromise;
+    }
+    post = (url: string, data: any): AxiosPromise => {
+        return this.instance().post(url, data);
+    }
+    postForm = (url: string, data: any): AxiosPromise => {
+        const formData = new FormData();    // Must be FormData so that the ajax request will be Form post
+        Object.keys(data).forEach((k) => {
+            formData.append(k, data[k])
+        });
+        return this.instance().post(url, formData);
+    }
+    remove = (url: string): AxiosPromise => {
+        return this.instance().delete(url);
+    }
+    put = (url: string, data: any): AxiosPromise => {
+        return this.instance().put(url, data);
+    }
+    patch = (url: string, data: any): AxiosPromise => {
+        return this.instance().patch(url, data);
+    }
 }
 
 const ajax = new Ajax();

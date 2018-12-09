@@ -1,20 +1,24 @@
-import { ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT_REQUEST } from './actionTypes';
+import { AuthState, ACTION_LOGIN_REQUEST, ACTION_LOGIN_SUCCESS, ACTION_LOGOUT_REQUEST, ACTION_GETUSER_SUCCESS } from '.';
 
-const initialState = {
-    user: null
-};
-
-export function auth(state = initialState, action) {
-    let user = null;
+export function auth(state: AuthState = {}, action): AuthState {
     switch (action.type) {
         case ACTION_LOGIN_REQUEST:
-            const loading = true;
-            return { ...state, loading };
+            return { ...state };
         case ACTION_LOGIN_SUCCESS:
-            user = action.user;
-            return { ...state, user };
+            return {
+                ...state,
+                accessToken: action.payload.access_token,
+                tokenType: action.payload.token_type,
+                expiresIn: action.payload.expires_in,
+                scope: action.payload.scope
+            };
+        case ACTION_GETUSER_SUCCESS:
+            return {
+                ...state,
+                user: action.payload
+            };
         case ACTION_LOGOUT_REQUEST:
-            return { ...state, user };
+            return { ...state, user: null };
         default:
             return state;
     }

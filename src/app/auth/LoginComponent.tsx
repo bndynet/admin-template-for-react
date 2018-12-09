@@ -165,7 +165,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
             );
             return false;
         }
-        dispatch(authActions.login(username, password, rememberMe));
+        dispatch(authActions.login({username, password, rememberMe}));
         return true;
     }
 });
