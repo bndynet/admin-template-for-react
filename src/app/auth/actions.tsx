@@ -7,7 +7,8 @@ import {
     ACTION_GETUSER_SUCCESS,
     LoginData,
     LoginSuccessData,
-    UserInfo
+    UserInfo,
+    ACTION_LOGIN_FAILURE
 } from '.';
 
 const authActions = {
@@ -18,6 +19,10 @@ const authActions = {
     loginSuccess: (response: LoginSuccessData) => ({
         type: ACTION_LOGIN_SUCCESS,
         payload: response
+    }),
+    loginFailure: (error) => ({
+        type: ACTION_LOGIN_FAILURE,
+        payload: error
     }),
     getUserInfo: (accessToken: string) => ({
         type: ACTION_GETUSER_REQUEST,

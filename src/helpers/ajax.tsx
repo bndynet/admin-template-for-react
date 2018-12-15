@@ -1,16 +1,18 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise, AxiosResponse, AxiosError } from 'axios';
 import _merge from 'lodash-es/merge';
 
 export type AjaxOptions = {
     baseURL?: string;
     headers?: object;
     headerAuthorization?: string | (() => string);
-    isPostForm?: boolean;
     onRequest?: (config: AxiosRequestConfig) => AxiosRequestConfig;
     onRequestError?: (error) => void;
     onResponse?: (response: any) => any;
     onResponseError?: (error) => any;
 };
+
+export type AjaxError = AxiosResponse;
+
 export class Ajax {
     static buildOptions(options: AjaxOptions): AxiosRequestConfig {
         if (!options) return null;
@@ -22,9 +24,10 @@ export class Ajax {
         if (options.headerAuthorization) {
             if (!config.headers) config.headers = {};
             if (!config.headers.common) config.headers.common = {};
-            const authorization = typeof options.headerAuthorization === 'string'
-                ? options.headerAuthorization
-                : options.headerAuthorization();
+            const authorization =
+                typeof options.headerAuthorization === 'string'
+                    ? options.headerAuthorization
+                    : options.headerAuthorization();
             config.headers.common['Authorization'] = authorization;
         }
         if (options.headers) {
@@ -34,13 +37,6 @@ export class Ajax {
                 config.headers.common[key] = options.headers[key];
             }
         }
-        if (options.isPostForm) {
-            if (!config.headers) config.headers = {};
-            // if (!config.headers.common) config.headers.common = {};
-            // config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
-        }
-
         return config;
     }
 
@@ -48,7 +44,7 @@ export class Ajax {
         axios.defaults = _merge({}, axios.defaults, Ajax.buildOptions(options));
     }
 
-    static instance(options?: AjaxOptions) : AxiosInstance {
+    static instance(options?: AjaxOptions): AxiosInstance {
         const result: AxiosInstance = options ? axios.create(Ajax.buildOptions(options)) : axios.create();
 
         if (options) {
@@ -66,6 +62,11 @@ export class Ajax {
             }
         }
 
+        result.interceptors.response.use(
+            (response: AxiosResponse) => response.data,
+            (error: AxiosError) => Promise.reject(error.response)
+        );
+
         return result;
     }
 
@@ -79,26 +80,26 @@ export class Ajax {
 
     get = (url: string): AxiosPromise => {
         return this.instance().get(url) as AxiosPromise;
-    }
+    };
     post = (url: string, data: any): AxiosPromise => {
         return this.instance().post(url, data);
-    }
+    };
     postForm = (url: string, data: any): AxiosPromise => {
-        const formData = new FormData();    // Must be FormData so that the ajax request will be Form post
+        const formData = new FormData(); // Must be FormData so that the ajax request will be Form post
         Object.keys(data).forEach((k) => {
-            formData.append(k, data[k])
+            formData.append(k, data[k]);
         });
         return this.instance().post(url, formData);
-    }
+    };
     remove = (url: string): AxiosPromise => {
         return this.instance().delete(url);
-    }
+    };
     put = (url: string, data: any): AxiosPromise => {
         return this.instance().put(url, data);
-    }
+    };
     patch = (url: string, data: any): AxiosPromise => {
         return this.instance().patch(url, data);
-    }
+    };
 }
 
 const ajax = new Ajax();

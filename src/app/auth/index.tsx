@@ -16,6 +16,7 @@ export type AuthState = {
     tokenType?: string;
     expiresIn?: number;
     scope?: string;
+    error?: any,
 };
 
 export type LoginData = {

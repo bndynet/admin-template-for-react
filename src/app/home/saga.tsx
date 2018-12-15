@@ -9,7 +9,7 @@ function* getReadMe(action) {
     try {
         yield put(globalActions.showRequesting());
         const response = yield call(resourceAjax.get, '/README.md');
-        yield put({ type: ACTION_README_GET_SUCCESS, readme: response.data });
+        yield put({ type: ACTION_README_GET_SUCCESS, readme: response});
         yield put(globalActions.hideRequesting());
     } catch (e) {
         console.log(e);
