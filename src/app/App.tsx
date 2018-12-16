@@ -7,22 +7,20 @@ import _merge from 'lodash-es/merge';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
 
-import routes from '../routes';
-import Notifier, { NotifierOptions } from './common/Notifier';
+import routes from '../config/routes';
+import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
 import globalActions from './global/actions';
-import Overlay from './common/Overlay';
-import Loading from './common/Loading';
-import { themeConfig } from '../theme';
+import { themeConfig } from '../config/theme';
 
 const styles = (theme: Theme) => {
     return createStyles({
         '@global': {
             a: {
-                color: 'inherit',
+                color: 'inherit'
             },
             '.recharts-tooltip-label': {
-                color: theme.palette.common.black,
-            },
+                color: theme.palette.common.black
+            }
         },
         progressBar: {
             position: 'fixed',
@@ -30,7 +28,7 @@ const styles = (theme: Theme) => {
             left: 0,
             width: '100%',
             zIndex: 2000
-        },
+        }
     });
 };
 
@@ -54,7 +52,12 @@ class AppComponent extends React.Component<AppComponentProps> {
         return (
             <MuiThemeProvider theme={theme}>
                 <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
-                <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
+                <Notifier
+                    options={notifierOptions}
+                    open={showNotifier}
+                    onCloseButtonClick={this.props.onCloseNotifier}
+                    hasCloseButton={true}
+                />
                 <Overlay open={this.props.loading}>
                     <Loading loadingText={this.props.loadingText} />
                 </Overlay>
@@ -74,12 +77,12 @@ const mapStateToProps = (state) => {
         requesting: state.global.requesting,
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
-        theme: muiFinalTheme,
+        theme: muiFinalTheme
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    onCloseNotifier: () => (dispatch(globalActions.unnotify())),
+    onCloseNotifier: () => dispatch(globalActions.unnotify())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppComponent));

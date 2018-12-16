@@ -9,7 +9,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { variantColor } from '../../theme';
+import { variantColor } from '../config/theme';
 
 const miniCardStyles = (theme: Theme) =>
     createStyles({

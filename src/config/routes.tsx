@@ -1,8 +1,8 @@
-import HomeComponent from './app/home/HomeComponent';
-import CallbackComponent from './app/auth/CallbackComponent';
-import LoginComponent from './app/auth/LoginComponent';
-import LogoutComponent from './app/auth/LogoutComponent';
-import AdminComponent from './app/admin/AdminComponent';
+import HomeComponent from '../app/home/HomeComponent';
+import CallbackComponent from '../app/auth/CallbackComponent';
+import LoginComponent from '../app/auth/LoginComponent';
+import LogoutComponent from '../app/auth/LogoutComponent';
+import AdminComponent from '../app/admin/AdminComponent';
 
 const routes = [
     {

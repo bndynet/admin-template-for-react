@@ -3,12 +3,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { ACTION_README_GET, ACTION_README_GET_SUCCESS } from './actionTypes';
 
 import globalActions from '../global/actions';
-import resourceAjax from '../services/resourceAjax';
+import homeService from './service';
 
 function* getReadMe(action) {
     try {
         yield put(globalActions.showRequesting());
-        const response = yield call(resourceAjax.get, '/README.md');
+        const response = yield call(homeService.get, '/README.md');
         yield put({ type: ACTION_README_GET_SUCCESS, readme: response});
         yield put(globalActions.hideRequesting());
     } catch (e) {

@@ -25,7 +25,7 @@ import BrightnessLowIcon from '@material-ui/icons/BrightnessLow';
 
 import AdminMenuComponent from './AdminMenuComponent';
 import authActions from '../auth/actions';
-import { themeConfig } from '../../theme';
+import { themeConfig } from '../../config/theme';
 import routes from './routes';
 import globalActions from '../global/actions';
 

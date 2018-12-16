@@ -1,7 +1,7 @@
 import { Ajax } from "../../helpers/ajax";
 import config from "../../config";
 
-class ResourceAjax extends Ajax {
+class ResourceService extends Ajax {
     constructor() {
         super({
             baseURL: config.resourceBaseURL,
@@ -12,6 +12,6 @@ class ResourceAjax extends Ajax {
     }
 }
 
-const resourceAjax = new ResourceAjax();
+const service = new ResourceService();
 
-export default resourceAjax;
+export default service;

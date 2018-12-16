@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { withStyles, Theme, createStyles, withTheme } from '@material-ui/core/styles';
-import { ifTheme, variantIcon, variantColor } from '../../theme';
+import { ifTheme, variantIcon, variantColor } from '../config/theme';
 
 const notifierContentStyles = (theme: Theme) =>
     createStyles({

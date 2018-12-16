@@ -4,9 +4,9 @@ import { ACTION_LOGIN_REQUEST, ACTION_LOGOUT_REQUEST, ACTION_GETUSER_REQUEST, Lo
 import globalActions from '../global/actions';
 import { LoginData, UserInfo } from '.';
 import authActions from './actions';
+import authService from './service';
 import config from '../../config';
 import { AjaxError } from '../../helpers/ajax';
-import oauthAjax from '../services/oauthAjax';
 
 function* login(action) {
     try {
@@ -15,7 +15,7 @@ function* login(action) {
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
         yield put(globalActions.showLoading('Logging in...'));
-        const loginSuccessData: LoginSuccessData = yield call(oauthAjax.login, { ...loginData, client_id: config.clientId });
+        const loginSuccessData: LoginSuccessData = yield call(authService.login, { ...loginData, client_id: config.clientId });
         yield put(authActions.loginSuccess(loginSuccessData));
         yield put(authActions.getUserInfo(loginSuccessData.access_token));
         yield put(globalActions.hideLoading());
@@ -37,7 +37,7 @@ function* logout(action) {
     try {
         yield put(globalActions.showLoading('Logging out...'));
         // request backend to terminate session
-        yield call(oauthAjax.logout);
+        yield call(authService.logout);
         yield put(authActions.logoutSuccess());
         yield put(globalActions.hideLoading());
         yield put(push('/logout'));
@@ -49,7 +49,7 @@ function* logout(action) {
 function* getUser(action) {
     try {
         yield put(globalActions.showLoading('Getting user info...'));
-        const response = yield call(oauthAjax.getUser, '/oauth/me');
+        const response = yield call(authService.getUser, '/oauth/me');
         yield put(authActions.getUserInfoSuccess(response as UserInfo));
         yield put(globalActions.hideLoading());
         yield put(push('/admin'));

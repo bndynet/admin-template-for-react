@@ -1,10 +1,10 @@
 import { AxiosPromise } from 'axios';
-import { LoginData } from '../auth';
+import { LoginData } from '.';
 import { Ajax } from '../../helpers/ajax';
 import config from '../../config';
 import store from '../../redux/store';
 
-const oauthAjax = {
+const service = {
     login: (data: LoginData) => {
         data.grant_type = 'password';
         data.client_id = config.clientId;
@@ -27,4 +27,4 @@ const oauthAjax = {
     }
 };
 
-export default oauthAjax;
+export default service;

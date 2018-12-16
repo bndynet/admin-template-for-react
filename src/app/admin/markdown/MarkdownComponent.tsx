@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import * as ReactMarkdown from 'react-markdown';
 import { Grid, Theme, createStyles, withStyles, TextField } from '@material-ui/core';
 
-import ContentHeader from '../../common/ContentHeader';
+import { ContentHeader } from '../../../ui';
 
 const styles = (theme: Theme) =>
     createStyles({

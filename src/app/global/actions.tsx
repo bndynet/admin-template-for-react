@@ -1,4 +1,4 @@
-import { NotifierOptions } from "../common/Notifier";
+import { NotifierOptions } from "../../ui";
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';

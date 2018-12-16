@@ -6,12 +6,8 @@ import { Theme, createStyles, withStyles, Grid, IconButton } from '@material-ui/
 import HelpIcon from '@material-ui/icons/Help';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-import ContentHeader from '../../common/ContentHeader';
-import Alert from '../../common/Alert';
-import Panel from '../../common/Panel';
+import { Alert, ContentHeader, Panel, MiniCard, Tag } from '../../../ui';
 import SimpleLineChart from './SimpleLineChart';
-import MiniCard from '../../common/MiniCard';
-import Tag from '../../common/Tag';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -37,13 +33,19 @@ const styles = (theme: Theme) =>
                 marginRight: 5
             }
         },
-        chartContainer: {},
+        chartContainer: {}
     });
 
 const renderCard = (props) => {
     return (
         <Grid item md={3} xs={6}>
-            <MiniCard title='150' description='New Orders' {...props} links={[['Home', '/'], ['More info', '/admin/dashboard']]} icon={<ShoppingCartIcon />}/>
+            <MiniCard
+                title='150'
+                description='New Orders'
+                {...props}
+                links={[ [ 'Home', '/' ], [ 'More info', '/admin/dashboard' ] ]}
+                icon={<ShoppingCartIcon />}
+            />
         </Grid>
     );
 };
@@ -94,13 +96,13 @@ class DashboardComponent extends React.Component<
                     title='Dashboard'
                     navigation={{
                         Home: '/',
-                        Dashboard: null,
+                        Dashboard: null
                     }}
                 />
                 <Grid container spacing={16 as GridSpacing}>
-                    {renderCard({variant: 'info'})}
-                    {renderCard({variant: 'success'})}
-                    {renderCard({variant: 'warning'})}
+                    {renderCard({ variant: 'info' })}
+                    {renderCard({ variant: 'success' })}
+                    {renderCard({ variant: 'warning' })}
                     {renderCard({})}
                 </Grid>
 
