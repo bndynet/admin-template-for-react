@@ -1,6 +1,6 @@
-import { AppConfig } from '.';
+import { Config } from '.';
 
-const config: AppConfig = {
+const config: Config = {
     clientId: '500bd7533a',
     clientSecret: 'bc55228ce6c70e97f4ee',
     oauthBaseURL: 'http://localhost:9110/'

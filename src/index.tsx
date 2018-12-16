@@ -5,10 +5,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import history from './redux/history';
-import store from './redux/store';
+import { store, history } from './redux';
 
-import App from './app/App';
+import { App } from './app';
 
 ReactDOM.render(
     <Provider store={store}>

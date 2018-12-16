@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import { createStyles, Theme, withStyles, Typography, Collapse, IconButton } from '@material-ui/core';
 
-import { variantIcon, variantColor } from '../config/theme';
+import { variantIcon, variantColor } from '../theme';
 
 const styles = (theme: Theme) =>
     createStyles({

@@ -4,7 +4,7 @@ import { Paper, Theme, createStyles, withStyles, Typography, Grid, IconButton, C
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { variantBorderColor } from '../config/theme';
+import { variantBorderColor } from '../theme';
 
 export const getPanelIconButtonStyle = (theme: Theme) => ({
     padding: theme.spacing.unit / 2,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CssBaseline, Paper, Typography, Theme, createStyles, withStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircleOutlined';
-import { themeConfig } from '../../config/theme';
+import { themeConfig } from '../../theme';
 import { Panel } from '../../ui';
 
 const styles = (theme: Theme) =>

@@ -2,12 +2,11 @@ import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware, compose, Store } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 
-import rootSaga from './saga';
-import { createRootReducer } from './reducer';
 import history from './history';
+import rootSaga from './saga';
+import rootReducer from './reducer';
 
 const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const appRootReducer = createRootReducer(history);
 const appSagaMiddleware = createSagaMiddleware();
 const appRouterMiddleware = routerMiddleware(history);
 
@@ -23,7 +22,7 @@ if (process.env.NODE_ENV === `development`) {
 }
 
 const store: Store<any, any> = createStore(
-    appRootReducer, 
+  rootReducer, 
     composeEnhancer(applyMiddleware(...middlewares))
 );
 

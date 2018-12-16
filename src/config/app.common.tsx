@@ -1,6 +1,6 @@
-import { AppConfig } from '.';
+import { Config } from '.';
 
-const config: AppConfig = {
+const config: Config = {
     resourceBaseURL: '/'
 };
 

@@ -9,7 +9,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import menus from './menus';
-import { themeConfig } from '../../config/theme';
+import { themeConfig } from '../../theme';
 
 const styles = (theme: Theme) =>
     createStyles({

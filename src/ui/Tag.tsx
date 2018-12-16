@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { createStyles, Theme, withStyles, Typography } from '@material-ui/core';
 
-import { variantColor } from '../config/theme';
+import { variantColor } from '../theme';
 
 const styles = (theme: Theme) =>
     createStyles({

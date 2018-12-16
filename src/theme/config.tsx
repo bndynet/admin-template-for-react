@@ -1,6 +1,3 @@
-import { Theme } from '@material-ui/core/styles';
-import { Palette } from '@material-ui/core/styles/createPalette';
-
 import indigo from '@material-ui/core/colors/indigo';
 import red from '@material-ui/core/colors/red';
 import pink from '@material-ui/core/colors/pink';
@@ -9,13 +6,8 @@ import lightBlue from '@material-ui/core/colors/lightBlue';
 import amber from '@material-ui/core/colors/amber';
 import { PaletteType } from '@material-ui/core';
 
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import WarningIcon from '@material-ui/icons/Warning';
-
 // default theme at https://material-ui.com/customization/default-theme/
-export const themeConfig = {
+const config = {
     typography: {
         useNextVariants: true
     },
@@ -73,59 +65,4 @@ export const themeConfig = {
     sidebarWidthMini: 56,
 };
 
-export interface IAppPalette extends Palette {
-    info: string;
-    success: string;
-    warning: string;
-}
-
-export interface IAppTheme extends Theme {
-    palette: IAppPalette;
-    headerHeight: number;
-    sidebarWidth: number;
-    sidebarWidthMini: number;
-}
-
-export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any =>
-    theme.palette.type === 'light' ? lightResult : darkResult;
-
-export const variantIcon = {
-    success: CheckCircleIcon,
-    warning: WarningIcon,
-    error: ErrorIcon,
-    info: InfoIcon
-};
-
-export const variantColor = (theme: Theme) => ({
-    success: {
-        color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.success
-    },
-    error: {
-        color: theme.palette.common.white,
-        backgroundColor: theme.palette.error.main
-    },
-    info: {
-        color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.info
-    },
-    warning: {
-        color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.warning
-    }
-});
-
-export const variantBorderColor = (theme: Theme) => ({
-    success: {
-        borderColor: themeConfig.palette.success
-    },
-    error: {
-        borderColor: theme.palette.error.main
-    },
-    info: {
-        borderColor: themeConfig.palette.info
-    },
-    warning: {
-        borderColor: themeConfig.palette.warning
-    }
-});
+export default config;

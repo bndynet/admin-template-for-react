@@ -7,10 +7,10 @@ import _merge from 'lodash-es/merge';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
 
-import routes from '../config/routes';
-import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
 import globalActions from './global/actions';
-import { themeConfig } from '../config/theme';
+import { routes } from '../config';
+import { themeConfig } from '../theme';
+import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
 
 const styles = (theme: Theme) => {
     return createStyles({
