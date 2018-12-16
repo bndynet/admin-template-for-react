@@ -51,6 +51,7 @@ const renderCard = (props) => {
 };
 
 const renderAlert = (props) => {
+    /* tslint:disable */
     return (
         <Grid item={true} sm={6}>
             <Alert

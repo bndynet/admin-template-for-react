@@ -71,12 +71,12 @@ class NotifierContentComponent extends React.Component<NotifierContentProps, {}>
             <SnackbarContent
                 className={classNames(classes.common, classes[variant], className)}
                 aria-describedby='client-snackbar'
-                message={
+                message={(
                     <span id='client-snackbar' className={classes.message}>
                         <Icon className={classNames(classes.icon, classes.iconVariant)} />
                         {message}
                     </span>
-                }
+                )}
                 action={actions}
             />
         );

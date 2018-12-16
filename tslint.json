@@ -16,6 +16,7 @@
         "max-classes-per-file": [true, 5, "exclude-class-expressions"],
         "object-literal-key-quotes": [true, "as-needed"],
         "no-submodule-imports": false,
+        "no-implicit-dependencies": [true, "dev"],
         "max-line-length": {
             "options": [260]
         },

@@ -13,8 +13,9 @@ const appRouterMiddleware = routerMiddleware(history);
 const middlewares = [ appRouterMiddleware, appSagaMiddleware ];
 
 // Middlewarees only in development
-if (process.env.NODE_ENV === `development`) {
-    const { logger } = require(`redux-logger`);
+if (process.env.NODE_ENV === 'development') {
+    // tslint:disable-next-line
+    const { logger } = require('redux-logger');
     middlewares.push(logger);
 }
 

@@ -1,5 +1,6 @@
-import { combineReducers } from 'redux';
+// tslint:disable-next-line
 import { History } from 'history';
+import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 import { auth } from '../app/auth/reducers';
