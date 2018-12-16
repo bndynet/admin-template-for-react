@@ -15,28 +15,28 @@ const panelStyles = (theme: Theme) =>
         ...variantBorderColor(theme),
         root: {
             borderTopStyle: 'solid',
-            marginBottom: theme.spacing.unit * 2
+            marginBottom: theme.spacing.unit * 2,
         },
         header: {
             display: 'flex',
             padding: `${theme.spacing.unit / 2} ${theme.spacing.unit} ${theme.spacing.unit / 2} ${theme.spacing.unit *
                 1.5}`,
-            borderBottom: `solid 1px ${theme.palette.divider}`
+            borderBottom: `solid 1px ${theme.palette.divider}`,
         },
         headerForCollapsed: {
-            borderBottom: 'none'
+            borderBottom: 'none',
         },
         headerTitle: {
-            flex: 1
+            flex: 1,
         },
         headerToolbox: {
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
         },
         headerToolboxButton: getPanelIconButtonStyle(theme),
         body: {
-            padding: `${theme.spacing.unit} ${theme.spacing.unit * 1.5}`
-        }
+            padding: `${theme.spacing.unit} ${theme.spacing.unit * 1.5}`,
+        },
     });
 
 class Panel extends React.Component<
@@ -57,20 +57,20 @@ class Panel extends React.Component<
         this.state = {
             open: true,
             collapsed: false,
-            collapsedDone: false
+            collapsedDone: false,
         };
     }
 
-    render() {
+    public render() {
         const { classes, className, title, bodyPadding, actions } = this.props;
         const actionEls = [];
         if (actions) {
             actions.forEach((action: any, index) => {
                 actionEls.push(
                     React.cloneElement(action, {
+                        className: action.type === IconButton ? classes.headerToolboxButton : '',
                         key: `ACTION-${index}`,
-                        className: action.type === IconButton ? classes.headerToolboxButton : ''
-                    })
+                    }),
                 );
             });
         }
@@ -81,7 +81,7 @@ class Panel extends React.Component<
                         <div
                             className={classNames(
                                 classes.header,
-                                this.state.collapsedDone && classes.headerForCollapsed
+                                this.state.collapsedDone && classes.headerForCollapsed,
                             )}>
                             <Typography className={classes.headerTitle} variant='subtitle1' component='h4'>
                                 {title}
@@ -108,7 +108,8 @@ class Panel extends React.Component<
                     <Collapse
                         in={!this.state.collapsed}
                         onEnter={() => this.setState({ collapsedDone: false })}
-                        onExited={() => this.setState({ collapsedDone: true })}>
+                        onExited={() => this.setState({ collapsedDone: true })}
+                        >
                         <div className={classes.body} style={{ padding: bodyPadding }}>
                             <Typography component='div'>{this.props.children}</Typography>
                         </div>

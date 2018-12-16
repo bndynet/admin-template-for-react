@@ -27,41 +27,41 @@ export const variantIcon = {
     success: CheckCircleIcon,
     warning: WarningIcon,
     error: ErrorIcon,
-    info: InfoIcon
+    info: InfoIcon,
 };
 
 export const variantColor = (theme: Theme) => ({
     success: {
         color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.success
+        backgroundColor: themeConfig.palette.success,
     },
     error: {
         color: theme.palette.common.white,
-        backgroundColor: theme.palette.error.main
+        backgroundColor: theme.palette.error.main,
     },
     info: {
         color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.info
+        backgroundColor: themeConfig.palette.info,
     },
     warning: {
         color: theme.palette.common.white,
-        backgroundColor: themeConfig.palette.warning
-    }
+        backgroundColor: themeConfig.palette.warning,
+    },
 });
 
 export const variantBorderColor = (theme: Theme) => ({
     success: {
-        borderColor: themeConfig.palette.success
+        borderColor: themeConfig.palette.success,
     },
     error: {
-        borderColor: theme.palette.error.main
+        borderColor: theme.palette.error.main,
     },
     info: {
-        borderColor: themeConfig.palette.info
+        borderColor: themeConfig.palette.info,
     },
     warning: {
-        borderColor: themeConfig.palette.warning
-    }
+        borderColor: themeConfig.palette.warning,
+    },
 });
 
 export { default as themeConfig } from './config';

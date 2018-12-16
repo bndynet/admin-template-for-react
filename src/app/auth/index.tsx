@@ -10,16 +10,16 @@ export const ACTION_GETUSER_REQUEST = 'USER_GETUSER_REQUEST';
 export const ACTION_GETUSER_SUCCESS = 'USER_GETUSER_SUCCESS';
 export const ACTION_GETUSER_FAULURE = 'USER_GETUSER_FAILURE';
 
-export type AuthState = {
-    user?: any,
-    accessToken?: string,
+export interface AuthState {
+    user?: any;
+    accessToken?: string;
     tokenType?: string;
     expiresIn?: number;
     scope?: string;
-    error?: any,
-};
+    error?: any;
+}
 
-export type LoginData = {
+export interface LoginData {
     username: string;
     password: string;
     rememberMe: boolean;
@@ -28,7 +28,7 @@ export type LoginData = {
     grant_type?: string;
 }
 
-export type LoginSuccessData = {
+export interface LoginSuccessData {
     access_token: string;
     refresh_token: string;
     token_type: string;
@@ -36,7 +36,7 @@ export type LoginSuccessData = {
     scope: string;
 }
 
-export type UserInfo = {
+export interface UserInfo {
     username: string;
     email: string;
 }

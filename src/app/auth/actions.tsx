@@ -8,36 +8,36 @@ import {
     LoginData,
     LoginSuccessData,
     UserInfo,
-    ACTION_LOGIN_FAILURE
+    ACTION_LOGIN_FAILURE,
 } from '.';
 
 const authActions = {
     login: (data: LoginData) => ({
         type: ACTION_LOGIN_REQUEST,
-        payload: data
+        payload: data,
     }),
     loginSuccess: (response: LoginSuccessData) => ({
         type: ACTION_LOGIN_SUCCESS,
-        payload: response
+        payload: response,
     }),
     loginFailure: (error) => ({
         type: ACTION_LOGIN_FAILURE,
-        payload: error
+        payload: error,
     }),
     getUserInfo: (accessToken: string) => ({
         type: ACTION_GETUSER_REQUEST,
-        payload: accessToken
+        payload: accessToken,
     }),
     getUserInfoSuccess: (userInfo: UserInfo) => ({
         type: ACTION_GETUSER_SUCCESS,
-        payload: userInfo
+        payload: userInfo,
     }),
     logout: () => ({
-        type: ACTION_LOGOUT_REQUEST
+        type: ACTION_LOGOUT_REQUEST,
     }),
     logoutSuccess: () => ({
-        type: ACTION_LOGOUT_SUCCESS
-    })
+        type: ACTION_LOGOUT_SUCCESS,
+    }),
 };
 
 export default authActions;

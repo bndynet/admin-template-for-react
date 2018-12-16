@@ -10,32 +10,29 @@ const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSI
 const appSagaMiddleware = createSagaMiddleware();
 const appRouterMiddleware = routerMiddleware(history);
 
-const middlewares = [
-  appRouterMiddleware, 
-  appSagaMiddleware
-];
+const middlewares = [ appRouterMiddleware, appSagaMiddleware ];
 
 // Middlewarees only in development
 if (process.env.NODE_ENV === `development`) {
-  const { logger } = require(`redux-logger`);
-  middlewares.push(logger);
+    const { logger } = require(`redux-logger`);
+    middlewares.push(logger);
 }
 
-const store: Store<any, any> = createStore(
-  rootReducer, 
-    composeEnhancer(applyMiddleware(...middlewares))
-);
+const store: Store<any, any> = createStore(rootReducer, composeEnhancer(applyMiddleware(...middlewares)));
 
 // then run the saga
 appSagaMiddleware.run(rootSaga);
 
 if (process.env.NODE_ENV === `development`) {
-  // Every time the state changes, log it
-  // Note that subscribe() returns a function for unregistering the listener
-  const unsubscribe: any = store.subscribe(() => console.debug(store.getState()));
+    // Every time the state changes, log it
+    // Note that subscribe() returns a function for unregistering the listener
+    const unsubscribe: any = store.subscribe(() => {
+        // tslint:disable-next-line:no-console
+        console.debug(store.getState());
+    });
 
-  // Stop listening to state updates
-  //unsubscribe();
+    // Stop listening to state updates
+    // unsubscribe();
 }
 
 export default store;

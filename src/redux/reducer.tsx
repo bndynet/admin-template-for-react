@@ -7,11 +7,11 @@ import { home } from '../app/home/reducers';
 import { global } from '../app/global/actions';
 import history from './history';
 
-const createRootReducer = (history: History) => (combineReducers({
-    router: connectRouter(history),
+const createRootReducer = (his: History) => (combineReducers({
+    router: connectRouter(his),
     global,
     auth,
-    home
+    home,
 }));
 
 const rootReducer = createRootReducer(history);

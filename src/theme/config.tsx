@@ -9,7 +9,7 @@ import { PaletteType } from '@material-ui/core';
 // default theme at https://material-ui.com/customization/default-theme/
 const config = {
     typography: {
-        useNextVariants: true
+        useNextVariants: true,
     },
     overrides: {
         // Name of the component
@@ -28,7 +28,7 @@ const config = {
             padding: {
                 paddingTop: 4,
                 paddingBottom: 4,
-            }
+            },
         },
         MuiListItem: {
             root: {
@@ -45,7 +45,7 @@ const config = {
                 paddingBottom: 4,
                 paddingLeft: 8,
                 paddingRight: 8,
-            }
+            },
         },
     },
     palette: {
@@ -57,7 +57,7 @@ const config = {
         // custom colors
         info: lightBlue[500],
         success: green[500],
-        warning: amber[700]
+        warning: amber[700],
         // end custom colors
     },
     headerHeight: 60,

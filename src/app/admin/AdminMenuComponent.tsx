@@ -18,11 +18,11 @@ const styles = (theme: Theme) =>
             '& $listItem': {
                 justifyContent: 'center',
                 [theme.breakpoints.down('sm')]: {
-                    overflow: 'hidden'
-                }
+                    overflow: 'hidden',
+                },
             },
             '& > li': {
-                position: 'relative'
+                position: 'relative',
             },
             '& > li:hover': {
                 width: themeConfig.sidebarWidth,
@@ -30,59 +30,59 @@ const styles = (theme: Theme) =>
                 borderTopRightRadius: theme.shape.borderRadius,
                 borderBottomRightRadius: theme.shape.borderRadius,
                 boxShadow: theme.shadows[2],
-                zIndex: 100
+                zIndex: 100,
             },
             '& > li $listItemText': {
-                visibility: 'hidden'
+                visibility: 'hidden',
             },
             '& > li:hover $listItemText': {
-                visibility: 'visible'
+                visibility: 'visible',
             },
             '& > li:hover $childList': {
-                display: 'block'
+                display: 'block',
             },
 
             '& > li $childList': {
-                display: 'none'
+                display: 'none',
             },
             '& $expandIcon': {
-                display: 'none'
-            }
+                display: 'none',
+            },
         },
         listItem: {
             paddingLeft: 0,
-            paddingRight: 0
+            paddingRight: 0,
         },
         listItemIcon: {
             marginRight: 0,
             width: themeConfig.sidebarWidthMini,
-            justifyContent: 'center'
+            justifyContent: 'center',
         },
         listItemText: {
             paddingLeft: 0,
-            paddingRight: 0
+            paddingRight: 0,
         },
         listItemTextPrimary: {
-            fontSize: '0.875rem'
+            fontSize: '0.875rem',
         },
         listItemTextSecondary: {
-            fontSize: '0.75rem'
+            fontSize: '0.75rem',
         },
         childList: {
             '& $listItem': {
-                paddingLeft: theme.spacing.unit
+                paddingLeft: theme.spacing.unit,
             },
             '& $childList $listItem': {
-                paddingLeft: theme.spacing.unit * 2
+                paddingLeft: theme.spacing.unit * 2,
             },
             '& $childList $childList $listItem': {
-                paddingLeft: theme.spacing.unit * 3
-            }
+                paddingLeft: theme.spacing.unit * 3,
+            },
         },
         expandIcon: {
             marginRight: 10,
-            color: theme.palette.text.secondary
-        }
+            color: theme.palette.text.secondary,
+        },
     });
 
 class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }, {}> {
@@ -93,26 +93,37 @@ class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }
         this.handleToggleChildMenu = this.handleToggleChildMenu.bind(this);
     }
 
-    getMenuKey(menu) {
+    public render() {
+        const { classes, mini } = this.props;
+        return (
+            <List className={classNames(classes.root, mini && classes.rootMini)}>
+                {menus.map((menu) => this.renderMenuItem(menu, classes))}
+            </List>
+        );
+    }
+
+    private getMenuKey(menu) {
         return `${menu.text}_${menu.link || ''}`;
     }
 
-    handleMenuClick(menu) {
+    private handleMenuClick(menu) {
         this.handleToggleChildMenu(menu);
     }
-    
-    handleToggleChildMenu(menu) {
+
+    private handleToggleChildMenu(menu) {
         const menuKey = this.getMenuKey(menu);
-        menu.children && this.setState({ [menuKey]: !this.state[menuKey] });
+        if (menu.children) {
+            this.setState({ [menuKey]: !this.state[menuKey] });
+        }
     }
 
-    renderMenuItem(menu, classes) {
+    private renderMenuItem(menu, classes) {
         const menuKey = this.getMenuKey(menu);
         const mini = this.props.mini;
         return (
             <li key={menuKey}>
                 <ListItem
-                    button
+                    button={true}
                     className={classes.listItem}
                     onClick={() => this.handleMenuClick(menu)}
                     component={menu.link ? (props: LinkProps) => <Link {...props} to={menu.link} /> : null}>
@@ -144,15 +155,6 @@ class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }
                         </Collapse>
                     ))}
             </li>
-        );
-    }
-
-    render() {
-        const { classes, mini } = this.props;
-        return (
-            <List className={classNames(classes.root, mini && classes.rootMini)}>
-                {menus.map((menu) => this.renderMenuItem(menu, classes))}
-            </List>
         );
     }
 }

@@ -10,7 +10,7 @@ const service = {
         data.client_id = config.clientId;
         data.client_secret = config.clientSecret;
         return new Ajax({
-            baseURL: config.oauthBaseURL
+            baseURL: config.oauthBaseURL,
         }).postForm('/oauth/token', data);
     },
     getUser: (): AxiosPromise => {
@@ -24,7 +24,7 @@ const service = {
             baseURL: config.oauthBaseURL,
             headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
         }).get('/login?logout');
-    }
+    },
 };
 
 export default service;

@@ -12,8 +12,8 @@ const styles = (theme: Theme) =>
             paddingBottom: theme.spacing.unit,
             marginBottom: theme.spacing.unit * 2,
             '& h2': {
-                flex: 1
-            }
+                flex: 1,
+            },
         },
         breadcrumb: {
             display: 'flex',
@@ -26,26 +26,25 @@ const styles = (theme: Theme) =>
                 content: '">"',
                 display: 'inline-block',
                 marginLeft: 5,
-                marginRight: 5
+                marginRight: 5,
             },
             '& > span': {
                 color: theme.palette.text.disabled,
             },
         },
-        chartContainer: {}
+        chartContainer: {},
     });
 
 const renderNavItem = (navigation) => {
     const items = [];
-    
-    for (var key in navigation) {
+    for (const key of Object.keys(navigation)) {
         items.push(navigation[key] ? <Link key={key} to={navigation[key]}>{key}</Link> : <span key={key}>{key}</span>);
     }
     return items;
 };
 
 class ContentHeader extends React.Component<{ classes: any; title: string; navigation?: object }, {}> {
-    render() {
+    public render() {
         const { classes, title, navigation } = this.props;
         return (
             <div className={classes.contentHeader}>

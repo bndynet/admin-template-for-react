@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 
 export default class ALink extends Link {
-    render() {
+    public render() {
         let result;
         const { to, ...others} = this.props;
         const isExternalLink = this.props.to.toString().toLowerCase().startsWith('http');

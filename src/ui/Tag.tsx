@@ -9,23 +9,27 @@ const styles = (theme: Theme) =>
     createStyles({
         ...variantColor(theme),
         root: {
-            display: 'inline-block',
-            padding: `${theme.spacing.unit / 2} ${theme.spacing.unit / 2}`,
-            lineHeight: '1em',
             borderRadius: 3,
+            display: 'inline-block',
             fontSize: '0.75rem',
+            lineHeight: '1em',
+            padding: `${theme.spacing.unit / 2} ${theme.spacing.unit / 2}`,
         },
         spacing: {
-            marginRight: theme.spacing.unit,
             marginBottom: theme.spacing.unit,
-        }
+            marginRight: theme.spacing.unit,
+        },
     });
 
-class Tag extends React.Component<{ classes: any; variant: string, hasSpacing?: boolean }> {
-    render() {
+class Tag extends React.Component<{ classes: any; variant: string; hasSpacing?: boolean }> {
+    public render() {
         const { classes, variant, hasSpacing } = this.props;
         return (
-            <Typography color='inherit' variant='caption' className={classNames(classes.root, classes[variant], hasSpacing && classes.spacing)}>
+            <Typography
+                color='inherit'
+                variant='caption'
+                className={classNames(classes.root, classes[variant], hasSpacing && classes.spacing)}
+            >
                 {this.props.children}
             </Typography>
         );

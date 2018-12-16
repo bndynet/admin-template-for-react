@@ -1,4 +1,4 @@
-import { NotifierOptions } from "../../ui";
+import { NotifierOptions } from '../../ui';
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
@@ -55,33 +55,33 @@ const globalActions = {
 
     notify: (notifierOptions: NotifierOptions) => ({
         type: ACTION_NOTIFIER_SHOW,
-        notifierOptions: notifierOptions,
+        notifierOptions,
     }),
     notifyInfo: (message: string) => ({
         type: ACTION_NOTIFIER_SHOW,
         notifierOptions: {
-            message: message,
+            message,
             variant: 'info',
         },
     }),
     notifySuccess: (message: string) => ({
         type: ACTION_NOTIFIER_SHOW,
         notifierOptions: {
-            message: message,
+            message,
             variant: 'success',
         },
     }),
     notifyWarning: (message: string) => ({
         type: ACTION_NOTIFIER_SHOW,
         notifierOptions: {
-            message: message,
+            message,
             variant: 'warning',
         },
     }),
     notifyError: (message: string) => ({
         type: ACTION_NOTIFIER_SHOW,
         notifierOptions: {
-            message: message,
+            message,
             variant: 'error',
         },
     }),
@@ -91,7 +91,7 @@ const globalActions = {
 
     changeTheme: (theme) => ({
         type: ACTION_THEME_CHANGE,
-        theme: theme,
+        theme,
     }),
 };
 

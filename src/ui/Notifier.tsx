@@ -13,27 +13,27 @@ const notifierContentStyles = (theme: Theme) =>
         common: {
             opacity: 0.9,
             paddingLeft: theme.spacing.unit * 2,
-            paddingRight: theme.spacing.unit * 5
+            paddingRight: theme.spacing.unit * 5,
         },
         info: {
             backgroundColor: ifTheme(theme, theme.palette.common.black, theme.palette.common.white),
         },
         icon: {
-            fontSize: 20
+            fontSize: 20,
         },
         iconVariant: {
             opacity: 0.9,
-            marginRight: theme.spacing.unit
+            marginRight: theme.spacing.unit,
         },
         message: {
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
         },
         close: {
             position: 'absolute',
             top: 3,
-            right: 0
-        }
+            right: 0,
+        },
     });
 
 interface NotifierContentProps {
@@ -50,11 +50,12 @@ class NotifierContentComponent extends React.Component<NotifierContentProps, {}>
         super(props);
     }
 
-    render() {
+    public render() {
         const { classes, className, message, onCloseButtonClick, variant } = this.props;
         const Icon = variantIcon[variant];
         const actions = [];
-        this.props.hasCloseButton &&
+
+        if (this.props.hasCloseButton) {
             actions.push(
                 <IconButton
                     key='close'
@@ -63,8 +64,9 @@ class NotifierContentComponent extends React.Component<NotifierContentProps, {}>
                     className={classes.close}
                     onClick={onCloseButtonClick}>
                     <CloseIcon className={classes.icon} />
-                </IconButton>
+                </IconButton>,
             );
+        }
         return (
             <SnackbarContent
                 className={classNames(classes.common, classes[variant], className)}
@@ -106,38 +108,32 @@ interface NotifierState {
 const NotifierStyles = (theme: Theme) =>
     createStyles({
         root: {
-            maxWidth: 640
-        }
+            maxWidth: 640,
+        },
     });
 
 class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
         };
     }
 
-    handleClose = (e) => {
-        this.setState({
-            open: false
-        });
-        this.props.onCloseButtonClick && this.props.onCloseButtonClick(e);
-    };
-
-    render() {
+    public render() {
         const { classes, hasCloseButton, onCloseButtonClick } = this.props;
-        const options = this.props.options || ({} as NotifierOptions);
+        // const defaultNotifierOptions = {} as NotifierOptions;
         const open = this.props.open || this.state.open;
+        const options = (this.props.options || {}) as NotifierOptions;
         let origin: SnackbarOrigin = {
             vertical: 'bottom',
-            horizontal: 'right'
+            horizontal: 'right',
         };
         if (options.placement) {
             const p = options.placement.split(' ');
             origin = {
                 vertical: p[0] as 'bottom',
-                horizontal: p[1] as 'right'
+                horizontal: p[1] as 'right',
             };
         }
         return (
@@ -156,6 +152,15 @@ class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
                 />
             </Snackbar>
         );
+    }
+
+    private handleClose = (e) => {
+        this.setState({
+            open: false,
+        });
+        if (this.props.onCloseButtonClick) {
+            this.props.onCloseButtonClick(e);
+        }
     }
 }
 

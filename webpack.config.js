@@ -44,8 +44,15 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "awesome-typescript-loader"
             }, {
-                enforce: "pre",
+                test: /\.tsx$/,
+                enforce: 'pre',
+                use: [{
+                    loader: 'tslint-loader',
+                    options: { /* Loader options go here */ }
+                }]
+            }, {
                 test: /\.(js|jsx)$/,
+                enforce: "pre",
                 exclude: /node_modules/,
                 use: [{
                     loader: "babel-loader",

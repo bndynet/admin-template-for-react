@@ -18,12 +18,12 @@ const miniCardStyles = (theme: Theme) =>
             position: 'relative',
             color: theme.palette.type === 'light' ? '' : theme.palette.text.primary,
             '&:hover $icon': {
-                transform: 'scale(4)'
-            }
+                transform: 'scale(4)',
+            },
         },
         body: {
             padding: `${theme.spacing.unit} ${theme.spacing.unit * 1.5} ${theme.spacing.unit * 2} ${theme.spacing.unit *
-                1.5}`
+                1.5}`,
         },
         icon: {
             position: 'absolute',
@@ -49,10 +49,10 @@ const miniCardStyles = (theme: Theme) =>
                 opacity: 0.8,
                 '&:hover': {
                     backgroundColor: fade(theme.palette.common.black, 0.2),
-                    opacity: 1
-                }
-            }
-        }
+                    opacity: 1,
+                },
+            },
+        },
     });
 
 class MiniCard extends React.Component<
@@ -71,11 +71,11 @@ class MiniCard extends React.Component<
         super(props);
     }
 
-    render() {
+    public render() {
         const { classes, className, icon, title, description, links } = this.props;
         const linkEls = [];
         if (links) {
-            for (let [ key, value ] of links) {
+            for (const [ key, value ] of links) {
                 linkEls.push(
                     value ? (
                         <Link color='default' key={key} to={value}>
@@ -87,7 +87,7 @@ class MiniCard extends React.Component<
                         <Typography color='inherit' variant='caption' key={key}>
                             {key}
                         </Typography>
-                    )
+                    ),
                 );
             }
         }

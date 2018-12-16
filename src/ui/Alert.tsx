@@ -35,7 +35,7 @@ const styles = (theme: Theme) =>
             position: 'absolute',
             top: 4,
             right: 4,
-        }
+        },
     });
 
 class Alert extends React.Component<
@@ -53,18 +53,12 @@ class Alert extends React.Component<
     constructor(props) {
         super(props);
         this.state = {
-            close: false
+            close: false,
         };
         this.handleClose = this.handleClose.bind(this);
     }
 
-    handleClose() {
-        this.setState({
-            close: true
-        });
-    }
-
-    render() {
+    public render() {
         const { classes, title, message, shadow, variant, square, closeable } = this.props;
         const Icon = variantIcon[variant];
         return (
@@ -94,6 +88,12 @@ class Alert extends React.Component<
                 </Paper>
             </Collapse>
         );
+    }
+
+    private handleClose() {
+        this.setState({
+            close: true,
+        });
     }
 }
 

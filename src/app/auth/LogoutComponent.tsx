@@ -14,17 +14,17 @@ const styles = (theme: Theme) =>
             paddingTop: theme.spacing.unit * 4,
             paddingBottom: theme.spacing.unit * 4,
             width: 400,
-            textAlign: 'center'
+            textAlign: 'center',
         },
         icon: {
             marginBottom: theme.spacing.unit * 2,
             color: themeConfig.palette.success,
             width: 80,
-            height: 80
+            height: 80,
         },
         textColor: {
             color: theme.palette.text.primary,
-        }
+        },
     });
 
 interface LogoutComponentProps {
@@ -32,14 +32,14 @@ interface LogoutComponentProps {
 }
 
 class LogoutComponent extends React.Component<LogoutComponentProps> {
-    render() {
+    public render() {
         const { classes } = this.props;
         return (
             <main>
                 <CssBaseline />
                 <Panel variant='success' className={classes.panel}>
                     <CheckCircleIcon className={classes.icon} />
-                    <Typography gutterBottom component='h1' variant='h6'>
+                    <Typography gutterBottom={true} component='h1' variant='h6'>
                         You have logged out successfully.
                     </Typography>
                     <Typography variant='body1'>

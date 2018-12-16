@@ -28,15 +28,15 @@ const styles = (theme: Theme) =>
             [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
                 width: 400,
                 marginLeft: 'auto',
-                marginRight: 'auto'
-            }
+                marginRight: 'auto',
+            },
         },
         paper: {
             marginTop: theme.spacing.unit * 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
+            padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
         },
         avatar: {
             margin: theme.spacing.unit,
@@ -47,11 +47,11 @@ const styles = (theme: Theme) =>
         },
         form: {
             width: '100%',
-            marginTop: theme.spacing.unit
+            marginTop: theme.spacing.unit,
         },
         submit: {
-            marginTop: theme.spacing.unit * 3
-        }
+            marginTop: theme.spacing.unit * 3,
+        },
     });
 
 interface LoginComponentProps {
@@ -72,17 +72,12 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
         this.state = {
             username: '',
             password: '',
-            rememberMe: true
+            rememberMe: true,
         };
         this.onLogin = this.onLogin.bind(this);
     }
 
-    onLogin(event) {
-        this.props.onLogin(this.state.username, this.state.password);
-        event.preventDefault();
-    }
-
-    render() {
+    public render() {
         const { classes } = this.props;
         return (
             <main className={classes.main}>
@@ -95,20 +90,20 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
                         Sign in
                     </Typography>
                     <form className={classes.form}>
-                        <FormControl margin='normal' required fullWidth>
+                        <FormControl margin='normal' required={true} fullWidth={true}>
                             <InputLabel htmlFor='username'>Username</InputLabel>
                             <Input
                                 id='username'
                                 name='username'
                                 type='text'
                                 autoComplete='username'
-                                autoFocus
+                                autoFocus={true}
                                 onChange={(e) => {
                                     this.setState({ username: e.target.value });
                                 }}
                             />
                         </FormControl>
-                        <FormControl margin='normal' required fullWidth>
+                        <FormControl margin='normal' required={true} fullWidth={true}>
                             <InputLabel htmlFor='password'>Password</InputLabel>
                             <Input
                                 name='password'
@@ -135,7 +130,7 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
                         />
                         <Button
                             type='submit'
-                            fullWidth
+                            fullWidth={true}
                             variant='contained'
                             color='primary'
                             className={classes.submit}
@@ -147,10 +142,15 @@ class LoginComponent extends React.Component<LoginComponentProps, LoginComponent
             </main>
         );
     }
+
+    private onLogin(event) {
+        this.props.onLogin(this.state.username, this.state.password);
+        event.preventDefault();
+    }
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user
+    user: state.auth.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -160,14 +160,14 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
                 globalActions.notify({
                     message: 'Please enter your username and password!',
                     variant: 'error',
-                    placement: 'bottom center'
-                })
+                    placement: 'bottom center',
+                }),
             );
             return false;
         }
         dispatch(authActions.login({username, password, rememberMe}));
         return true;
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginComponent));

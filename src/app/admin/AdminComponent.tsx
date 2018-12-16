@@ -37,28 +37,28 @@ const styles = (theme: Theme) =>
             },
             '.markdown-body pre': {
                 backgroundColor: theme.palette.background.paper,
-            }
+            },
         },
         root: {
-            display: 'flex'
+            display: 'flex',
         },
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
-            flexDirection: 'row'
+            flexDirection: 'row',
         },
         brand: {
             height: themeConfig.headerHeight,
             flex: 1,
             display: 'flex',
             alignItems: 'center',
-            paddingLeft: theme.spacing.unit * 2
+            paddingLeft: theme.spacing.unit * 2,
         },
         menuButton: {
             padding: theme.spacing.unit,
             transform: 'scale(1.5)',
             [theme.breakpoints.down('sm')]: {
                 display: 'inherit',
-                marginLeft: 0
+                marginLeft: 0,
             },
         },
         menuButtonHidden: {
@@ -70,12 +70,12 @@ const styles = (theme: Theme) =>
         brandTitle: {
             color: '#ffffff',
             [theme.breakpoints.down('sm')]: {
-                display: 'none'
-            }
+                display: 'none',
+            },
         },
         toolbar: {
             paddingRight: theme.spacing.unit * 2,
-            minHeight: themeConfig.headerHeight
+            minHeight: themeConfig.headerHeight,
         },
         avatar: {
             marginLeft: theme.spacing.unit * 1.5,
@@ -86,7 +86,7 @@ const styles = (theme: Theme) =>
             fontSize: '2rem',
         },
         avatarMenu: {
-            minWidth: 160
+            minWidth: 160,
         },
         drawerPaper: {
             position: 'relative',
@@ -96,7 +96,7 @@ const styles = (theme: Theme) =>
             width: themeConfig.sidebarWidth + 1,   // include right border width
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen
+                duration: theme.transitions.duration.enteringScreen,
             }),
             [theme.breakpoints.down('sm')]: {
                 position: 'fixed',
@@ -106,12 +106,12 @@ const styles = (theme: Theme) =>
             overflowY: 'inherit',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen
+                duration: theme.transitions.duration.leavingScreen,
             }),
             width: themeConfig.sidebarWidthMini + 1,    // include right border width
             [theme.breakpoints.down('sm')]: {
-                width: 0
-            }
+                width: 0,
+            },
         },
         drawerPaperFooter: {
             position: 'fixed',
@@ -129,8 +129,8 @@ const styles = (theme: Theme) =>
             padding: theme.spacing.unit / 2,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen
-            })
+                duration: theme.transitions.duration.leavingScreen,
+            }),
         },
         drawerPaperFooterClose: {
             justifyContent: 'center',
@@ -138,15 +138,15 @@ const styles = (theme: Theme) =>
             [theme.breakpoints.down('sm')]: {
                 width: 0,
                 padding: 0,
-            }
+            },
         },
 
         copyright: {
             flex: 1,
-            paddingLeft: theme.spacing.unit
+            paddingLeft: theme.spacing.unit,
         },
         copyrightHidden: {
-            display: 'none'
+            display: 'none',
         },
         content: {
             flexGrow: 1,
@@ -155,10 +155,10 @@ const styles = (theme: Theme) =>
             paddingLeft: theme.spacing.unit * 3,
             paddingRight: theme.spacing.unit * 3,
             height: '100vh',
-            overflow: 'auto'
+            overflow: 'auto',
         },
         iconButton: {
-            padding: theme.spacing.unit
+            padding: theme.spacing.unit,
         },
         badge: {
             width: '1rem',
@@ -168,8 +168,8 @@ const styles = (theme: Theme) =>
             right: -5,
             borderWidth: 2,
             borderStyle: 'solid',
-            borderColor: theme.palette.primary.main
-        }
+            borderColor: theme.palette.primary.main,
+        },
     });
 
 class AdminComponent extends React.Component<
@@ -189,36 +189,11 @@ class AdminComponent extends React.Component<
         super(props);
         this.state = {
             largeMainMenu: isWidthUp('sm', this.props.width),
-            avatarMenuAnchor: null
+            avatarMenuAnchor: null,
         };
     }
 
-    handleDrawerToggle = () => {
-        this.setState({ largeMainMenu: !this.state.largeMainMenu });
-    };
-
-    handleAvatarClick = (e) => {
-        if (!this.props.user) {
-            this.props.push('/login');
-            return;
-        } 
-        this.setState({ avatarMenuAnchor: e.currentTarget });
-    };
-
-    handleThemeChange = () => {
-        this.props.onThemeChange(!this.props.isDarkTheme);
-    };
-
-    handleAvatarMenuClose = () => {
-        this.setState({ avatarMenuAnchor: null });
-    };
-
-    handleLogout = () => {
-        this.handleAvatarMenuClose();
-        this.props.onLogout();
-    };
-
-    render() {
+    public render() {
         const { avatarMenuAnchor } = this.state;
         const { classes, isDarkTheme } = this.props;
         const user = this.props.user || {};
@@ -234,7 +209,8 @@ class AdminComponent extends React.Component<
                                     classes.brandTitle,
                                 )}
                                 variant='h5'
-                                component='h1'>
+                                component='h1'
+                                >
                                 ADMIN REACT
                             </Typography>
                         </Link>
@@ -242,14 +218,15 @@ class AdminComponent extends React.Component<
                             color='inherit'
                             aria-label='Open drawer'
                             onClick={this.handleDrawerToggle}
-                            className={classNames(classes.menuButton, this.state.largeMainMenu && classes.menuButtonHidden)}>
+                            className={classNames(classes.menuButton, this.state.largeMainMenu && classes.menuButtonHidden)}
+                            >
                             <MenuIcon />
                         </IconButton>
                     </div>
                     <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
                         <Tooltip title='Toggle light/dark theme'>
                             <IconButton color='inherit' onClick={() => this.handleThemeChange()}>
-                                {isDarkTheme ? <BrightnessLowIcon fontSize='large' /> : <BrightnessHighIcon fontSize='large' /> }
+                                {isDarkTheme ? <BrightnessLowIcon fontSize='large' /> : <BrightnessHighIcon fontSize='large' />}
                             </IconButton>
                         </Tooltip>
                         <IconButton color='inherit'>
@@ -262,7 +239,8 @@ class AdminComponent extends React.Component<
                                 aria-owns={avatarMenuAnchor ? 'avatar-menu' : undefined}
                                 aria-haspopup='true'
                                 className={classes.avatar}
-                                onClick={this.handleAvatarClick}>
+                                onClick={this.handleAvatarClick}
+                                >
                                 {user.username && user.username[0]}
                             </Avatar>
                         </Tooltip>
@@ -271,7 +249,8 @@ class AdminComponent extends React.Component<
                             classes={{ paper: classes.avatarMenu }}
                             anchorEl={avatarMenuAnchor}
                             open={Boolean(avatarMenuAnchor)}
-                            onClose={this.handleAvatarMenuClose}>
+                            onClose={this.handleAvatarMenuClose}
+                            >
                             <MenuItem dense={true} onClick={this.handleLogout}>
                                 Logout
                             </MenuItem>
@@ -281,20 +260,21 @@ class AdminComponent extends React.Component<
                 <Drawer
                     variant='permanent'
                     classes={{
-                        paper: classNames(classes.drawerPaper, !this.state.largeMainMenu && classes.drawerPaperClose)
+                        paper: classNames(classes.drawerPaper, !this.state.largeMainMenu && classes.drawerPaperClose),
                     }}
-                    open={this.state.largeMainMenu}>
+                    open={this.state.largeMainMenu}
+                    >
                     <Divider />
                     <AdminMenuComponent mini={!this.state.largeMainMenu} />
                     <div
                         className={classNames(
                             classes.drawerPaperFooter,
-                            !this.state.largeMainMenu && classes.drawerPaperFooterClose
+                            !this.state.largeMainMenu && classes.drawerPaperFooterClose,
                         )}>
                         <a
                             className={classNames(
                                 classes.copyright,
-                                !this.state.largeMainMenu && classes.copyrightHidden
+                                !this.state.largeMainMenu && classes.copyrightHidden,
                             )}
                             href='http://bndy.net'
                             target='_blank'>
@@ -315,11 +295,36 @@ class AdminComponent extends React.Component<
             </div>
         );
     }
+
+    private handleDrawerToggle = () => {
+        this.setState({ largeMainMenu: !this.state.largeMainMenu });
+    }
+
+    private handleAvatarClick = (e) => {
+        if (!this.props.user) {
+            this.props.push('/login');
+            return;
+        }
+        this.setState({ avatarMenuAnchor: e.currentTarget });
+    }
+
+    private handleThemeChange = () => {
+        this.props.onThemeChange(!this.props.isDarkTheme);
+    }
+
+    private handleAvatarMenuClose = () => {
+        this.setState({ avatarMenuAnchor: null });
+    }
+
+    private handleLogout = () => {
+        this.handleAvatarMenuClose();
+        this.props.onLogout();
+    }
 }
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === 'dark'
+    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === 'dark',
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -333,11 +338,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         dispatch(
             globalActions.changeTheme({
                 palette: {
-                    type: toDark ? 'dark' : 'light'
-                }
-            })
+                    type: toDark ? 'dark' : 'light',
+                },
+            }),
         );
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withWidth()(AdminComponent)));

@@ -10,30 +10,30 @@ const styles = (theme: Theme) =>
             borderStyle: 'solid',
             borderWidth: 2,
             borderColor: fade(theme.palette.primary.main, 0.2),
-            textAlign: 'center'
+            textAlign: 'center',
         },
         circularProgressWrapper: {
             position: 'relative',
             display: 'inline-block',
-            margin: theme.spacing.unit * 2
+            margin: theme.spacing.unit * 2,
         },
         circularProgressDeterminate: {
-            color: fade(theme.palette.primary.main, 0.2)
+            color: fade(theme.palette.primary.main, 0.2),
         },
         circularProgressIndeterminate: {
             color: theme.palette.primary.main,
             animationDuration: '600ms',
             position: 'absolute',
-            left: 0
+            left: 0,
         },
         circularProgressText: {
             display: 'block',
-            textAlign: 'center'
-        }
+            textAlign: 'center',
+        },
     });
 
 class Loading extends React.Component<{ classes: any; loadingText?: string }, {}> {
-    render() {
+    public render() {
         const { classes, loadingText } = this.props;
         return (
             <div className={classes.circularProgressContainer}>
@@ -47,7 +47,7 @@ class Loading extends React.Component<{ classes: any; loadingText?: string }, {}
                     />
                     <CircularProgress
                         variant='indeterminate'
-                        disableShrink
+                        disableShrink={true}
                         className={classes.circularProgressIndeterminate}
                         size={48}
                         thickness={4}

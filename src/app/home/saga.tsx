@@ -12,7 +12,6 @@ function* getReadMe(action) {
         yield put({ type: ACTION_README_GET_SUCCESS, readme: response});
         yield put(globalActions.hideRequesting());
     } catch (e) {
-        console.log(e);
         yield put(globalActions.hideRequesting());
     }
 }

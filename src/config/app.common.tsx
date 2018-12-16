@@ -1,7 +1,7 @@
 import { Config } from '.';
 
 const config: Config = {
-    resourceBaseURL: '/'
+    resourceBaseURL: '/',
 };
 
 module.exports = config;

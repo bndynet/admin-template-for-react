@@ -15,37 +15,37 @@ const menus = [
         icon: <HomeIcon />,
         text: 'Home',
         description: 'Go to public home',
-        link: '/'
+        link: '/',
     },
     {
         icon: <DashboardIcon />,
         text: 'Dashboard',
         description: '',
-        link: '/admin/dashboard'
+        link: '/admin/dashboard',
     },
     {
         icon: <InputIcon />,
         text: 'Markdown Editor',
         description: '',
-        link: '/admin/markdown'
+        link: '/admin/markdown',
     },
     {
         icon: <ScheduleIcon />,
         text: 'Real-Time',
         description: '',
-        link: ''
+        link: '',
     },
     {
         icon: <TimelineIcon />,
         text: 'Audience',
         description: '',
-        link: ''
+        link: '',
     },
     {
         icon: <DnsIcon />,
         text: 'Behavior',
         description: '',
-        link: ''
+        link: '',
     },
     {
         icon: <BuildIcon />,
@@ -82,7 +82,7 @@ const menus = [
                         icon: <BarChartIcon />,
                         text: 'Menu 3-3',
                     },
-                ]
+                ],
             },
             {
                 icon: <LayersIcon />,
@@ -90,7 +90,7 @@ const menus = [
                 description: '',
                 link: '',
             },
-        ]
+        ],
     },
 ];
 

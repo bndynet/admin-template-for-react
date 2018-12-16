@@ -1,8 +1,7 @@
 import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ACTION_LOGIN_REQUEST, ACTION_LOGOUT_REQUEST, ACTION_GETUSER_REQUEST, LoginSuccessData } from '.';
+import { ACTION_LOGIN_REQUEST, ACTION_LOGOUT_REQUEST, ACTION_GETUSER_REQUEST, LoginSuccessData, LoginData, UserInfo } from '.';
 import globalActions from '../global/actions';
-import { LoginData, UserInfo } from '.';
 import authActions from './actions';
 import authService from './service';
 import config from '../../config';

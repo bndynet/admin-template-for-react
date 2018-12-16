@@ -20,17 +20,17 @@ const styles = (theme: Theme) =>
             body: {
                 paddingTop: theme.spacing.unit * 4,
                 color: theme.palette.text.primary,
-                backgroundColor: theme.palette.background.default
+                backgroundColor: theme.palette.background.default,
             },
             '.markdown-body a': {
                 color: theme.palette.text.primary,
-                textDecoration: 'underline'
-            }
+                textDecoration: 'underline',
+            },
         },
         main: {
             maxWidth: 845,
             marginLeft: 'auto',
-            marginRight: 'auto'
+            marginRight: 'auto',
         },
         fab: {
             position: 'fixed',
@@ -39,21 +39,21 @@ const styles = (theme: Theme) =>
             fontSize: 24,
             fontWeight: 700,
             '&.disabled': {
-                color: theme.palette.common.white
-            }
+                color: theme.palette.common.white,
+            },
         },
         forkMe: {
             position: 'absolute',
             top: 0,
             right: 0,
-            border: 0
+            border: 0,
         },
         linkButton: {
             '& button': {
                 marginRight: theme.spacing.unit,
                 marginBottom: theme.spacing.unit * 4,
-            }
-        }
+            },
+        },
     });
 
 interface HomeComponentProps {
@@ -71,44 +71,22 @@ interface HomeComponentState {
 }
 
 class HomeComponent extends React.Component<HomeComponentProps, HomeComponentState> {
-    interval: any;
+    private interval: any;
 
     constructor(props: HomeComponentProps) {
         super(props);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
-            logoutDelay: null
+            logoutDelay: null,
         };
     }
 
-    componentWillMount() {
+    public componentWillMount() {
         this.props.onGetReadme();
     }
 
-    handleLogout() {
-        this.setState({
-            logoutDelay: 5
-        });
-        this.props.onPreLogout();
-        this.interval = setInterval(() => {
-            const delay = this.state.logoutDelay - 1;
-            this.setState({
-                logoutDelay: delay
-            });
-            if (delay <= 0) {
-                clearInterval(this.interval);
-                this.props.onLogout();
-                return;
-            }
-        }, 1000);
-    }
-
-    handleLogin() {
-        this.props.history.push('/login');
-    }
-
-    render() {
+    public render() {
         const { classes } = this.props;
         const btn = this.props.user ? (
             <Tooltip title={this.props.user.username}>
@@ -163,11 +141,34 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
             </div>
         );
     }
+
+    private handleLogout() {
+        this.setState({
+            logoutDelay: 5,
+        });
+        this.props.onPreLogout();
+        this.interval = setInterval(() => {
+            const delay = this.state.logoutDelay - 1;
+            this.setState({
+                logoutDelay: delay,
+            });
+            if (delay <= 0) {
+                clearInterval(this.interval);
+                this.props.onLogout();
+                return;
+            }
+        }, 1000);
+    }
+
+    private handleLogin() {
+        this.props.history.push('/login');
+    }
+
 }
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    readme: state.home.readme
+    readme: state.home.readme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -180,13 +181,13 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
                 message: 'Logging out...',
                 variant: 'info',
                 duration: 5000,
-                placement: 'bottom left'
-            })
+                placement: 'bottom left',
+            }),
         );
     },
     onGetReadme: () => {
         dispatch(homeActions.getReadme());
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HomeComponent));

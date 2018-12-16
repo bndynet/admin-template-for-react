@@ -1,0 +1,44 @@
+{
+    "project": "./tsconfig.json",
+    "extends": ["tslint:latest", "tslint-react"],
+    "rules": {
+        "jsx-alignment": false,
+        "jsx-no-lambda": false, // TODO
+        "jsx-no-multiline-js": false, // TODO
+        "quotemark": [
+			true,
+			"single"
+        ],
+        "ordered-imports": false,
+        "grouped-imports": false,
+        "object-literal-sort-keys": false,
+        "interface-name": [true, "never-prefix"],
+        "max-classes-per-file": [true, 5, "exclude-class-expressions"],
+        "object-literal-key-quotes": [true, "as-needed"],
+        "no-submodule-imports": false,
+        "max-line-length": {
+            "options": [260]
+        },
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-consecutive-blank-lines": false,
+        "no-console": {
+            "severity": "warning",
+            "options": [
+                "debug",
+                "info",
+                "log",
+                "time",
+                "timeEnd",
+                "trace"
+            ]
+        }
+    },
+    "jsRules": {
+        "max-line-length": {
+            "options": [120]
+        }
+    }
+}

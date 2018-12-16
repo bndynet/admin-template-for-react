@@ -3,16 +3,19 @@ import _merge from 'lodash-es/merge';
 // Uncomment or define it in index.html to specify your environment.
 // window.__APP_ENV__ = 'your env'
 
-export type Config = {
+export interface Config {
     clientId?: string;
     clientSecret?: string;
     oauthBaseURL?: string;
     resourceBaseURL?: string;
-};
+}
 
 const getConfig = (): Config => {
     const env = window.__APP_ENV__ || process.env.NODE_ENV;
 
+    // eslint-disable-next-line no-console
+    /*eslint no-console: "error"*/
+    // tslint:disable-next-line:no-console
     console.info(`Application is running in ${env} mode.`);
 
     switch (env) {

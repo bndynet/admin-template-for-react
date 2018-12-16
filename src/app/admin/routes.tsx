@@ -4,17 +4,17 @@ const routes = [
     {
         path: '/admin',
         exact: true,
-        component: DashboardComponent
+        component: DashboardComponent,
     },
     {
         path: '/admin/dashboard',
         exact: true,
-        component: DashboardComponent
+        component: DashboardComponent,
     },
     {
         path: '/admin/markdown',
         exact: true,
-        component: MarkdownComponent, 
+        component: MarkdownComponent,
     },
 ];
 

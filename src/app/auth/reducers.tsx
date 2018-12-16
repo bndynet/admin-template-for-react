@@ -10,12 +10,12 @@ export function auth(state: AuthState = {}, action): AuthState {
                 accessToken: action.payload.access_token,
                 tokenType: action.payload.token_type,
                 expiresIn: action.payload.expires_in,
-                scope: action.payload.scope
+                scope: action.payload.scope,
             };
         case ACTION_GETUSER_SUCCESS:
             return {
                 ...state,
-                user: action.payload
+                user: action.payload,
             };
         case ACTION_LOGOUT_REQUEST:
             return { ...state, user: null };

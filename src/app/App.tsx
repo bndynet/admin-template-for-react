@@ -16,19 +16,19 @@ const styles = (theme: Theme) => {
     return createStyles({
         '@global': {
             a: {
-                color: 'inherit'
+                color: 'inherit',
             },
             '.recharts-tooltip-label': {
-                color: theme.palette.common.black
-            }
+                color: theme.palette.common.black,
+            },
         },
         progressBar: {
             position: 'fixed',
             top: 0,
             left: 0,
             width: '100%',
-            zIndex: 2000
-        }
+            zIndex: 2000,
+        },
     });
 };
 
@@ -47,7 +47,7 @@ class AppComponent extends React.Component<AppComponentProps> {
         super(props);
     }
 
-    render() {
+    public render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
         return (
             <MuiThemeProvider theme={theme}>
@@ -77,12 +77,12 @@ const mapStateToProps = (state) => {
         requesting: state.global.requesting,
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
-        theme: muiFinalTheme
+        theme: muiFinalTheme,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    onCloseNotifier: () => dispatch(globalActions.unnotify())
+    onCloseNotifier: () => dispatch(globalActions.unnotify()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppComponent));

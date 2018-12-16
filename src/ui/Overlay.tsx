@@ -16,15 +16,15 @@ const styles = (theme: Theme) =>
             width: '100%',
             height: '100vh',
             backgroundColor: fade(theme.palette.background.default, 0.5),
-            zIndex: 9999
+            zIndex: 9999,
         },
         overlayClose: {
-            display: 'none'
-        }
+            display: 'none',
+        },
     });
 
 class Overlay extends React.Component<{ classes: any; open: boolean; }, {}> {
-    render() {
+    public render() {
         const { classes, open} = this.props;
         return <div className={classNames(classes.overlay, !open && classes.overlayClose)}>{this.props.children}</div>;
     }

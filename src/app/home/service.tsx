@@ -1,5 +1,5 @@
-import { Ajax } from "../../helpers/ajax";
-import config from "../../config";
+import config from '../../config';
+import { Ajax } from '../../helpers/ajax';
 
 class ResourceService extends Ajax {
     constructor() {
@@ -7,7 +7,7 @@ class ResourceService extends Ajax {
             baseURL: config.resourceBaseURL,
             onResponseError: (error) => {
                 console.warn('TODO: handle global exception for response!');
-            }
+            },
         });
     }
 }
