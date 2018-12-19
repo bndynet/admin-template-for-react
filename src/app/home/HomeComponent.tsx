@@ -140,7 +140,7 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
                     {
                         Object.keys(supportLocales).map((key: string) => (
                             <Button className={classes.btn} key={key} variant='outlined' onClick={() => this.props.onChangeLocale(key)}>
-                                <FormattedMessage id={supportLocales[key]} />
+                                {supportLocales[key]}
                             </Button>
                         ))
                     }
