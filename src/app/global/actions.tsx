@@ -1,4 +1,5 @@
 import { NotifierOptions } from '../../ui';
+import { LocaleType } from '../../locales';
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
@@ -7,6 +8,7 @@ export const ACTION_NOTIFIER_HIDE = 'G_NOTIFIER_HIDE';
 export const ACTION_REQUESTING_SHOW = 'G_REQUESTING_SHOW';
 export const ACTION_REQUESTING_HIDE = 'G_REQUESTING_HIDE';
 export const ACTION_THEME_CHANGE = 'G_THEME_CHANGE';
+export const ACTION_LOCALE_CHANGE = 'G_LOCALE_CHANGE';
 
 export const global = (state = { loading: false }, action) => {
     switch (action.type) {
@@ -29,6 +31,9 @@ export const global = (state = { loading: false }, action) => {
 
         case ACTION_THEME_CHANGE:
             return {...state, theme: action.theme };
+
+        case ACTION_LOCALE_CHANGE:
+            return {...state, locale: action.locale };
 
         default:
             return state;
@@ -92,6 +97,11 @@ const globalActions = {
     changeTheme: (theme) => ({
         type: ACTION_THEME_CHANGE,
         theme,
+    }),
+
+    changeLocale: (locale: LocaleType) => ({
+        type: ACTION_LOCALE_CHANGE,
+        locale,
     }),
 };
 

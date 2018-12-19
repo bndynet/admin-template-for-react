@@ -14,6 +14,9 @@ import authActions from '../auth/actions';
 import homeActions from './actions';
 import globalActions from '../global/actions';
 
+import { FormattedMessage } from 'react-intl';
+import { LocaleType, supportLocales } from '../../locales';
+
 const styles = (theme: Theme) =>
     createStyles({
         '@global': {
@@ -48,11 +51,9 @@ const styles = (theme: Theme) =>
             right: 0,
             border: 0,
         },
-        linkButton: {
-            '& button': {
-                marginRight: theme.spacing.unit,
-                marginBottom: theme.spacing.unit * 4,
-            },
+        btn: {
+            marginRight: theme.spacing.unit,
+            marginBottom: theme.spacing.unit * 4,
         },
     });
 
@@ -64,6 +65,7 @@ interface HomeComponentProps {
     onLogout(): void;
     onPreLogout(): void;
     onGetReadme(): void;
+    onChangeLocale(locale: string): void;
 }
 
 interface HomeComponentState {
@@ -125,16 +127,23 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
                     />
                 </a>
                 <main className={classes.main}>
-                    <Link to='/login' className={classes.linkButton}>
-                        <Button variant='outlined'>
-                            <Typography>Log in</Typography>
+                    <Link to='/login'>
+                        <Button variant='outlined' className={classes.btn}>
+                            <Typography><FormattedMessage id='login' /></Typography>
                         </Button>
                     </Link>
-                    <Link to='/admin' className={classes.linkButton}>
-                        <Button variant='outlined'>
-                            <Typography>Admin Panel</Typography>
+                    <Link to='/admin'>
+                        <Button variant='outlined' className={classes.btn}>
+                            <Typography><FormattedMessage id='adminPanel' /></Typography>
                         </Button>
                     </Link>
+                    {
+                        Object.keys(supportLocales).map((key: string) => (
+                            <Button className={classes.btn} key={key} variant='outlined' onClick={() => this.props.onChangeLocale(key)}>
+                                <FormattedMessage id={supportLocales[key]} />
+                            </Button>
+                        ))
+                    }
                     <ReactMarkdown source={this.props.readme} className={'markdown-body'} />
                     {btn}
                 </main>
@@ -187,6 +196,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     },
     onGetReadme: () => {
         dispatch(homeActions.getReadme());
+    },
+    onChangeLocale: (locale: LocaleType) => {
+        dispatch(globalActions.changeLocale(locale));
     },
 });
 

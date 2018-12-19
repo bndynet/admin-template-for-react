@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import { Dispatch, Action } from 'redux';
+import { IntlProvider } from 'react-intl';
 import _merge from 'lodash-es/merge';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import globalActions from './global/actions';
 import { routes } from '../config';
 import { themeConfig } from '../theme';
 import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
+import { messages, defaultLocale } from '../locales';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -40,8 +42,10 @@ interface AppComponentProps {
     showNotifier: boolean;
     notifierOptions: NotifierOptions;
     theme: any;
+    locale: string;
     onCloseNotifier: () => void;
 }
+
 class AppComponent extends React.Component<AppComponentProps> {
     constructor(props) {
         super(props);
@@ -50,19 +54,21 @@ class AppComponent extends React.Component<AppComponentProps> {
     public render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
         return (
-            <MuiThemeProvider theme={theme}>
-                <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
-                <Notifier
-                    options={notifierOptions}
-                    open={showNotifier}
-                    onCloseButtonClick={this.props.onCloseNotifier}
-                    hasCloseButton={true}
-                />
-                <Overlay open={this.props.loading}>
-                    <Loading loadingText={this.props.loadingText} />
-                </Overlay>
-                {renderRoutes(routes)}
-            </MuiThemeProvider>
+            <IntlProvider locale={this.props.locale} key={this.props.locale} messages={messages[this.props.locale]}>
+                <MuiThemeProvider theme={theme}>
+                    <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
+                    <Notifier
+                        options={notifierOptions}
+                        open={showNotifier}
+                        onCloseButtonClick={this.props.onCloseNotifier}
+                        hasCloseButton={true}
+                    />
+                    <Overlay open={this.props.loading}>
+                        <Loading loadingText={this.props.loadingText} />
+                    </Overlay>
+                    {renderRoutes(routes)}
+                </MuiThemeProvider>
+            </IntlProvider>
         );
     }
 }
@@ -78,6 +84,7 @@ const mapStateToProps = (state) => {
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
         theme: muiFinalTheme,
+        locale: state.global.locale || defaultLocale,
     };
 };
 

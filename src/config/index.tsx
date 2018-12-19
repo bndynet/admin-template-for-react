@@ -1,4 +1,5 @@
 import _merge from 'lodash-es/merge';
+import { LocaleType } from '../locales';
 
 // Uncomment or define it in index.html to specify your environment.
 // window.__APP_ENV__ = 'your env'
@@ -8,15 +9,14 @@ export interface Config {
     clientSecret?: string;
     oauthBaseURL?: string;
     resourceBaseURL?: string;
+    defaultLocale?: LocaleType;
 }
 
 const getConfig = (): Config => {
     const env = window.__APP_ENV__ || process.env.NODE_ENV;
 
-    // eslint-disable-next-line no-console
-    /*eslint no-console: "error"*/
     // tslint:disable-next-line:no-console
-    console.info(`Application is running in ${env} mode.`);
+    console.info(`Application is running in '${env}' mode.`);
 
     switch (env) {
         case 'production':
