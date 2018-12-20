@@ -58,18 +58,17 @@ module.exports = {
                     loader: "babel-loader",
                 }],
             },
-            {
-                test: /\.html$/,
-                use: [{
-                    loader: "html-loader"
-                }]
-            }
         ]
     },
     plugins: [
         new PrintTimeWebpackPlugin(),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
+            title: app.title,
+            meta: {
+                author: app.author,
+                description: app.description,
+            },
             inject: true,
             template: './assets/index.html',
         }),
@@ -79,11 +78,6 @@ module.exports = {
             APP_BUILD: JSON.stringify(Date.now()),
         }),
         new webpack.ProvidePlugin({
-            // _: 'lodash',
-            // $: 'jquery',
-            // jQuery: 'jquery',
-            // 'window.jQuery': 'jquery',
-            // moment: 'moment/moment.js',
             React: 'react',
             ReactDOM: 'react-dom',
         }),
