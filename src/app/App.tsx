@@ -13,6 +13,8 @@ import { routes } from '../config';
 import { themeConfig } from '../theme';
 import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
 import { messages, defaultLocale } from '../locales';
+import { KEY_LOCALE, KEY_THEME } from './global';
+import storage from '../storage';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -74,7 +76,7 @@ class AppComponent extends React.Component<AppComponentProps> {
 }
 
 const mapStateToProps = (state) => {
-    const clientTheme = state.global.theme;
+    const clientTheme = state.global.theme || storage.get(KEY_THEME);
     const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
     const muiFinalTheme = createMuiTheme(finalTheme);
     return {
@@ -84,7 +86,7 @@ const mapStateToProps = (state) => {
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
         theme: muiFinalTheme,
-        locale: state.global.locale || defaultLocale,
+        locale: state.global.locale || storage.get(KEY_LOCALE) || defaultLocale,
     };
 };
 

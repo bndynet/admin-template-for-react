@@ -1,5 +1,7 @@
 import { NotifierOptions } from '../../ui';
 import { LocaleType } from '../../locales';
+import { KEY_LOCALE, KEY_THEME } from '.';
+import storage from '../../storage';
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
@@ -30,9 +32,11 @@ export const global = (state = { loading: false }, action) => {
             return { ...state, showNotifier: false };
 
         case ACTION_THEME_CHANGE:
+            storage.set(KEY_THEME, action.theme);
             return {...state, theme: action.theme };
 
         case ACTION_LOCALE_CHANGE:
+            storage.set(KEY_LOCALE, action.locale);
             return {...state, locale: action.locale };
 
         default:

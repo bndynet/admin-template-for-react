@@ -13,7 +13,7 @@ const styles = (theme: Theme) =>
             display: 'inline-block',
             fontSize: '0.75rem',
             lineHeight: '1em',
-            padding: `${theme.spacing.unit / 2} ${theme.spacing.unit / 2}`,
+            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 2}px`,
         },
         spacing: {
             marginBottom: theme.spacing.unit,
