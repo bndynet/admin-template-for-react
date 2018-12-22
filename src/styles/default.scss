@@ -9,3 +9,11 @@ a {
 .markdown-body {
     color: inherit;
 }
+
+.dark {
+    .markdown-body {
+        pre {
+            background-color: #424242;
+        }
+    }
+}

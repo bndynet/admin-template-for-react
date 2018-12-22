@@ -56,21 +56,23 @@ class AppComponent extends React.Component<AppComponentProps> {
     public render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
         return (
-            <IntlProvider locale={this.props.locale} key={this.props.locale} messages={messages[this.props.locale]}>
-                <MuiThemeProvider theme={theme}>
-                    <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
-                    <Notifier
-                        options={notifierOptions}
-                        open={showNotifier}
-                        onCloseButtonClick={this.props.onCloseNotifier}
-                        hasCloseButton={true}
-                    />
-                    <Overlay open={this.props.loading}>
-                        <Loading loadingText={this.props.loadingText} />
-                    </Overlay>
-                    {renderRoutes(routes)}
-                </MuiThemeProvider>
-            </IntlProvider>
+            <div className={theme.palette.type}>
+                <IntlProvider locale={this.props.locale} key={this.props.locale} messages={messages[this.props.locale]}>
+                    <MuiThemeProvider theme={theme}>
+                        <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
+                        <Notifier
+                            options={notifierOptions}
+                            open={showNotifier}
+                            onCloseButtonClick={this.props.onCloseNotifier}
+                            hasCloseButton={true}
+                        />
+                        <Overlay open={this.props.loading}>
+                            <Loading loadingText={this.props.loadingText} />
+                        </Overlay>
+                        {renderRoutes(routes)}
+                    </MuiThemeProvider>
+                </IntlProvider>
+            </div>
         );
     }
 }
