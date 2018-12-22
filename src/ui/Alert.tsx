@@ -12,7 +12,7 @@ const styles = (theme: Theme) =>
         ...variantColor(theme),
         root: {
             position: 'relative',
-            padding: `${theme.spacing.unit * 1.5} ${theme.spacing.unit * 2}`,
+            padding: `${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 2}px`,
             marginBottom: theme.spacing.unit * 2,
         },
         header: {

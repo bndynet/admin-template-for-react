@@ -19,8 +19,7 @@ const panelStyles = (theme: Theme) =>
         },
         header: {
             display: 'flex',
-            padding: `${theme.spacing.unit / 2} ${theme.spacing.unit} ${theme.spacing.unit / 2} ${theme.spacing.unit *
-                1.5}`,
+            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
             borderBottom: `solid 1px ${theme.palette.divider}`,
         },
         headerForCollapsed: {
@@ -35,7 +34,7 @@ const panelStyles = (theme: Theme) =>
         },
         headerToolboxButton: getPanelIconButtonStyle(theme),
         body: {
-            padding: `${theme.spacing.unit} ${theme.spacing.unit * 1.5}`,
+            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 1.5}px`,
         },
     });
 

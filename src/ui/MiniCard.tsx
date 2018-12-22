@@ -22,8 +22,7 @@ const miniCardStyles = (theme: Theme) =>
             },
         },
         body: {
-            padding: `${theme.spacing.unit} ${theme.spacing.unit * 1.5} ${theme.spacing.unit * 2} ${theme.spacing.unit *
-                1.5}`,
+            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 2}px ${theme.spacing.unit * 1.5}px`,
         },
         icon: {
             position: 'absolute',
