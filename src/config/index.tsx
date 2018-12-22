@@ -2,7 +2,7 @@ import _merge from 'lodash-es/merge';
 import { LocaleType } from '../locales';
 
 // Uncomment or define it in index.html to specify your environment.
-// window.__APP_ENV__ = 'your env'
+// window.__APP_ENV__ = 'your env';
 
 export interface Config {
     clientId?: string;
