@@ -8,6 +8,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import { Alert, ContentHeader, Panel, MiniCard, Tag } from '../../../ui';
 import SimpleLineChart from './SimpleLineChart';
+import FormatterPanel from './FormaterPanel';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -137,6 +138,9 @@ class DashboardComponent extends React.Component<
                         ],
                     })}
                 </Grid>
+
+                <ContentHeader title='Formatters' />
+                <FormatterPanel />
             </div>
         );
     }

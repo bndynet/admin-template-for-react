@@ -1,5 +1,5 @@
 {
-    "_name": "中文",
+    "hi": "{name} 您好！",
 
     "login": "登录",
     "adminPanel": "控制台",

@@ -1,5 +1,5 @@
 {
-    "_name": "English",
+    "hi": "Hi {name}",
 
     "login": "Log in",
     "adminPanel": "Admin Panel",
