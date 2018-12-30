@@ -44,7 +44,7 @@ const renderCard = (props) => {
                 title='150'
                 description='New Orders'
                 {...props}
-                links={[ [ 'Home', '/' ], [ 'More info', '/admin/dashboard' ] ]}
+                links={{Home: '/', 'More info': '/admin/dashboard'}}
                 icon={<ShoppingCartIcon />}
             />
         </Grid>
