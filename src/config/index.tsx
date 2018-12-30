@@ -7,8 +7,8 @@ import { LocaleType } from '../locales';
 export interface Config {
     clientId?: string;
     clientSecret?: string;
-    oauthBaseURL?: string;
-    resourceBaseURL?: string;
+    oauthBaseUri?: string;
+    resourceBaseUri?: string;
     defaultLocale?: LocaleType;
 }
 

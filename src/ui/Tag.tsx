@@ -21,14 +21,14 @@ const styles = (theme: Theme) =>
         },
     });
 
-class Tag extends React.Component<{ classes: any; variant: string; hasSpacing?: boolean }> {
+class Tag extends React.Component<{ classes: any; className?: string; variant: string; hasSpacing?: boolean }> {
     public render() {
-        const { classes, variant, hasSpacing } = this.props;
+        const { classes, className, variant, hasSpacing } = this.props;
         return (
             <Typography
                 color='inherit'
                 variant='caption'
-                className={classNames(classes.root, classes[variant], hasSpacing && classes.spacing)}
+                className={classNames(className, classes.root, classes[variant], hasSpacing && classes.spacing)}
             >
                 {this.props.children}
             </Typography>

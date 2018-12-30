@@ -41,6 +41,7 @@ const styles = (theme: Theme) =>
 class Alert extends React.Component<
     {
         classes: any;
+        className?: string;
         title: string;
         message?: string;
         shadow?: number;
@@ -59,10 +60,10 @@ class Alert extends React.Component<
     }
 
     public render() {
-        const { classes, title, message, shadow, variant, square, closeable } = this.props;
+        const { classes, className, title, message, shadow, variant, square, closeable } = this.props;
         const Icon = variantIcon[variant];
         return (
-            <Collapse in={!this.state.close}>
+            <Collapse in={!this.state.close} className={className}>
                 <Paper className={classNames(classes.root, classes[variant])} elevation={shadow} square={square}>
                     {title && (
                         <Typography className={classes.header} variant='subtitle1' component='h3' color='inherit'>

@@ -4,7 +4,7 @@ import { Ajax } from '../../helpers/ajax';
 class ResourceService extends Ajax {
     constructor() {
         super({
-            baseURL: config.resourceBaseURL,
+            baseURL: config.resourceBaseUri,
             onResponseError: (error) => {
                 console.warn('TODO: handle global exception for response!');
             },

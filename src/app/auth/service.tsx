@@ -10,18 +10,18 @@ const service = {
         data.client_id = config.clientId;
         data.client_secret = config.clientSecret;
         return new Ajax({
-            baseURL: config.oauthBaseURL,
+            baseURL: config.oauthBaseUri,
         }).postForm('/oauth/token', data);
     },
     getUser: (): AxiosPromise => {
         return new Ajax({
-            baseURL: config.oauthBaseURL,
+            baseURL: config.oauthBaseUri,
             headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
         }).get('/oauth/me');
     },
     logout: (): AxiosPromise => {
         return new Ajax({
-            baseURL: config.oauthBaseURL,
+            baseURL: config.oauthBaseUri,
             headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
         }).get('/login?logout');
     },
