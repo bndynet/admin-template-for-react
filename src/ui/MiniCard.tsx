@@ -62,7 +62,7 @@ class MiniCard extends React.Component<
         description: string;
         icon: any;
         variant?: string;
-        links: Map<string, string>;
+        links: {[key: string]: string};
     },
     {}
 > {

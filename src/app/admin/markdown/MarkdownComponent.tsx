@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import * as ReactMarkdown from 'react-markdown';
 import { Grid, Theme, createStyles, withStyles, TextField } from '@material-ui/core';
 
-import { ContentHeader } from '../../../ui';
+import { PageHeader } from '../../../ui';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -53,7 +53,7 @@ Code block
         const { classes } = this.props;
         return (
             <div>
-                <ContentHeader title='Markdown Editor' />
+                <PageHeader title='Markdown Editor' />
                 <Grid container={true}>
                     <Grid item={true} xs={6}>
                         <TextField

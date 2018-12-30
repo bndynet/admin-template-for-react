@@ -6,7 +6,7 @@ import { Theme, createStyles, withStyles, Grid, IconButton } from '@material-ui/
 import HelpIcon from '@material-ui/icons/Help';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-import { Alert, ContentHeader, Panel, MiniCard, Tag } from '../../../ui';
+import { Alert, PageHeader, Panel, MiniCard, Tag } from '../../../ui';
 import SimpleLineChart from './SimpleLineChart';
 import FormatterPanel from './FormaterPanel';
 
@@ -94,7 +94,7 @@ class DashboardComponent extends React.Component<
         const { classes } = this.props;
         return (
             <div data-name='top'>
-                <ContentHeader
+                <PageHeader
                     title='Dashboard'
                     navigation={{
                         Home: '/',
@@ -108,12 +108,12 @@ class DashboardComponent extends React.Component<
                     {renderCard({})}
                 </Grid>
 
-                <ContentHeader title='Chart' />
+                <PageHeader title='Chart' />
                 <Typography component='div' className={classes.chartContainer}>
                     <SimpleLineChart />
                 </Typography>
 
-                <ContentHeader title='Alerts' />
+                <PageHeader title='Alerts' />
                 <Grid container={true} spacing={16 as GridSpacing}>
                     {renderAlert({ variant: 'info', square: true, closeable: false })}
                     {renderAlert({ variant: 'success', square: true, closeable: false })}
@@ -121,7 +121,7 @@ class DashboardComponent extends React.Component<
                     {renderAlert({ variant: 'error', square: false, closeable: true, shadow: 3 })}
                 </Grid>
 
-                <ContentHeader title='Panels' />
+                <PageHeader title='Panels' />
                 <Grid container={true} spacing={16 as GridSpacing}>
                     {renderPanel({ variant: 'info' })}
                     {renderPanel({ variant: 'success' })}
@@ -139,7 +139,9 @@ class DashboardComponent extends React.Component<
                     })}
                 </Grid>
 
-                <ContentHeader title='Formatters' />
+                <PageHeader title='Formatters' toolbox={
+                    <Typography>Here is the toolbox placeholder.</Typography>
+                } />
                 <FormatterPanel />
             </div>
         );
