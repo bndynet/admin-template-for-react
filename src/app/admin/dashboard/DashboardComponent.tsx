@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import { GridSpacing } from '@material-ui/core/Grid';
-import { Theme, createStyles, withStyles, Grid, IconButton } from '@material-ui/core';
+import { Theme, createStyles, withStyles, Grid, IconButton, Button } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -121,7 +121,12 @@ class DashboardComponent extends React.Component<
                     {renderAlert({ variant: 'error', square: false, closeable: true, shadow: 3 })}
                 </Grid>
 
-                <PageHeader title='Panels' />
+                <PageHeader title='Panels' toolbox={(
+                    <div>
+                        <Button variant='contained'>Button</Button>
+                        <Button>Button</Button>
+                    </div>
+                )} />
                 <Grid container={true} spacing={16 as GridSpacing}>
                     {renderPanel({ variant: 'info' })}
                     {renderPanel({ variant: 'success' })}

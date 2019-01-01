@@ -14,7 +14,7 @@ const styles = (theme: Theme) =>
             '& h2': {
                 flex: 1,
             },
-            '& *': {
+            '& > *': {
                 alignSelf: 'flex-end',
             },
         },
