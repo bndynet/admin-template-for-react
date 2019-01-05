@@ -33,7 +33,5 @@ const getConfig = (): Config => {
     }
 };
 
-const config = getConfig();
-
-export default config;
+export const config = getConfig();
 export { default as routes } from './routes';

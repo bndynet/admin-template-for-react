@@ -1,7 +1,6 @@
-import { NotifierOptions } from '../../ui';
-import { LocaleType } from '../../locales';
-import { KEY_LOCALE, KEY_THEME } from '.';
-import storage from '../../storage';
+import { NotifierOptions } from '../ui';
+import { LocaleType } from '../locales';
+import storage from '../storage';
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
@@ -12,39 +11,10 @@ export const ACTION_REQUESTING_HIDE = 'G_REQUESTING_HIDE';
 export const ACTION_THEME_CHANGE = 'G_THEME_CHANGE';
 export const ACTION_LOCALE_CHANGE = 'G_LOCALE_CHANGE';
 
-export const global = (state = { loading: false }, action) => {
-    switch (action.type) {
-        case ACTION_LOADING_SHOW:
-            const { loadingText } = action.payload;
-            return { ...state, loading: true, loadingText };
-        case ACTION_LOADING_HIDE:
-            return { ...state, loading: false };
+export const KEY_LOCALE = 'locale';
+export const KEY_THEME = 'theme';
 
-        case ACTION_REQUESTING_SHOW:
-            return { ...state, requesting: true };
-        case ACTION_REQUESTING_HIDE:
-            return { ...state, requesting: false};
-
-        case ACTION_NOTIFIER_SHOW:
-            const notifierOptions = action.notifierOptions;
-            return { ...state, showNotifier: true, notifierOptions };
-        case ACTION_NOTIFIER_HIDE:
-            return { ...state, showNotifier: false };
-
-        case ACTION_THEME_CHANGE:
-            storage.set(KEY_THEME, action.theme);
-            return {...state, theme: action.theme };
-
-        case ACTION_LOCALE_CHANGE:
-            storage.set(KEY_LOCALE, action.locale);
-            return {...state, locale: action.locale };
-
-        default:
-            return state;
-    }
-};
-
-const globalActions = {
+export const actions = {
     showLoading: (text?: string) => ({
         type: ACTION_LOADING_SHOW,
         payload: {
@@ -109,4 +79,35 @@ const globalActions = {
     }),
 };
 
-export default globalActions;
+export const reducer = (state = { loading: false }, action) => {
+    switch (action.type) {
+        case ACTION_LOADING_SHOW:
+            const { loadingText } = action.payload;
+            return { ...state, loading: true, loadingText };
+        case ACTION_LOADING_HIDE:
+            return { ...state, loading: false };
+
+        case ACTION_REQUESTING_SHOW:
+            return { ...state, requesting: true };
+        case ACTION_REQUESTING_HIDE:
+            return { ...state, requesting: false};
+
+        case ACTION_NOTIFIER_SHOW:
+            const notifierOptions = action.notifierOptions;
+            return { ...state, showNotifier: true, notifierOptions };
+        case ACTION_NOTIFIER_HIDE:
+            return { ...state, showNotifier: false };
+
+        case ACTION_THEME_CHANGE:
+            storage.set(KEY_THEME, action.theme);
+            return {...state, theme: action.theme };
+
+        case ACTION_LOCALE_CHANGE:
+            storage.set(KEY_LOCALE, action.locale);
+            return {...state, locale: action.locale };
+
+        default:
+            return state;
+    }
+};
+

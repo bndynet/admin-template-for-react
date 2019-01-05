@@ -10,9 +10,9 @@ import { Typography } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import authActions from '../auth/actions';
 import homeActions from './actions';
-import globalActions from '../global/actions';
+import { actions as authActions } from '../../service/auth';
+import { actions as globalActions } from '../../service/global';
 
 import { FormattedMessage } from 'react-intl';
 import { LocaleType, supportLocales } from '../../locales';

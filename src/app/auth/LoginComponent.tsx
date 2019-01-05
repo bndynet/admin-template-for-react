@@ -15,8 +15,8 @@ import AccountCircleRounded from '@material-ui/icons/AccountCircleRounded';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import authActions from './actions';
-import globalActions from '../global/actions';
+import { actions as authActions } from '../../service/auth';
+import { actions as globalActions } from '../../service/global';
 
 const styles = (theme: Theme) =>
     createStyles({

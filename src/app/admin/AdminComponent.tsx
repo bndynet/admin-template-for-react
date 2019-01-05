@@ -24,10 +24,11 @@ import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 import BrightnessLowIcon from '@material-ui/icons/BrightnessLow';
 
 import AdminMenuComponent from './AdminMenuComponent';
-import authActions from '../auth/actions';
 import { themeConfig } from '../../theme';
+import { actions as authActions } from '../../service/auth';
+import { actions as globalActions } from '../../service/global';
+
 import routes from './routes';
-import globalActions from '../global/actions';
 
 const styles = (theme: Theme) =>
     createStyles({

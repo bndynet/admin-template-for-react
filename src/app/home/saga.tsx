@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { ACTION_README_GET, ACTION_README_GET_SUCCESS } from './actionTypes';
 
-import globalActions from '../global/actions';
+import { actions as globalActions } from '../../service/global';
 import homeService from './service';
 
 function* getReadMe(action) {

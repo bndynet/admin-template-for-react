@@ -8,12 +8,11 @@ import _merge from 'lodash-es/merge';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
 
-import globalActions from './global/actions';
 import { routes } from '../config';
 import { themeConfig } from '../theme';
 import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
 import { messages, defaultLocale } from '../locales';
-import { KEY_LOCALE, KEY_THEME } from './global';
+import { KEY_LOCALE, KEY_THEME, actions as globalActions } from '../service/global';
 import storage from '../storage';
 
 const styles = (theme: Theme) => {

@@ -1,4 +1,4 @@
-import config from '../../config';
+import { config } from '../../config';
 import { Ajax } from '../../helpers/ajax';
 
 class ResourceService extends Ajax {

@@ -1,7 +1,7 @@
 import { addLocaleData } from 'react-intl';
 import * as en from 'react-intl/locale-data/en';
 import * as zh from 'react-intl/locale-data/zh';
-import config from '../config';
+import { config } from '../config';
 
 addLocaleData([...en, ...zh]);
 
