@@ -6,7 +6,7 @@ import { createStyles, Theme, withStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
     createStyles({
-        contentHeader: {
+        pageHeader: {
             display: 'flex',
             paddingTop: theme.spacing.unit * 2,
             paddingBottom: theme.spacing.unit,
@@ -14,11 +14,13 @@ const styles = (theme: Theme) =>
             '& h2': {
                 flex: 1,
             },
+            '& > *': {
+                alignSelf: 'flex-end',
+            },
         },
         breadcrumb: {
             display: 'flex',
             '& > *': {
-                alignSelf: 'flex-end',
                 color: theme.palette.text.primary,
                 textDecoration: 'none',
             },
@@ -32,7 +34,16 @@ const styles = (theme: Theme) =>
                 color: theme.palette.text.disabled,
             },
         },
-        chartContainer: {},
+        toolbox: {
+            display: 'flex',
+            '& > *': {
+                display: 'flex',
+            },
+            '& > * > *': {
+                color: theme.palette.text.primary,
+                textDecoration: 'none',
+            },
+        },
     });
 
 const renderNavItem = (navigation) => {
@@ -43,11 +54,11 @@ const renderNavItem = (navigation) => {
     return items;
 };
 
-class ContentHeader extends React.Component<{ classes: any; title: string; navigation?: object }, {}> {
+class PageHeader extends React.Component<{ classes: any; title: string | JSX.Element; toolbox?: JSX.Element, navigation?: {[key: string]: string}}, {}> {
     public render() {
-        const { classes, title, navigation } = this.props;
+        const { classes, title, navigation, toolbox } = this.props;
         return (
-            <div className={classes.contentHeader}>
+            <div className={classes.pageHeader}>
                 <Typography component='h2' variant='h5'>
                     {title}
                 </Typography>
@@ -56,9 +67,14 @@ class ContentHeader extends React.Component<{ classes: any; title: string; navig
                         {renderNavItem(navigation)}
                     </Typography>
                 )}
+                {toolbox && (
+                    <div className={classes.toolbox}>
+                        {toolbox}
+                    </div>
+                )}
             </div>
         );
     }
 }
 
-export default withStyles(styles)(ContentHeader);
+export default withStyles(styles)(PageHeader);

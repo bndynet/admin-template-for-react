@@ -1,6 +1,6 @@
 export { default as ALink } from './ALink';
 export { default as Alert } from './Alert';
-export { default as ContentHeader } from './ContentHeader';
+export { default as PageHeader } from './PageHeader';
 export { default as Loading } from './Loading';
 export { default as MiniCard } from './MiniCard';
 export { default as Notifier, NotifierOptions } from './Notifier';

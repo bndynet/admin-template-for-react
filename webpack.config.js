@@ -4,11 +4,12 @@ const app = require("./package.json");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PrintTimeWebpackPlugin = require('print-time-webpack');
 const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: ['./src/index.tsx'],
     performance: {
         hints: false
     }, // disable to show warnings about performance
@@ -34,12 +35,16 @@ module.exports = {
                 use: [{
                     loader: 'url-loader',
                 }]
-            }, {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }, {
-                test: /\.scss$/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
+                ],
             }, {
                 test: /\.tsx?$/,
                 loader: "awesome-typescript-loader"
@@ -86,6 +91,10 @@ module.exports = {
         }, {
             from: './README.md',
         }]),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css',
+            chunkFilename: '[id].[hash].css',
+        }),
         new HeaderInjectionWebpackPlugin(),
     ],
     optimization: {
@@ -105,7 +114,7 @@ module.exports = {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10
-                }
+                },
             }
         }
     },

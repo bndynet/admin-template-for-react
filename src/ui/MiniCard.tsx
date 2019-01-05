@@ -62,7 +62,7 @@ class MiniCard extends React.Component<
         description: string;
         icon: any;
         variant?: string;
-        links: Map<string, string>;
+        links: {[key: string]: string};
     },
     {}
 > {
@@ -74,20 +74,8 @@ class MiniCard extends React.Component<
         const { classes, className, icon, title, description, links } = this.props;
         const linkEls = [];
         if (links) {
-            for (const [ key, value ] of links) {
-                linkEls.push(
-                    value ? (
-                        <Link color='default' key={key} to={value}>
-                            <Typography color='inherit' variant='caption'>
-                                {key}
-                            </Typography>
-                        </Link>
-                    ) : (
-                        <Typography color='inherit' variant='caption' key={key}>
-                            {key}
-                        </Typography>
-                    ),
-                );
+            for (const key of Object.keys(links)) {
+                linkEls.push(this.getLink(key, links[key]));
             }
         }
         return (
@@ -106,6 +94,32 @@ class MiniCard extends React.Component<
                 </Typography>
             </Paper>
         );
+    }
+
+    private getLink(text: string, url?: string): JSX.Element {
+        if (url) {
+            if (url.indexOf('://') > 0) {
+                return (
+                    <Typography color='inherit' variant='caption' key={text}>
+                        <a href={url} target='_blank'> {text} </a>
+                    </Typography>
+                );
+            } else {
+                return (
+                    <Link color='default' key={text} to={url}>
+                        <Typography color='inherit' variant='caption'>
+                            {text}
+                        </Typography>
+                    </Link>
+                );
+            }
+        } else {
+            return (
+                <Typography color='inherit' variant='caption' key={text}>
+                    {text}
+                </Typography>
+            );
+        }
     }
 }
 
