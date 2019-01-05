@@ -10,7 +10,7 @@ import { Typography } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import homeActions from './actions';
+import { actions as resourceActions } from '../../service/resource';
 import { actions as authActions } from '../../service/auth';
 import { actions as globalActions } from '../../service/global';
 
@@ -177,7 +177,7 @@ class HomeComponent extends React.Component<HomeComponentProps, HomeComponentSta
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    readme: state.home.readme,
+    readme: state.resource.readme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -195,7 +195,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         );
     },
     onGetReadme: () => {
-        dispatch(homeActions.getReadme());
+        dispatch(resourceActions.getReadme());
     },
     onChangeLocale: (locale: LocaleType) => {
         dispatch(globalActions.changeLocale(locale));
