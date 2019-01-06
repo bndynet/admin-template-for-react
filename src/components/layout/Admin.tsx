@@ -23,12 +23,12 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 import BrightnessLowIcon from '@material-ui/icons/BrightnessLow';
 
-import AdminMenuComponent from './AdminMenuComponent';
-import { themeConfig } from '../../theme';
-import { actions as authActions } from '../../service/auth';
-import { actions as globalActions } from '../../service/global';
+import { themeConfig } from 'app/theme';
+import { adminRoutes } from 'app/config';
+import { actions as authActions } from 'app/service/auth';
+import { actions as globalActions } from 'app/service/global';
 
-import routes from './routes';
+import AdminMenu from './AdminMenu';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -173,7 +173,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-class AdminComponent extends React.Component<
+class Admin extends React.Component<
     {
         user: any;
         classes: any;
@@ -266,7 +266,7 @@ class AdminComponent extends React.Component<
                     open={this.state.largeMainMenu}
                     >
                     <Divider />
-                    <AdminMenuComponent mini={!this.state.largeMainMenu} />
+                    <AdminMenu mini={!this.state.largeMainMenu} />
                     <div
                         className={classNames(
                             classes.drawerPaperFooter,
@@ -291,7 +291,7 @@ class AdminComponent extends React.Component<
                     </div>
                 </Drawer>
                 <main className={classes.content}>
-                    {renderRoutes(routes)}
+                    {renderRoutes(adminRoutes)}
                 </main>
             </div>
         );
@@ -346,4 +346,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withWidth()(AdminComponent)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withWidth()(Admin)));

@@ -1,30 +1,30 @@
-import HomeComponent from '../app/home/HomeComponent';
-import CallbackComponent from '../app/auth/CallbackComponent';
-import LoginComponent from '../app/auth/LoginComponent';
-import LogoutComponent from '../app/auth/LogoutComponent';
-import AdminComponent from '../app/admin/AdminComponent';
+import Home from '../components/pages/Home';
+import Callback from '../components/pages/auth/Callback';
+import Login from '../components/pages/auth/Login';
+import Logout from '../components/pages/auth/Logout';
+import Admin from '../components/layout/Admin';
 
 const routes = [
     {
         path: '/',
         exact: true,
-        component: HomeComponent,
+        component: Home,
     },
     {
         path: '/login',
-        component: LoginComponent,
+        component: Login,
     },
     {
         path: '/logout',
-        component: LogoutComponent,
+        component: Logout,
     },
     {
         path: '/callback',
-        component: CallbackComponent,
+        component: Callback,
     },
     {
         path: '/admin',
-        component: AdminComponent,
+        component: Admin,
     },
 ];
 

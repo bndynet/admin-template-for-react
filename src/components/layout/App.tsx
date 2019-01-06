@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { renderRoutes } from 'react-router-config';
 import { Dispatch, Action } from 'redux';
+import { renderRoutes } from 'react-router-config';
 import { IntlProvider } from 'react-intl';
 import _merge from 'lodash-es/merge';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
 
-import { routes } from '../config';
-import { themeConfig } from '../theme';
-import { Notifier, NotifierOptions, Overlay, Loading } from '../ui';
-import { messages, defaultLocale } from '../locales';
-import { KEY_LOCALE, KEY_THEME, actions as globalActions } from '../service/global';
-import storage from '../storage';
+import { routes } from 'app/config';
+import { themeConfig } from 'app/theme';
+import { Notifier, NotifierOptions, Overlay, Loading } from 'app/ui';
+import { messages, defaultLocale } from 'app/locales';
+import { KEY_LOCALE, KEY_THEME, actions as globalActions } from 'app/service/global';
+import storage from 'app/helpers/storage';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -47,7 +47,7 @@ interface AppComponentProps {
     onCloseNotifier: () => void;
 }
 
-class AppComponent extends React.Component<AppComponentProps> {
+class App extends React.Component<AppComponentProps> {
     constructor(props) {
         super(props);
     }
@@ -95,4 +95,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     onCloseNotifier: () => dispatch(globalActions.unnotify()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));

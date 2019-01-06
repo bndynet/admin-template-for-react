@@ -1,10 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const app = require("./package.json");
+const app = require('./package.json');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
 const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
 
@@ -19,7 +19,8 @@ module.exports = {
         publicPath: '/',
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".scss", "css"]
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', 'css'],
+        alias:  resolveTsconfigPathsToAlias(),
     },
     module: {
         rules: [{
@@ -47,7 +48,7 @@ module.exports = {
                 ],
             }, {
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
+                loader: 'awesome-typescript-loader'
             }, {
                 test: /\.tsx$/,
                 enforce: 'pre',
@@ -57,10 +58,10 @@ module.exports = {
                 }]
             }, {
                 test: /\.(js|jsx)$/,
-                enforce: "pre",
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: [{
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
                 }],
             },
         ]
@@ -99,7 +100,7 @@ module.exports = {
     ],
     optimization: {
         splitChunks: {
-            chunks: "async",
+            chunks: 'async',
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
@@ -119,3 +120,23 @@ module.exports = {
         }
     },
 };
+
+function resolveTsconfigPathsToAlias({
+    tsconfigPath = './tsconfig.json',
+    webpackConfigBasePath = './'
+} = {}, ) {
+    const {
+        paths
+    } = require(tsconfigPath).compilerOptions;
+
+    const aliases = {};
+
+    Object.keys(paths).forEach((item) => {
+        const key = item.replace('/*', '');
+        const value = path.resolve(webpackConfigBasePath, paths[item][0].replace('/*', ''));
+
+        aliases[key] = value;
+    });
+
+    return aliases;
+}

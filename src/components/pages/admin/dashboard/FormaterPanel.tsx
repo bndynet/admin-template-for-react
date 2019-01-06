@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Formatter, RawHtml } from '../../../ui';
 import { Paper, List, ListItem, ListItemText } from '@material-ui/core';
+
+import { Formatter, RawHtml } from 'app/ui';
 
 export default function FormatterPanel() {
     return (

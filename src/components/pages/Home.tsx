@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
+import { FormattedMessage } from 'react-intl';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,12 +11,11 @@ import { Typography } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import { actions as resourceActions } from '../../service/resource';
-import { actions as authActions } from '../../service/auth';
-import { actions as globalActions } from '../../service/global';
+import { actions as resourceActions } from 'app/service/resource';
+import { actions as authActions } from 'app/service/auth';
+import { actions as globalActions } from 'app/service/global';
 
-import { FormattedMessage } from 'react-intl';
-import { LocaleType, supportLocales } from '../../locales';
+import { LocaleType, supportLocales } from 'app/locales';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -72,7 +72,7 @@ interface HomeComponentState {
     logoutDelay?: number;
 }
 
-class HomeComponent extends React.Component<HomeComponentProps, HomeComponentState> {
+class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     private interval: any;
 
     constructor(props: HomeComponentProps) {
@@ -202,4 +202,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HomeComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home));

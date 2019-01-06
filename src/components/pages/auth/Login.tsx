@@ -15,8 +15,8 @@ import AccountCircleRounded from '@material-ui/icons/AccountCircleRounded';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { actions as authActions } from '../../service/auth';
-import { actions as globalActions } from '../../service/global';
+import { actions as authActions } from 'app/service/auth';
+import { actions as globalActions } from 'app/service/global';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -66,7 +66,7 @@ interface LoginComponentState {
     rememberMe: boolean;
 }
 
-class LoginComponent extends React.Component<LoginComponentProps, LoginComponentState> {
+class Login extends React.Component<LoginComponentProps, LoginComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -170,4 +170,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));

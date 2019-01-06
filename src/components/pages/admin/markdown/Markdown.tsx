@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import * as ReactMarkdown from 'react-markdown';
 import { Grid, Theme, createStyles, withStyles, TextField } from '@material-ui/core';
 
-import { PageHeader } from '../../../ui';
+import { PageHeader } from 'app/ui';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-class MarkdownComponent extends React.Component<{
+class Markdown extends React.Component<{
     classes: any,
 }, { input: string }> {
 
@@ -79,4 +79,4 @@ Code block
     }
 }
 
-export default withStyles(styles)(MarkdownComponent);
+export default withStyles(styles)(Markdown);

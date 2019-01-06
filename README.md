@@ -17,7 +17,10 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 3. `npm start` to start web server
 4. `npm run build` to build production code into **dist** folder
 
-## Application Configurations
+
+## Development
+
+### Application Configurations
 
 ```ts
 export interface Config {
@@ -36,7 +39,7 @@ export interface Config {
 - ./src/config/app.prod.tsx
 - ./src/config/app.common.tsx
 
-### Custom more environments
+### Customize more environments
 
 1. New file **./src/config/app.[env_name].tsx** to override your configurations
 2. Use below code to merge settings in **./src/config/index.tsx**
@@ -51,11 +54,11 @@ export interface Config {
     ```
 4. `npm start` and `npm run build` will always use the environment you defined
 
-## Components based on Material UI or some else
+### Components based on Material UI or some else
 
 `Alert`, `Loading`, `MiniCard`, `Notifier`, `Overlay`, `Panel`, `Tag`, ...
 
-## i18n/l10n Support
+### i18n/l10n Support
 
 ```tsx
 <Formatter i18nKey='hi' value={{name: 'Bendy'}} description='This is a welcome message.' descriptionPlacement='top' />
@@ -68,3 +71,30 @@ export interface Config {
 
 <Formatter value={1459832991883} formatAs='fromNow' />
 ```
+
+
+
+### Debug with **Chrome** in **Visual Studio Code**
+
+1. Requires **[Visual Studio Code](https://code.visualstudio.com/)** as IDE and extension **[Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)**
+
+1. `npm start` to run application
+
+1. Click menu **Debug** > **Start Debugging** to debug with generated **.vscode/launch.json** file as below:
+
+    ```json
+    {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "chrome",
+                "request": "launch",
+                "name": "Launch Chrome against localhost",
+                "url": "http://localhost:8080",
+                "webRoot": "${workspaceFolder}"
+            }
+        ]
+    }
+    ```
+
+1. Set breakpoints in your **vscode** and operate in the new Chrome window **Start Debugging** opened

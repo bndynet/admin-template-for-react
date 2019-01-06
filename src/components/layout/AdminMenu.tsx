@@ -8,8 +8,8 @@ import { Theme, createStyles, withStyles, List, Collapse } from '@material-ui/co
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import menus from './menus';
-import { themeConfig } from '../../theme';
+import { adminMenus } from 'app/config';
+import { themeConfig } from 'app/theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -85,7 +85,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }, {}> {
+class AdminMenu extends React.Component<{ classes: any; mini?: boolean }, {}> {
     constructor(props) {
         super(props);
         this.state = {};
@@ -97,7 +97,7 @@ class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }
         const { classes, mini } = this.props;
         return (
             <List className={classNames(classes.root, mini && classes.rootMini)}>
-                {menus.map((menu) => this.renderMenuItem(menu, classes))}
+                {adminMenus.map((menu) => this.renderMenuItem(menu, classes))}
             </List>
         );
     }
@@ -159,4 +159,4 @@ class AdminMenuCompnent extends React.Component<{ classes: any; mini?: boolean }
     }
 }
 
-export default withStyles(styles)(AdminMenuCompnent);
+export default withStyles(styles)(AdminMenu);

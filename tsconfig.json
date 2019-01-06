@@ -5,7 +5,18 @@
         "noImplicitAny": false,
         "module": "commonjs",
         "target": "es6",
-        "jsx": "react"
+        "jsx": "react",
+        "baseUrl": ".",
+        "paths": {
+            "app/ui": ["src/ui"],
+            "app/components": ["src/components"],
+            "app/config": ["src/config"],
+            "app/theme": ["src/theme"],
+            "app/redux": ["src/redux"],
+            "app/locales": ["src/locales"],
+            "app/service/*": ["src/service/*"],
+            "app/helpers/*": ["src/helpers/*"]
+        }
     },
     "include": [
         "./src/**/*"

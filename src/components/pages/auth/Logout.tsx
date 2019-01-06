@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { CssBaseline, Paper, Typography, Theme, createStyles, withStyles } from '@material-ui/core';
+import { CssBaseline, Typography, Theme, createStyles, withStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircleOutlined';
-import { themeConfig } from '../../theme';
-import { Panel } from '../../ui';
+import { themeConfig } from 'app/theme';
+import { Panel } from 'app/ui';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -31,7 +31,7 @@ interface LogoutComponentProps {
     classes: any;
 }
 
-class LogoutComponent extends React.Component<LogoutComponentProps> {
+class Logout extends React.Component<LogoutComponentProps> {
     public render() {
         const { classes } = this.props;
         return (
@@ -51,4 +51,4 @@ class LogoutComponent extends React.Component<LogoutComponentProps> {
     }
 }
 
-export default withStyles(styles)(LogoutComponent);
+export default withStyles(styles)(Logout);

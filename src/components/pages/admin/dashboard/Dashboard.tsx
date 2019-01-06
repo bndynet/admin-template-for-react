@@ -6,7 +6,7 @@ import { Theme, createStyles, withStyles, Grid, IconButton, Button } from '@mate
 import HelpIcon from '@material-ui/icons/Help';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-import { Alert, PageHeader, Panel, MiniCard, Tag } from '../../../ui';
+import { Alert, PageHeader, Panel, MiniCard, Tag } from 'app/ui';
 import SimpleLineChart from './SimpleLineChart';
 import FormatterPanel from './FormaterPanel';
 
@@ -84,7 +84,7 @@ const renderPanel = (props) => {
     );
 };
 
-class DashboardComponent extends React.Component<
+class Dashboard extends React.Component<
     {
         classes: any;
     },
@@ -153,4 +153,4 @@ class DashboardComponent extends React.Component<
     }
 }
 
-export default withStyles(styles)(DashboardComponent);
+export default withStyles(styles)(Dashboard);

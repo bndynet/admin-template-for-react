@@ -35,3 +35,5 @@ const getConfig = (): Config => {
 
 export const config = getConfig();
 export { default as routes } from './routes';
+export { default as adminRoutes } from './routes.admin';
+export { default as adminMenus } from './menus.admin';
