@@ -8,6 +8,7 @@
     "start": "webpack-dev-server --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",
     "lint": "tslint -p tsconfig.json",
+    "precommit": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -70,16 +71,23 @@
     "eslint-plugin-react": "^7.8.2",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.9.0",
     "postcss-loader": "^3.0.0",
+    "prettier": "^1.15.3",
     "print-time-webpack": "^2.0.3",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "sass-loader": "^7.0.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
+    "stylelint": "^9.9.0",
+    "stylelint-config-recommended": "^2.1.0",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-eslint-rules": "^5.4.0",
     "tslint-loader": "^3.5.4",
     "tslint-react": "^3.6.0",
     "typescript": "^3.1.6",
@@ -88,5 +96,17 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.scss": "stylelint --syntax=scss"
   }
 }

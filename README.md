@@ -1,5 +1,7 @@
 # Admin Template for React
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
 
 ![](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home.png)
@@ -16,7 +18,6 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 2. `npm install` to install all dependencies
 3. `npm start` to start web server
 4. `npm run build` to build production code into **dist** folder
-
 
 ## Development
 
@@ -71,8 +72,6 @@ export interface Config {
 
 <Formatter value={1459832991883} formatAs='fromNow' />
 ```
-
-
 
 ### Debug with **Chrome** in **Visual Studio Code**
 

@@ -1,45 +1,12 @@
 {
     "project": "./tsconfig.json",
-    "extends": ["tslint:latest", "tslint-react"],
+    "extends": [
+        "tslint:latest",
+        "tslint-react",
+        "tslint-eslint-rules",
+        "tslint-config-prettier"
+    ],
     "rules": {
-        "jsx-alignment": false,
-        "jsx-no-lambda": false, // TODO
-        "jsx-no-multiline-js": false, // TODO
-        "quotemark": [
-			true,
-			"single"
-        ],
-        "ordered-imports": false,
-        "grouped-imports": false,
-        "object-literal-sort-keys": false,
-        "interface-name": [true, "never-prefix"],
-        "max-classes-per-file": [true, 5, "exclude-class-expressions"],
-        "object-literal-key-quotes": [true, "as-needed"],
-        "no-submodule-imports": false,
-        "no-implicit-dependencies": [true, ["app"]],
-        "max-line-length": {
-            "options": [260]
-        },
-        "new-parens": true,
-        "no-arg": true,
-        "no-bitwise": true,
-        "no-conditional-assignment": true,
-        "no-consecutive-blank-lines": false,
-        "no-console": {
-            "severity": "warning",
-            "options": [
-                "debug",
-                "info",
-                "log",
-                "time",
-                "timeEnd",
-                "trace"
-            ]
-        }
-    },
-    "jsRules": {
-        "max-line-length": {
-            "options": [120]
-        }
+        "no-implicit-dependencies": [true, ["app"]]
     }
 }
