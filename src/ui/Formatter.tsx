@@ -1,8 +1,14 @@
-import * as React from 'react';
-import { Typography, Tooltip } from '@material-ui/core';
-import { FormattedMessage, FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl';
+import * as React from "react";
+import { Typography, Tooltip } from "@material-ui/core";
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedDate,
+    FormattedTime,
+    FormattedRelative,
+} from "react-intl";
 
-type FormatterFormatAs = 'string' | 'number' | 'date' | 'time' | 'fromNow';
+type FormatterFormatAs = "string" | "number" | "date" | "time" | "fromNow";
 
 export default class Formatter extends React.Component<{
     i18nKey?: string;
@@ -14,17 +20,20 @@ export default class Formatter extends React.Component<{
     format?: string;
 }> {
     public render() {
-        let tooltipPlacement = this.props.descriptionPlacement as 'top';
+        let tooltipPlacement = this.props.descriptionPlacement as "top";
         if (!tooltipPlacement) {
-            tooltipPlacement = 'top';
+            tooltipPlacement = "top";
         }
         const text = (
-            <Typography style={{ display: 'inline' }} component='span'>
+            <Typography style={{ display: "inline" }} component="span">
                 {this.getItem()}
             </Typography>
         );
         return this.props.description ? (
-            <Tooltip title={this.props.description} placement={tooltipPlacement}>
+            <Tooltip
+                title={this.props.description}
+                placement={tooltipPlacement}
+            >
                 {text}
             </Tooltip>
         ) : (
@@ -36,17 +45,17 @@ export default class Formatter extends React.Component<{
         const key = this.props.i18nKey;
         let formatAs = this.props.formatAs;
         if (this.props.i18nKey) {
-            formatAs = 'string';
+            formatAs = "string";
         }
         if (!formatAs && this.props.value) {
-            if (typeof this.props.value === 'string') {
-                formatAs = 'string';
-            } else if (typeof this.props.value === 'number') {
-                formatAs = 'number';
+            if (typeof this.props.value === "string") {
+                formatAs = "string";
+            } else if (typeof this.props.value === "number") {
+                formatAs = "number";
             }
         }
         switch (formatAs) {
-            case 'string':
+            case "string":
                 return (
                     <FormattedMessage
                         id={key}
@@ -56,25 +65,42 @@ export default class Formatter extends React.Component<{
                     />
                 );
 
-            case 'number':
+            case "number":
                 return <FormattedNumber value={this.props.value} />;
 
-            case 'date':
-                const dateValue = typeof this.props.value === 'number' ? new Date(this.props.value) : this.props.value;
-                return <FormattedDate value={dateValue} format={this.props.format} />;
+            case "date":
+                const dateValue =
+                    typeof this.props.value === "number"
+                        ? new Date(this.props.value)
+                        : this.props.value;
+                return (
+                    <FormattedDate
+                        value={dateValue}
+                        format={this.props.format}
+                    />
+                );
 
-            case 'time':
-                const timeValue = typeof this.props.value === 'number' ? new Date(this.props.value) : this.props.value;
-                return <FormattedTime value={timeValue} format={this.props.format} />;
+            case "time":
+                const timeValue =
+                    typeof this.props.value === "number"
+                        ? new Date(this.props.value)
+                        : this.props.value;
+                return (
+                    <FormattedTime
+                        value={timeValue}
+                        format={this.props.format}
+                    />
+                );
 
-            case 'fromNow':
+            case "fromNow":
                 const fromNowValue =
-                    typeof this.props.value === 'number' ? new Date(this.props.value) : this.props.value;
+                    typeof this.props.value === "number"
+                        ? new Date(this.props.value)
+                        : this.props.value;
                 return <FormattedRelative value={fromNowValue} />;
 
             default:
                 const msg = `! Can not obtain format type, you can set it mannually using <I18n formatAs="..." />`;
-                console.error(msg);
                 return <span>{msg}</span>;
         }
     }
