@@ -26,12 +26,14 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
 import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
 
+import { SlidePanel } from "app/ui";
 import { themeConfig } from "app/theme";
 import { adminRoutes } from "app/config";
 import { actions as authActions } from "app/service/auth";
@@ -84,16 +86,12 @@ const styles = (theme: Theme) =>
             },
         },
         toolbar: {
-            paddingRight: theme.spacing.unit * 2,
             minHeight: themeConfig.headerHeight,
         },
         avatar: {
             marginLeft: theme.spacing.unit * 1.5,
-            width: "2.6rem",
-            height: "2.6rem",
             backgroundColor: theme.palette.secondary.main,
             cursor: "pointer",
-            fontSize: "2rem",
         },
         avatarMenu: {
             minWidth: 160,
@@ -193,13 +191,14 @@ class Admin extends React.Component<
         onLogout: () => void;
         onThemeChange: (toDark: boolean) => void;
     },
-    { largeMainMenu: boolean; avatarMenuAnchor: any }
+    { largeMainMenu: boolean; avatarMenuAnchor: any; sidePanelOpen: boolean }
 > {
     constructor(props) {
         super(props);
         this.state = {
             largeMainMenu: isWidthUp("sm", this.props.width),
             avatarMenuAnchor: null,
+            sidePanelOpen: false,
         };
     }
 
@@ -285,6 +284,14 @@ class Admin extends React.Component<
                                 Logout
                             </MenuItem>
                         </Menu>
+                        <IconButton
+                            color="inherit"
+                            onClick={() =>
+                                this.setState({ sidePanelOpen: true })
+                            }
+                        >
+                            <MoreVertIcon fontSize="large" />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -335,6 +342,15 @@ class Admin extends React.Component<
                 <main className={classes.content}>
                     {renderRoutes(adminRoutes)}
                 </main>
+                <SlidePanel
+                    width={600}
+                    anchor="right"
+                    title="Panel Title"
+                    open={this.state.sidePanelOpen}
+                    onClose={this.handleSidePanelClose}
+                >
+                    <Typography>This is a side panel.</Typography>
+                </SlidePanel>
             </div>
         );
     }
@@ -362,6 +378,12 @@ class Admin extends React.Component<
     private handleLogout = () => {
         this.handleAvatarMenuClose();
         this.props.onLogout();
+    };
+
+    private handleSidePanelClose = () => {
+        this.setState({
+            sidePanelOpen: false,
+        });
     };
 }
 
