@@ -1,3 +1,8 @@
+@import "variables";
+
+@include generateTRBL("margin", 0, 1, 2);
+@include generateTRBL("padding", 0, 1, 2);
+
 a {
     text-decoration: none;
 }
@@ -21,6 +26,26 @@ a {
 
 .text-center {
     text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.font-xs {
+    font-size: 0.5em;
+}
+
+.font-sm {
+    font-size: 0.75em;
+}
+
+.font-lg {
+    font-size: 1.25em;
+}
+
+.font-xl {
+    font-size: 1.5em;
 }
 
 .dark {

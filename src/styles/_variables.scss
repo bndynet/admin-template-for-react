@@ -1,0 +1,27 @@
+
+$TRBL: top, right, bottom, left;
+
+@mixin generateTRBL($property, $units...) {
+    @each $unit in $units {
+        @if $unit == 1 {
+            .#{$property} {
+                #{$property}: $unit * 8px;
+            }
+        } @else {
+            .#{$property}-#{$unit} {
+                #{$property}: $unit * 8px;
+            }
+        }
+        @each $item in $TRBL {
+            @if $unit == 1 {
+                .#{$property}-#{$item} {
+                    #{$property}-#{$item}: $unit * 8px;
+                }
+            } @else {
+                .#{$property}-#{$item}-#{$unit} {
+                    #{$property}-#{$item}: $unit * 8px;
+                }
+            }
+        }
+    }
+}
