@@ -87,6 +87,7 @@ const styles = (theme: Theme) =>
         },
         toolbar: {
             minHeight: themeConfig.headerHeight,
+            paddingRight: 0,
         },
         avatar: {
             marginLeft: theme.spacing.unit * 1.5,
