@@ -1,6 +1,15 @@
 # Admin Template for React
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+![](https://img.shields.io/badge/Language-TypeScript-blue.svg?style=flat-square)
+![](https://img.shields.io/badge/Language-SCSS-blue.svg?style=flat-square)
+![](https://img.shields.io/badge/React-16.3-brightgreen.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/React-Redux-brightgreen.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/React-react--router--config-brightgreen.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/React-react--intl-brightgreen.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/React-connected--react--router-brightgreen.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/React-Redux%20Saga-brightgreen.svg?style=flat-square&logo=react)
+[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
 
@@ -28,9 +37,9 @@ export interface Config {
     // following options used to log in
     clientId?: string;
     clientSecret?: string;
-    oauthBaseURL?: string;
+    oauthBaseUri?: string;
     // define your resource base url
-    resourceBaseURL?: string;
+    resourceBaseUri?: string;
     // default locale for language and datetime format
     defaultLocale?: LocaleType;
 }
@@ -97,3 +106,10 @@ export interface Config {
     ```
 
 1. Set breakpoints in your **vscode** and operate in the new Chrome window **Start Debugging** opened
+
+### Recommendatory extensions for **Chrome**
+
+- React Developer Tools
+- Redux DevTools
+
+Above extensions will show you the **Actions**, **States** and **Reducers** in **Chrome** console.
