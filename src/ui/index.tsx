@@ -10,3 +10,6 @@ export { default as Tag } from "./Tag";
 export { default as Formatter } from "./Formatter";
 export { default as RawHtml } from "./RawHtml";
 export { default as SlidePanel } from "./SlidePanel";
+export { default as LinkButton } from "./LinkButton";
+export { default as VerticalMenu } from "./VerticalMenu";
+export { default as HorizontalMenu } from "./HorizontalMenu";

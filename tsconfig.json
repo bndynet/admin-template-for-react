@@ -9,6 +9,7 @@
         "baseUrl": ".",
         "paths": {
             "app/ui": ["src/ui"],
+            "app/types": ["src/types"],
             "app/components": ["src/components"],
             "app/config": ["src/config"],
             "app/theme": ["src/theme"],
