@@ -1,52 +1,51 @@
-import * as React from 'react';
-import * as ReactMarkdown from 'react-markdown';
-import { FormattedMessage } from 'react-intl';
-import { Dispatch, Action } from 'redux';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
+import { FormattedMessage } from "react-intl";
+import { Dispatch, Action } from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { Typography } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Typography, Button, Fab } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-import { actions as resourceActions } from 'app/service/resource';
-import { actions as authActions } from 'app/service/auth';
-import { actions as globalActions } from 'app/service/global';
+import { actions as resourceActions } from "app/service/resource";
+import { actions as authActions } from "app/service/auth";
+import { actions as globalActions } from "app/service/global";
 
-import { LocaleType, supportLocales } from 'app/locales';
+import { LocaleType, supportLocales } from "app/locales";
 
 const styles = (theme: Theme) =>
     createStyles({
-        '@global': {
+        "@global": {
             body: {
                 paddingTop: theme.spacing.unit * 4,
                 color: theme.palette.text.primary,
                 backgroundColor: theme.palette.background.default,
             },
-            '.markdown-body a': {
+            ".markdown-body a": {
                 color: theme.palette.text.primary,
-                textDecoration: 'underline',
+                textDecoration: "underline",
             },
         },
         main: {
             maxWidth: 845,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            marginLeft: "auto",
+            marginRight: "auto",
         },
         fab: {
-            position: 'fixed',
+            position: "fixed",
             right: theme.spacing.unit * 2,
             bottom: theme.spacing.unit * 2,
             fontSize: 24,
             fontWeight: 700,
-            '&.disabled': {
+            "&.disabled": {
                 color: theme.palette.common.white,
             },
         },
         forkMe: {
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             right: 0,
             border: 0,
@@ -92,59 +91,67 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         const { classes } = this.props;
         const btn = this.props.user ? (
             <Tooltip title={this.props.user.username}>
-                <Button
+                <Fab
                     disabled={!!this.state.logoutDelay}
-                    classes={{ root: classes.fab, disabled: 'disabled' }}
+                    classes={{ root: classes.fab, disabled: "disabled" }}
                     onClick={this.handleLogout}
-                    color='secondary'
-                    variant='fab'>
-                    {this.state.logoutDelay && this.state.logoutDelay > 0 ? (
-                        this.state.logoutDelay
-                    ) : (
-                        this.props.user.username[0]
-                    )}
-                </Button>
+                    color="secondary"
+                >
+                    {this.state.logoutDelay && this.state.logoutDelay > 0
+                        ? this.state.logoutDelay
+                        : this.props.user.username[0]}
+                </Fab>
             </Tooltip>
         ) : (
-            <Tooltip title='Log in'>
-                <Button
-                    classes={{ root: classes.fab, disabled: 'disabled' }}
+            <Tooltip title="Log in">
+                <Fab
+                    classes={{ root: classes.fab, disabled: "disabled" }}
                     onClick={this.handleLogin}
-                    color='primary'
-                    variant='fab'>
+                    color="primary"
+                >
                     <AccountCircleIcon />
-                </Button>
+                </Fab>
             </Tooltip>
         );
 
         return (
             <div className={classes.body}>
-                <a href='https://github.com/bndynet/admin-template-for-react'>
+                <a href="https://github.com/bndynet/admin-template-for-react">
                     <img
                         className={classes.forkMe}
-                        src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png'
-                        alt='Fork me on GitHub'
+                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+                        alt="Fork me on GitHub"
                     />
                 </a>
                 <main className={classes.main}>
-                    <Link to='/login'>
-                        <Button variant='outlined' className={classes.btn}>
-                            <Typography><FormattedMessage id='login' /></Typography>
+                    <Link to="/login">
+                        <Button variant="outlined" className={classes.btn}>
+                            <Typography>
+                                <FormattedMessage id="login" />
+                            </Typography>
                         </Button>
                     </Link>
-                    <Link to='/admin'>
-                        <Button variant='outlined' className={classes.btn}>
-                            <Typography><FormattedMessage id='adminPanel' /></Typography>
+                    <Link to="/admin">
+                        <Button variant="outlined" className={classes.btn}>
+                            <Typography>
+                                <FormattedMessage id="adminPanel" />
+                            </Typography>
                         </Button>
                     </Link>
-                    {
-                        Object.keys(supportLocales).map((key: string) => (
-                            <Button className={classes.btn} key={key} variant='outlined' onClick={() => this.props.onChangeLocale(key)}>
-                                {supportLocales[key]}
-                            </Button>
-                        ))
-                    }
-                    <ReactMarkdown source={this.props.readme} className={'markdown-body'} />
+                    {Object.keys(supportLocales).map((key: string) => (
+                        <Button
+                            className={classes.btn}
+                            key={key}
+                            variant="outlined"
+                            onClick={() => this.props.onChangeLocale(key)}
+                        >
+                            {supportLocales[key]}
+                        </Button>
+                    ))}
+                    <ReactMarkdown
+                        source={this.props.readme}
+                        className={"markdown-body"}
+                    />
                     {btn}
                 </main>
             </div>
@@ -170,12 +177,11 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     }
 
     private handleLogin() {
-        this.props.history.push('/login');
+        this.props.history.push("/login");
     }
-
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     user: state.auth.user,
     readme: state.resource.readme,
 });
@@ -187,10 +193,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     onPreLogout: () => {
         dispatch(
             globalActions.notify({
-                message: 'Logging out...',
-                variant: 'info',
+                message: "Logging out...",
+                variant: "info",
                 duration: 5000,
-                placement: 'bottom left',
+                placement: "bottom left",
             }),
         );
     },
@@ -202,4 +208,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home));
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(withStyles(styles)(Home));
