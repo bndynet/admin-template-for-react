@@ -10,3 +10,4 @@ export { default as Tag } from "./Tag";
 export { default as Formatter } from "./Formatter";
 export { default as RawHtml } from "./RawHtml";
 export { default as SlidePanel } from "./SlidePanel";
+export { default as Chart } from "./Chart";
