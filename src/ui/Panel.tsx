@@ -6,7 +6,6 @@ import {
     createStyles,
     withStyles,
     Typography,
-    Grid,
     IconButton,
     Collapse,
 } from "@material-ui/core";
@@ -23,16 +22,20 @@ const panelStyles = (theme: Theme) =>
     createStyles({
         ...variantBorderColor(theme),
         root: {
-            borderTopStyle: "solid",
             marginBottom: theme.spacing.unit * 2,
+        },
+        rootForBordered: {
+            borderTopStyle: "solid",
         },
         header: {
             display: "flex",
             alignItems: "center",
-            padding: `${theme.spacing.unit / 2}px ${
-                theme.spacing.unit
-            }px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
             borderBottom: `solid 1px ${theme.palette.divider}`,
+            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit +
+                1}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
+        },
+        headerForNonBordered: {
+            paddingTop: theme.spacing.unit / 2 + 2,
         },
         headerForCollapsed: {
             borderBottom: "none",
@@ -94,6 +97,7 @@ class Panel extends React.Component<
                     className={classNames(
                         classes.root,
                         classes[this.props.variant],
+                        this.props.variant && classes.rootForBordered,
                         className,
                     )}
                 >
@@ -103,6 +107,8 @@ class Panel extends React.Component<
                                 classes.header,
                                 this.state.collapsedDone &&
                                     classes.headerForCollapsed,
+                                this.props.variant ||
+                                    classes.headerForNonBordered,
                             )}
                         >
                             <Typography
