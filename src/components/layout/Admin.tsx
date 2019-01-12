@@ -33,13 +33,11 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
 import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
 
-import { SlidePanel } from "app/ui";
+import { SlidePanel, HorizontalMenu, VerticalMenu } from "app/ui";
 import { themeConfig } from "app/theme";
-import { adminRoutes } from "app/config";
+import { adminMenus, adminRoutes } from "app/config";
 import { actions as authActions } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
-
-import AdminMenu from "./AdminMenu";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -60,10 +58,10 @@ const styles = (theme: Theme) =>
         },
         brand: {
             height: themeConfig.headerHeight,
-            flex: 1,
             display: "flex",
             alignItems: "center",
             paddingLeft: theme.spacing.unit * 2,
+            paddingRight: theme.spacing.unit * 2,
         },
         menuButton: {
             padding: theme.spacing.unit,
@@ -85,7 +83,9 @@ const styles = (theme: Theme) =>
                 display: "none",
             },
         },
+
         toolbar: {
+            flex: "inherit",
             minHeight: themeConfig.headerHeight,
             paddingRight: 0,
         },
@@ -237,6 +237,9 @@ class Admin extends React.Component<
                             <MenuIcon />
                         </IconButton>
                     </div>
+
+                    <HorizontalMenu data={adminMenus} />
+
                     <Toolbar
                         disableGutters={!this.state.largeMainMenu}
                         className={classes.toolbar}
@@ -307,7 +310,12 @@ class Admin extends React.Component<
                     open={this.state.largeMainMenu}
                 >
                     <Divider />
-                    <AdminMenu mini={!this.state.largeMainMenu} />
+                    <VerticalMenu
+                        mini={!this.state.largeMainMenu}
+                        width={themeConfig.sidebarWidth}
+                        minWidth={themeConfig.sidebarWidthMini}
+                        data={adminMenus}
+                    />
                     <div
                         className={classNames(
                             classes.drawerPaperFooter,

@@ -1,10 +1,10 @@
-import indigo from '@material-ui/core/colors/indigo';
-import red from '@material-ui/core/colors/red';
-import pink from '@material-ui/core/colors/pink';
-import green from '@material-ui/core/colors/green';
-import lightBlue from '@material-ui/core/colors/lightBlue';
-import amber from '@material-ui/core/colors/amber';
-import { PaletteType } from '@material-ui/core';
+import indigo from "@material-ui/core/colors/indigo";
+import red from "@material-ui/core/colors/red";
+import pink from "@material-ui/core/colors/pink";
+import green from "@material-ui/core/colors/green";
+import lightBlue from "@material-ui/core/colors/lightBlue";
+import amber from "@material-ui/core/colors/amber";
+import { PaletteType } from "@material-ui/core";
 
 // default theme at https://material-ui.com/customization/default-theme/
 const config = {
@@ -15,13 +15,14 @@ const config = {
         // Name of the component
         MuiSvgIcon: {
             root: {
-                fontSize: '1rem',
+                fontSize: "1rem",
+                verticalAlign: "text-top",
             },
             fontSizeSmall: {
-                fontSize: '0.875rem',
+                fontSize: "0.875rem",
             },
             fontSizeLarge: {
-                fontSize: '1.5rem',
+                fontSize: "1.5rem",
             },
         },
         MuiList: {
@@ -36,8 +37,8 @@ const config = {
                 paddingBottom: 8,
                 paddingLeft: 16,
                 paddingRight: 16,
-                '&$dense': {
-                    fontSize: '0.875rem',
+                "&$dense": {
+                    fontSize: "0.875rem",
                 },
             },
             dense: {
@@ -49,7 +50,7 @@ const config = {
         },
     },
     palette: {
-        type: 'light' as PaletteType, // or dark
+        type: "light" as PaletteType, // or dark
         primary: indigo,
         secondary: pink,
         error: red,
