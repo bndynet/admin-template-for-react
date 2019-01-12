@@ -3,6 +3,10 @@
 @include generateTRBL("margin", 0, 1, 2);
 @include generateTRBL("padding", 0, 1, 2);
 
+* {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
 a {
     text-decoration: none;
 }
