@@ -2,15 +2,32 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
-export default class ALink extends Link {
+export default class ALink extends React.Component<{
+    to: string;
+}> {
+    constructor(props) {
+        super(props);
+    }
+
     public render() {
         let result;
         const { to, ...others } = this.props;
-        const isExternalLink = this.props.to
-            .toString()
-            .toLowerCase()
-            .startsWith("http");
-        if (isExternalLink) {
+        const isEmptyLink = !this.props.to;
+        const isExternalLink =
+            this.props.to &&
+            this.props.to
+                .toString()
+                .toLowerCase()
+                .startsWith("http");
+        if (isEmptyLink) {
+            result = (
+                <a {...others}>
+                    <Typography color="inherit" component="span">
+                        {this.props.children}
+                    </Typography>
+                </a>
+            );
+        } else if (isExternalLink) {
             result = (
                 <a href={to as string} {...others}>
                     <Typography color="inherit" component="span">
@@ -20,7 +37,7 @@ export default class ALink extends Link {
             );
         } else {
             result = (
-                <Link {...this.props}>
+                <Link to={to} {...others}>
                     <Typography color="inherit">
                         {this.props.children}
                     </Typography>

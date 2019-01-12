@@ -1,20 +1,50 @@
 import * as React from "react";
-import { Button } from "@material-ui/core";
+import classNames from "classnames";
+import { Button, createStyles, Theme, withStyles } from "@material-ui/core";
 import { ButtonProps } from "@material-ui/core/Button";
 import ALink from "./ALink";
 
 interface LinkButtonProps extends ButtonProps {
     to: string;
+    classes: any;
+    contentAlign?: "left" | "center" | "right";
+    square?: boolean;
 }
 
-export default class LinkButton extends React.Component<LinkButtonProps, {}> {
+const styles = (them: Theme) =>
+    createStyles({
+        root: {
+            width: "100%",
+        },
+        rootSquare: {
+            borderRadius: 0,
+        },
+        labelLeft: {
+            justifyContent: "left",
+        },
+        labelRight: {
+            justifyContent: "right",
+        },
+    });
+
+class LinkButton extends React.Component<LinkButtonProps, {}> {
     public render() {
-        const { className, to } = this.props;
-        const elLink = props => <ALink to={to} {...props} />;
+        const { classes, to, contentAlign, square, ...others } = this.props;
         return (
-            <Button className={className} component={elLink}>
-                {this.props.children}
+            <Button
+                className={classNames(square && classes.rootSquare)}
+                classes={{
+                    label: classNames(
+                        contentAlign === "left" && classes.labelLeft,
+                        contentAlign === "right" && classes.labelRight,
+                    ),
+                }}
+                {...others}
+            >
+                <ALink to={to}>{this.props.children}</ALink>
             </Button>
         );
     }
 }
+
+export default withStyles(styles)(LinkButton);
