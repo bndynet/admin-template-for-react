@@ -16,6 +16,7 @@ import {
     Symbols,
     IconType,
     LegendProps,
+    Label,
 } from "recharts";
 import {
     CircularProgress,
@@ -24,12 +25,22 @@ import {
     Theme,
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { size } from "lodash-es";
 
 export interface Serie {
     key: string;
+    label: string;
     color?: string;
     width?: number;
     type?: "area" | "line" | "bar";
+    legendIconType?:
+        | "circle"
+        | "cross"
+        | "diamond"
+        | "square"
+        | "star"
+        | "triangle"
+        | "wye";
     visualizationType?: LineType;
 }
 
@@ -48,7 +59,7 @@ const styles = (theme: Theme) =>
             backgroundColor: fade(theme.palette.background.paper, 0.6),
         },
         legendItemInactive: {
-            color: theme.palette.action.disabled,
+            color: theme.palette.grey[500],
         },
     });
 
@@ -57,6 +68,8 @@ interface ChartLegendContentProps extends LegendProps {
     series: Serie[];
     onItemClick: (serie: Serie) => void;
 }
+
+const ICON_SIZE = 32;
 
 class ChartLegendContent extends React.Component<
     ChartLegendContentProps,
@@ -72,21 +85,33 @@ class ChartLegendContent extends React.Component<
     }
 
     public render() {
-        const { classes, iconType, iconSize } = this.props;
+        const { classes, align, iconType, iconSize } = this.props;
         return (
-            <div className="customized-legend">
+            <div
+                className="customized-legend"
+                style={{
+                    textAlign: align,
+                }}
+            >
                 {this.props.series &&
-                    this.props.series.map(serie => {
-                        const { key, color } = serie;
+                    this.props.series.map((serie, index) => {
+                        const { key, label, color } = serie;
                         const inactive = !!this.state.offSeries[key];
+                        const margin = {
+                            left: `0 16px 0 0`,
+                            right: `0 0 0 16px`,
+                            center: `0 8px 0 8px`,
+                        };
                         const itemStyles = {
-                            marginRight: 10,
+                            margin: margin[align],
                             cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
                         };
 
                         return (
                             <span
-                                key={key}
+                                key={`legend-item-${index}`}
                                 className={classNames(
                                     "legend-item",
                                     inactive && classes.itemInactive,
@@ -102,28 +127,16 @@ class ChartLegendContent extends React.Component<
                                     viewBox={{
                                         x: 0,
                                         y: 0,
-                                        width: 10,
-                                        height: 10,
+                                        width: ICON_SIZE,
+                                        height: ICON_SIZE,
+                                    }}
+                                    style={{
+                                        marginRight: 4,
                                     }}
                                 >
-                                    <Symbols
-                                        cx={5}
-                                        cy={5}
-                                        type={iconType as "circle"}
-                                        size={50}
-                                        fill={color}
-                                    />
-                                    {inactive && (
-                                        <Symbols
-                                            cx={5}
-                                            cy={5}
-                                            type={iconType as "circle"}
-                                            size={25}
-                                            fill="#FFF"
-                                        />
-                                    )}
+                                    {this.renderIcon(serie, inactive)}
                                 </Surface>
-                                <span>{key}</span>
+                                <span>{label || key}</span>
                             </span>
                         );
                     })}
@@ -134,6 +147,7 @@ class ChartLegendContent extends React.Component<
     private handleLegendItemClick = serie => {
         this.setState({
             offSeries: {
+                ...this.state.offSeries,
                 [serie.key]: !this.state.offSeries[serie.key],
             },
         });
@@ -141,6 +155,83 @@ class ChartLegendContent extends React.Component<
             this.props.onItemClick(serie);
         }
     };
+
+    private renderIcon(serie: Serie, inactive: boolean = false) {
+        const halfSize = ICON_SIZE / 2;
+        const sixthSize = ICON_SIZE / 6;
+        const thirdSize = ICON_SIZE / 3;
+        const color = serie.color;
+        if (!serie.legendIconType) {
+            if (serie.type === "line") {
+                // show line as the legend icon
+                return inactive ? (
+                    <path
+                        strokeWidth={4}
+                        fill="none"
+                        stroke={"#9e9e9e"}
+                        d={`M0,${halfSize}h${thirdSize}
+                                A${sixthSize},${sixthSize},0,1,1,${2 *
+                            thirdSize},${halfSize}
+                                H${ICON_SIZE}M${2 * thirdSize},${halfSize}
+                                A${sixthSize},${sixthSize},0,1,1,${thirdSize},${halfSize}`}
+                        className="recharts-legend-icon"
+                    />
+                ) : (
+                    <path
+                        strokeWidth={4}
+                        fill="none"
+                        stroke={color}
+                        d={`M0,${halfSize}h${thirdSize}
+                                A${sixthSize},${sixthSize},0,1,1,${2 *
+                            thirdSize},${halfSize}
+                                H${ICON_SIZE}M${2 * thirdSize},${halfSize}
+                                A${sixthSize},${sixthSize},0,1,1,${thirdSize},${halfSize}`}
+                        className="recharts-legend-icon"
+                    />
+                );
+            } else {
+                // for area, bar show rect legend
+                return inactive ? (
+                    <path
+                        strokeWidth={4}
+                        stroke={color}
+                        fill="none"
+                        d={`M0,${sixthSize}h${ICON_SIZE}v${halfSize}h${-ICON_SIZE}z`}
+                        className="recharts-legend-icon"
+                    />
+                ) : (
+                    <path
+                        stroke="none"
+                        fill={color}
+                        d={`M0,${sixthSize}h${ICON_SIZE}v${halfSize}h${-ICON_SIZE}z`}
+                        className="recharts-legend-icon"
+                    />
+                );
+            }
+        }
+
+        return inactive ? (
+            <Symbols
+                fill="none"
+                strokeWidth={4}
+                stroke={color}
+                cx={halfSize}
+                cy={halfSize}
+                size={ICON_SIZE - 10}
+                sizeType="diameter"
+                type={serie.legendIconType || "circle"}
+            />
+        ) : (
+            <Symbols
+                fill={color}
+                cx={halfSize}
+                cy={halfSize}
+                size={ICON_SIZE - 10}
+                sizeType="diameter"
+                type={serie.legendIconType || "circle"}
+            />
+        );
+    }
 }
 
 export class Chart extends React.Component<
@@ -158,6 +249,7 @@ export class Chart extends React.Component<
         legendItemIconType?: IconType;
         dataSource?: Promise<any[]> | (() => Promise<any[]>);
         onDataSourceError: (error) => void;
+        onLegendClick: (options) => void;
     },
     {
         loadingDataSource: boolean;
@@ -273,7 +365,6 @@ export class Chart extends React.Component<
                                     case "bar":
                                         return (
                                             <Bar
-                                                style={{ display: "none" }}
                                                 key={index}
                                                 dataKey={serie.key}
                                                 barSize={serie.width || 20}
@@ -311,18 +402,16 @@ export class Chart extends React.Component<
     }
 
     private onLegendClick = p => {
-        const dataKey = p.dataKey;
-        this.setState({
-            offSeries: {
-                [dataKey]: !this.state.offSeries[dataKey],
-            },
-        });
+        if (this.props.onLegendClick) {
+            this.props.onLegendClick(p);
+        }
     };
 
     private onLegentItemClick = serie => {
         const dataKey = serie.key;
         this.setState({
             offSeries: {
+                ...this.state.offSeries,
                 [dataKey]: !this.state.offSeries[dataKey],
             },
         });
