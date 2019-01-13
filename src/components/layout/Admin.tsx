@@ -212,17 +212,18 @@ class Admin extends React.Component<
                 <CssBaseline />
                 <AppBar position="absolute" className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Link to="/" hidden={!this.state.largeMainMenu}>
-                            <Typography
-                                className={classNames(
-                                    "clickable",
-                                    classes.brandTitle,
-                                )}
-                                variant="h5"
-                                component="h1"
-                            >
-                                ADMIN REACT
-                            </Typography>
+                        <Link
+                            to="/"
+                            className={classNames(
+                                "clickable",
+                                classes.brandTitle,
+                            )}
+                            hidden={!this.state.largeMainMenu}
+                        >
+                            <img
+                                src="https://static.bndy.net/images/logo_white.svg"
+                                style={{ height: 60 }}
+                            />
                         </Link>
                         <IconButton
                             color="inherit"

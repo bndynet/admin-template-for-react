@@ -16,7 +16,6 @@ import {
     Symbols,
     IconType,
     LegendProps,
-    Label,
 } from "recharts";
 import {
     CircularProgress,
@@ -25,7 +24,6 @@ import {
     Theme,
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { size } from "lodash-es";
 
 export interface Serie {
     key: string;
