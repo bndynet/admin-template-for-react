@@ -12,6 +12,10 @@ import {
     ComposedChart,
     Bar,
     Area,
+    Surface,
+    Symbols,
+    IconType,
+    LegendProps,
 } from "recharts";
 import {
     CircularProgress,
@@ -43,7 +47,101 @@ const styles = (theme: Theme) =>
             alignItems: "center",
             backgroundColor: fade(theme.palette.background.paper, 0.6),
         },
+        legendItemInactive: {
+            color: theme.palette.action.disabled,
+        },
     });
+
+interface ChartLegendContentProps extends LegendProps {
+    classes?: { itemInactive: string };
+    series: Serie[];
+    onItemClick: (serie: Serie) => void;
+}
+
+class ChartLegendContent extends React.Component<
+    ChartLegendContentProps,
+    {
+        offSeries: any;
+    }
+> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            offSeries: {},
+        };
+    }
+
+    public render() {
+        const { classes, iconType, iconSize } = this.props;
+        return (
+            <div className="customized-legend">
+                {this.props.series &&
+                    this.props.series.map(serie => {
+                        const { key, color } = serie;
+                        const inactive = !!this.state.offSeries[key];
+                        const itemStyles = {
+                            marginRight: 10,
+                            cursor: "pointer",
+                        };
+
+                        return (
+                            <span
+                                key={key}
+                                className={classNames(
+                                    "legend-item",
+                                    inactive && classes.itemInactive,
+                                )}
+                                onClick={() =>
+                                    this.handleLegendItemClick(serie)
+                                }
+                                style={itemStyles}
+                            >
+                                <Surface
+                                    width={iconSize}
+                                    height={iconSize}
+                                    viewBox={{
+                                        x: 0,
+                                        y: 0,
+                                        width: 10,
+                                        height: 10,
+                                    }}
+                                >
+                                    <Symbols
+                                        cx={5}
+                                        cy={5}
+                                        type={iconType as "circle"}
+                                        size={50}
+                                        fill={color}
+                                    />
+                                    {inactive && (
+                                        <Symbols
+                                            cx={5}
+                                            cy={5}
+                                            type={iconType as "circle"}
+                                            size={25}
+                                            fill="#FFF"
+                                        />
+                                    )}
+                                </Surface>
+                                <span>{key}</span>
+                            </span>
+                        );
+                    })}
+            </div>
+        );
+    }
+
+    private handleLegendItemClick = serie => {
+        this.setState({
+            offSeries: {
+                [serie.key]: !this.state.offSeries[serie.key],
+            },
+        });
+        if (this.props.onItemClick) {
+            this.props.onItemClick(serie);
+        }
+    };
+}
 
 export class Chart extends React.Component<
     {
@@ -57,12 +155,14 @@ export class Chart extends React.Component<
         xHeight?: number;
         yWidth?: number;
         legendHeight?: number;
+        legendItemIconType?: IconType;
         dataSource?: Promise<any[]> | (() => Promise<any[]>);
         onDataSourceError: (error) => void;
     },
     {
         loadingDataSource: boolean;
         data: any[];
+        offSeries: any;
     }
 > {
     constructor(props) {
@@ -70,6 +170,7 @@ export class Chart extends React.Component<
         this.state = {
             loadingDataSource: false,
             data: this.props.data,
+            offSeries: {},
         };
     }
 
@@ -133,9 +234,27 @@ export class Chart extends React.Component<
                         {this.props.data && this.props.data.length > 0 && (
                             <Tooltip />
                         )}
-                        <Legend height={this.props.legendHeight || 45} />
+                        <Legend
+                            height={this.props.legendHeight || 45}
+                            iconType={this.props.legendItemIconType || "square"}
+                            onClick={this.onLegendClick}
+                            content={props => (
+                                <ChartLegendContent
+                                    {...props}
+                                    series={this.props.series}
+                                    onItemClick={this.onLegentItemClick}
+                                    classes={{
+                                        itemInactive:
+                                            classes.legendItemInactive,
+                                    }}
+                                />
+                            )}
+                        />
                         {this.props.series &&
                             this.props.series.map((serie, index) => {
+                                if (this.state.offSeries[serie.key]) {
+                                    return;
+                                }
                                 switch (serie.type) {
                                     case "area":
                                         return (
@@ -154,6 +273,7 @@ export class Chart extends React.Component<
                                     case "bar":
                                         return (
                                             <Bar
+                                                style={{ display: "none" }}
                                                 key={index}
                                                 dataKey={serie.key}
                                                 barSize={serie.width || 20}
@@ -189,6 +309,24 @@ export class Chart extends React.Component<
             </div>
         );
     }
+
+    private onLegendClick = p => {
+        const dataKey = p.dataKey;
+        this.setState({
+            offSeries: {
+                [dataKey]: !this.state.offSeries[dataKey],
+            },
+        });
+    };
+
+    private onLegentItemClick = serie => {
+        const dataKey = serie.key;
+        this.setState({
+            offSeries: {
+                [dataKey]: !this.state.offSeries[dataKey],
+            },
+        });
+    };
 }
 
 export default withStyles(styles)(Chart);

@@ -16,6 +16,7 @@
             "app/redux": ["src/redux"],
             "app/locales": ["src/locales"],
             "app/service/*": ["src/service/*"],
+            "app/types/*": ["src/types/*"],
             "app/helpers/*": ["src/helpers/*"]
         }
     },

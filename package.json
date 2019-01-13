@@ -59,7 +59,7 @@
     "@types/react-redux": "^6.0.10",
     "@types/react-router-config": "^1.1.0",
     "@types/react-router-dom": "^4.3.1",
-    "@types/recharts": "^1.1.2",
+    "@types/recharts": "file:local-types/recharts",
     "@types/redux-logger": "^3.0.6",
     "autoprefixer": "^9.4.3",
     "awesome-typescript-loader": "^5.2.1",
