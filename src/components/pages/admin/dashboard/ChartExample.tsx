@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Chart } from "app/ui";
+import { Chart as Bart } from "@bndynet/recharts-wrapper/lib/cjs/src";
 
 const data = [
     { name: "Mon", Visits: 0, Orders: 20 },
@@ -8,7 +9,7 @@ const data = [
 ];
 
 function loadData() {
-    return new Promise((resolve, reject) => {
+    return new Promise<any[]>((resolve, reject) => {
         setTimeout(() => {
             const response = [
                 { name: "Mon", Visits: 2200, Orders: 3400, ShoppingCart: 1210 },
@@ -26,10 +27,10 @@ function loadData() {
 
 function ChartExample() {
     return (
-        <Chart
+        <Bart
             data={data}
-            dataSource={loadData}
             xKey="name"
+            dataSource={loadData}
             series={[
                 { key: "Visits", color: "#82ca9d", type: "bar" },
                 { key: "Orders", color: "#8884d8", type: "area" },
