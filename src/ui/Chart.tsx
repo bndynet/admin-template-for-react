@@ -2,7 +2,6 @@ import * as React from "react";
 import classNames from "classnames";
 import {
     ResponsiveContainer,
-    LineChart,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -10,6 +9,9 @@ import {
     Legend,
     Line,
     LineType,
+    ComposedChart,
+    Bar,
+    Area,
 } from "recharts";
 import {
     CircularProgress,
@@ -22,6 +24,8 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 export interface Serie {
     key: string;
     color?: string;
+    width?: number;
+    type?: "area" | "line" | "bar";
     visualizationType?: LineType;
 }
 
@@ -113,7 +117,7 @@ export class Chart extends React.Component<
                 style={{ width: this.props.width, height }}
             >
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={this.state.data}>
+                    <ComposedChart data={this.state.data}>
                         <XAxis
                             dataKey={this.props.xKey}
                             height={this.props.xHeight}
@@ -131,15 +135,48 @@ export class Chart extends React.Component<
                         )}
                         <Legend height={this.props.legendHeight || 45} />
                         {this.props.series &&
-                            this.props.series.map((serie, index) => (
-                                <Line
-                                    key={index}
-                                    type={serie.visualizationType || "monotone"}
-                                    dataKey={serie.key}
-                                    stroke={serie.color}
-                                />
-                            ))}
-                    </LineChart>
+                            this.props.series.map((serie, index) => {
+                                switch (serie.type) {
+                                    case "area":
+                                        return (
+                                            <Area
+                                                key={index}
+                                                type={
+                                                    serie.visualizationType ||
+                                                    "monotone"
+                                                }
+                                                dataKey={serie.key}
+                                                fill={serie.color}
+                                                stroke={serie.color}
+                                            />
+                                        );
+
+                                    case "bar":
+                                        return (
+                                            <Bar
+                                                key={index}
+                                                dataKey={serie.key}
+                                                barSize={serie.width || 20}
+                                                fill={serie.color}
+                                            />
+                                        );
+
+                                    case "line":
+                                    default:
+                                        return (
+                                            <Line
+                                                key={index}
+                                                type={
+                                                    serie.visualizationType ||
+                                                    "monotone"
+                                                }
+                                                dataKey={serie.key}
+                                                stroke={serie.color}
+                                            />
+                                        );
+                                }
+                            })}
+                    </ComposedChart>
                 </ResponsiveContainer>
                 {this.state.loadingDataSource && (
                     <div

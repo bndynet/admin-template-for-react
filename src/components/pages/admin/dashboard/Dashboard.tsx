@@ -14,7 +14,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import { Alert, PageHeader, Panel, MiniCard, Tag } from "app/ui";
-import SimpleLineChart from "./SimpleLineChart";
+import ChartExample from "./ChartExample";
 import FormatterPanel from "./FormaterPanel";
 
 const styles = (theme: Theme) =>
@@ -119,7 +119,7 @@ class Dashboard extends React.Component<
 
                 <PageHeader title="Chart" />
                 <Typography component="div" className={classes.chartContainer}>
-                    <SimpleLineChart />
+                    <ChartExample />
                 </Typography>
 
                 <PageHeader title="Alerts" />
