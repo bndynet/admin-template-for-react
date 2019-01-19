@@ -51,6 +51,7 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "@bndynet/header-injection-webpack-plugin": "^4.0.1",
+    "@bndynet/recharts-wrapper": "^1.0.1",
     "@types/classnames": "^2.2.6",
     "@types/lodash-es": "^4.17.1",
     "@types/react": "^16.7.7",
