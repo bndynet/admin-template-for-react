@@ -5,16 +5,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { renderRoutes } from "react-router-config";
 import { Link } from "react-router-dom";
-import {
-    withStyles,
-    Theme,
-    createStyles,
-    Avatar,
-    Tooltip,
-    Menu,
-    MenuItem,
-    withWidth,
-} from "@material-ui/core";
+import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem, withWidth } from "@material-ui/core";
 import { isWidthUp } from "@material-ui/core/withWidth";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -212,89 +203,38 @@ class Admin extends React.Component<
                 <CssBaseline />
                 <AppBar position="absolute" className={classes.appBar}>
                     <div className={classes.brand}>
-                        <Link
-                            to="/"
-                            className={classNames(
-                                "clickable",
-                                classes.brandTitle,
-                            )}
-                            hidden={!this.state.largeMainMenu}
-                        >
-                            <img
-                                src="https://static.bndy.net/images/logo_white.svg"
-                                style={{ height: 60 }}
-                            />
+                        <Link to="/" className={classNames("clickable", classes.brandTitle)} hidden={!this.state.largeMainMenu}>
+                            <img src="https://static.bndy.net/images/logo_white.svg" style={{ height: 60 }} />
                         </Link>
-                        <IconButton
-                            color="inherit"
-                            aria-label="Open drawer"
-                            onClick={this.handleDrawerToggle}
-                            className={classNames(
-                                classes.menuButton,
-                                this.state.largeMainMenu &&
-                                    classes.menuButtonHidden,
-                            )}
-                        >
+                        <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton, this.state.largeMainMenu && classes.menuButtonHidden)}>
                             <MenuIcon />
                         </IconButton>
                     </div>
 
                     <HorizontalMenu data={adminMenus} />
 
-                    <Toolbar
-                        disableGutters={!this.state.largeMainMenu}
-                        className={classes.toolbar}
-                    >
+                    <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
                         <Tooltip title="Toggle light/dark theme">
-                            <IconButton
-                                color="inherit"
-                                onClick={() => this.handleThemeChange()}
-                            >
-                                {isDarkTheme ? (
-                                    <BrightnessLowIcon fontSize="large" />
-                                ) : (
-                                    <BrightnessHighIcon fontSize="large" />
-                                )}
+                            <IconButton color="inherit" onClick={() => this.handleThemeChange()}>
+                                {isDarkTheme ? <BrightnessLowIcon fontSize="large" /> : <BrightnessHighIcon fontSize="large" />}
                             </IconButton>
                         </Tooltip>
                         <IconButton color="inherit">
-                            <Badge
-                                badgeContent={4}
-                                color="secondary"
-                                classes={{ badge: classes.badge }}
-                            >
+                            <Badge badgeContent={4} color="secondary" classes={{ badge: classes.badge }}>
                                 <NotificationsIcon fontSize="large" />
                             </Badge>
                         </IconButton>
                         <Tooltip title={user.username || "Not logged in"}>
-                            <Avatar
-                                aria-owns={
-                                    avatarMenuAnchor ? "avatar-menu" : undefined
-                                }
-                                aria-haspopup="true"
-                                className={classes.avatar}
-                                onClick={this.handleAvatarClick}
-                            >
+                            <Avatar aria-owns={avatarMenuAnchor ? "avatar-menu" : undefined} aria-haspopup="true" className={classes.avatar} onClick={this.handleAvatarClick}>
                                 {user.username && user.username[0]}
                             </Avatar>
                         </Tooltip>
-                        <Menu
-                            id="avatar-menu"
-                            classes={{ paper: classes.avatarMenu }}
-                            anchorEl={avatarMenuAnchor}
-                            open={Boolean(avatarMenuAnchor)}
-                            onClose={this.handleAvatarMenuClose}
-                        >
+                        <Menu id="avatar-menu" classes={{ paper: classes.avatarMenu }} anchorEl={avatarMenuAnchor} open={Boolean(avatarMenuAnchor)} onClose={this.handleAvatarMenuClose}>
                             <MenuItem dense={true} onClick={this.handleLogout}>
                                 Logout
                             </MenuItem>
                         </Menu>
-                        <IconButton
-                            color="inherit"
-                            onClick={() =>
-                                this.setState({ sidePanelOpen: true })
-                            }
-                        >
+                        <IconButton color="inherit" onClick={() => this.setState({ sidePanelOpen: true })}>
                             <MoreVertIcon fontSize="large" />
                         </IconButton>
                     </Toolbar>
@@ -302,63 +242,23 @@ class Admin extends React.Component<
                 <Drawer
                     variant="permanent"
                     classes={{
-                        paper: classNames(
-                            classes.drawerPaper,
-                            !this.state.largeMainMenu &&
-                                classes.drawerPaperClose,
-                        ),
+                        paper: classNames(classes.drawerPaper, !this.state.largeMainMenu && classes.drawerPaperClose),
                     }}
                     open={this.state.largeMainMenu}
                 >
                     <Divider />
-                    <VerticalMenu
-                        mini={!this.state.largeMainMenu}
-                        width={themeConfig.sidebarWidth}
-                        minWidth={themeConfig.sidebarWidthMini}
-                        data={adminMenus}
-                    />
-                    <div
-                        className={classNames(
-                            classes.drawerPaperFooter,
-                            !this.state.largeMainMenu &&
-                                classes.drawerPaperFooterClose,
-                        )}
-                    >
-                        <a
-                            className={classNames(
-                                classes.copyright,
-                                !this.state.largeMainMenu &&
-                                    classes.copyrightHidden,
-                            )}
-                            href="http://bndy.net"
-                            target="_blank"
-                        >
-                            <Typography variant="caption">
-                                &copy; 2018 BNDY-NET
-                            </Typography>
+                    <VerticalMenu mini={!this.state.largeMainMenu} width={themeConfig.sidebarWidth} minWidth={themeConfig.sidebarWidthMini} data={adminMenus} />
+                    <div className={classNames(classes.drawerPaperFooter, !this.state.largeMainMenu && classes.drawerPaperFooterClose)}>
+                        <a className={classNames(classes.copyright, !this.state.largeMainMenu && classes.copyrightHidden)} href="http://bndy.net" target="_blank">
+                            <Typography variant="caption">&copy; 2018 BNDY-NET</Typography>
                         </a>
-                        <IconButton
-                            className={classes.iconButton}
-                            onClick={this.handleDrawerToggle}
-                        >
-                            {this.state.largeMainMenu ? (
-                                <ChevronLeftIcon fontSize="small" />
-                            ) : (
-                                <ChevronRightIcon fontSize="small" />
-                            )}
+                        <IconButton className={classes.iconButton} onClick={this.handleDrawerToggle}>
+                            {this.state.largeMainMenu ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
                         </IconButton>
                     </div>
                 </Drawer>
-                <main className={classes.content}>
-                    {renderRoutes(adminRoutes)}
-                </main>
-                <SlidePanel
-                    width={600}
-                    anchor="right"
-                    title="Panel Title"
-                    open={this.state.sidePanelOpen}
-                    onClose={this.handleSidePanelClose}
-                >
+                <main className={classes.content}>{renderRoutes(adminRoutes)}</main>
+                <SlidePanel width={600} anchor="right" title="Panel Title" open={this.state.sidePanelOpen} onClose={this.handleSidePanelClose}>
                     <Typography>This is a side panel.</Typography>
                 </SlidePanel>
             </div>
@@ -399,10 +299,7 @@ class Admin extends React.Component<
 
 const mapStateToProps = state => ({
     user: state.auth.user,
-    isDarkTheme:
-        state.global.theme &&
-        state.global.theme.palette &&
-        state.global.theme.palette.type === "dark",
+    isDarkTheme: state.global.theme && state.global.theme.palette && state.global.theme.palette.type === "dark",
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({

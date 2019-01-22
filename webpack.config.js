@@ -20,7 +20,10 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', 'css'],
-        alias:  resolveTsconfigPathsToAlias(),
+        alias:  {
+            ...resolveTsconfigPathsToAlias(),
+            'react': path.join(__dirname, 'node_modules/react'),
+        }
     },
     module: {
         rules: [{
@@ -48,7 +51,7 @@ module.exports = {
                 ],
             }, {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader'
+                loader: 'awesome-typescript-loader',
             }, {
                 test: /\.tsx$/,
                 enforce: 'pre',
