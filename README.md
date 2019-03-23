@@ -1,14 +1,15 @@
 # Admin Template for React
 
-![](https://img.shields.io/badge/Language-TypeScript-blue.svg?style=flat-square)
-![](https://img.shields.io/badge/Language-SCSS-blue.svg?style=flat-square)
-![](https://img.shields.io/badge/React-16.3-brightgreen.svg?style=flat-square&logo=react)
-![](https://img.shields.io/badge/React-Redux-brightgreen.svg?style=flat-square&logo=react)
-![](https://img.shields.io/badge/React-react--router--config-brightgreen.svg?style=flat-square&logo=react)
-![](https://img.shields.io/badge/React-react--intl-brightgreen.svg?style=flat-square&logo=react)
-![](https://img.shields.io/badge/React-connected--react--router-brightgreen.svg?style=flat-square&logo=react)
-![](https://img.shields.io/badge/React-Redux%20Saga-brightgreen.svg?style=flat-square&logo=react)
-[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f1d6e125-33e2-42a7-a97e-67a912d878af/deploy-status)](https://app.netlify.com/sites/admin-react/deploys)
+![](https://img.shields.io/badge/Language-TypeScript-blue.svg)
+![](https://img.shields.io/badge/Language-SCSS-blue.svg)
+![](https://img.shields.io/badge/React-16.3-brightgreen.svg?logo=react)
+![](https://img.shields.io/badge/React-Redux-brightgreen.svg?logo=react)
+![](https://img.shields.io/badge/React-react--router--config-brightgreen.svg?logo=react)
+![](https://img.shields.io/badge/React-react--intl-brightgreen.svg?logo=react)
+![](https://img.shields.io/badge/React-connected--react--router-brightgreen.svg?logo=react)
+![](https://img.shields.io/badge/React-Redux%20Saga-brightgreen.svg?logo=react)
+[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
