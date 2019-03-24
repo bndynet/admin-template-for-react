@@ -161,11 +161,8 @@ const styles = (theme: Theme) =>
             padding: theme.spacing.unit,
         },
         badge: {
-            width: "1rem",
-            height: "1rem",
             fontSize: "11px",
-            top: -5,
-            right: -5,
+            right: 5,
             borderWidth: 2,
             borderStyle: "solid",
             borderColor: theme.palette.primary.main,
