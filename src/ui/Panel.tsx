@@ -1,14 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
-import {
-    Paper,
-    Theme,
-    createStyles,
-    withStyles,
-    Typography,
-    IconButton,
-    Collapse,
-} from "@material-ui/core";
+import { Paper, Theme, createStyles, withStyles, Typography, IconButton, Collapse } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -31,8 +23,7 @@ const panelStyles = (theme: Theme) =>
             display: "flex",
             alignItems: "center",
             borderBottom: `solid 1px ${theme.palette.divider}`,
-            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit +
-                1}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
+            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit + 1}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
         },
         headerForNonBordered: {
             paddingTop: theme.spacing.unit / 2 + 2,
@@ -57,7 +48,7 @@ class Panel extends React.Component<
     {
         classes: any;
         className?: string;
-        title: string;
+        title: string | JSX.Element;
         variant?: string;
         closeable: boolean;
         minimizeable: boolean;
@@ -82,10 +73,7 @@ class Panel extends React.Component<
             actions.forEach((action: any, index) => {
                 actionEls.push(
                     React.cloneElement(action, {
-                        className:
-                            action.type === IconButton
-                                ? classes.headerToolboxButton
-                                : "",
+                        className: action.type === IconButton ? classes.headerToolboxButton : "",
                         key: `ACTION-${index}`,
                     }),
                 );
@@ -93,29 +81,10 @@ class Panel extends React.Component<
         }
         return (
             <Collapse in={this.state.open}>
-                <Paper
-                    className={classNames(
-                        classes.root,
-                        classes[this.props.variant],
-                        this.props.variant && classes.rootForBordered,
-                        className,
-                    )}
-                >
+                <Paper className={classNames(classes.root, classes[this.props.variant], this.props.variant && classes.rootForBordered, className)}>
                     {title && (
-                        <div
-                            className={classNames(
-                                classes.header,
-                                this.state.collapsedDone &&
-                                    classes.headerForCollapsed,
-                                this.props.variant ||
-                                    classes.headerForNonBordered,
-                            )}
-                        >
-                            <Typography
-                                className={classes.headerTitle}
-                                variant="subtitle1"
-                                component="h4"
-                            >
+                        <div className={classNames(classes.header, this.state.collapsedDone && classes.headerForCollapsed, this.props.variant || classes.headerForNonBordered)}>
+                            <Typography className={classes.headerTitle} variant="subtitle1" component="h4">
                                 {title}
                             </Typography>
                             <div className={classes.headerToolbox}>
@@ -125,43 +94,24 @@ class Panel extends React.Component<
                                         className={classes.headerToolboxButton}
                                         onClick={() =>
                                             this.setState({
-                                                collapsed: !this.state
-                                                    .collapsed,
+                                                collapsed: !this.state.collapsed,
                                             })
                                         }
                                     >
-                                        {this.state.collapsed ? (
-                                            <AddIcon />
-                                        ) : (
-                                            <RemoveIcon />
-                                        )}
+                                        {this.state.collapsed ? <AddIcon /> : <RemoveIcon />}
                                     </IconButton>
                                 )}
                                 {this.props.closeable && (
-                                    <IconButton
-                                        className={classes.headerToolboxButton}
-                                        onClick={() =>
-                                            this.setState({ open: false })
-                                        }
-                                    >
+                                    <IconButton className={classes.headerToolboxButton} onClick={() => this.setState({ open: false })}>
                                         <CloseIcon />
                                     </IconButton>
                                 )}
                             </div>
                         </div>
                     )}
-                    <Collapse
-                        in={!this.state.collapsed}
-                        onEnter={() => this.setState({ collapsedDone: false })}
-                        onExited={() => this.setState({ collapsedDone: true })}
-                    >
-                        <div
-                            className={classes.body}
-                            style={{ padding: bodyPadding }}
-                        >
-                            <Typography component="div">
-                                {this.props.children}
-                            </Typography>
+                    <Collapse in={!this.state.collapsed} onEnter={() => this.setState({ collapsedDone: false })} onExited={() => this.setState({ collapsedDone: true })}>
+                        <div className={classes.body} style={{ padding: bodyPadding }}>
+                            <Typography component="div">{this.props.children}</Typography>
                         </div>
                     </Collapse>
                 </Paper>
