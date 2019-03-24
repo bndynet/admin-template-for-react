@@ -4,5 +4,8 @@
     "login": "Log in",
     "adminPanel": "Admin Panel",
 
-    "other": "Other"
+    "other": "Other",
+
+    "errors.404.title": "404 - Page Not Found",
+    "errors.404.description": "The page you are looking for might have been removed had its name changed or is temporarily unavailable."
 }

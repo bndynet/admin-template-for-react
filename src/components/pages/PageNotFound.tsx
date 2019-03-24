@@ -1,0 +1,44 @@
+import * as React from "react";
+import { Formatter } from "app/ui";
+import { connect } from "react-redux";
+import { createStyles, withStyles, Typography } from "@material-ui/core";
+
+const styles = createStyles({
+    root: {
+        marginTop: 100,
+        width: 400,
+        margin: "auto",
+        textAlign: "center",
+    },
+});
+
+class PageNotFound extends React.Component<
+    {
+        classes: any;
+    },
+    {}
+> {
+    public render() {
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+                <i className="far fa-frown fa-5x" />
+                <br />
+                <br />
+                <Typography component="h2" variant="h4">
+                    <Formatter i18nKey="errors.404.title" />
+                </Typography>
+                <br />
+                <br />
+                <Typography>
+                    <Formatter i18nKey="errors.404.description" />
+                </Typography>
+            </div>
+        );
+    }
+}
+
+export default connect(
+    null,
+    null,
+)(withStyles(styles)(PageNotFound));

@@ -1,20 +1,24 @@
-import { Dashboard, Markdown } from '../components/pages/admin';
+import { Dashboard, Markdown } from "../components/pages/admin";
+import PageNotFound from "../components/pages/PageNotFound";
 
 const routes = [
     {
-        path: '/admin',
+        path: "/admin",
         exact: true,
         component: Dashboard,
     },
     {
-        path: '/admin/dashboard',
+        path: "/admin/dashboard",
         exact: true,
         component: Dashboard,
     },
     {
-        path: '/admin/markdown',
+        path: "/admin/markdown",
         exact: true,
         component: Markdown,
+    },
+    {
+        component: PageNotFound,
     },
 ];
 

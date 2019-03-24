@@ -32,9 +32,9 @@ const menus: MenuItem[] = [
     },
     {
         icon: <ScheduleIcon />,
-        text: "Real-Time",
+        text: "404 Page",
         description: "",
-        link: "",
+        link: "/admin/this_page_not_found",
     },
     {
         icon: <TimelineIcon />,

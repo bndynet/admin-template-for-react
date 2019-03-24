@@ -4,5 +4,8 @@
     "login": "登录",
     "adminPanel": "控制台",
 
-    "other": "其它"
+    "other": "其它",
+
+    "errors.404.title": "404 - 页面没有找到",
+    "errors.404.description": "您访问的页面，可能被删除，名称改变，又或是短时间内不能访问。"
 }
