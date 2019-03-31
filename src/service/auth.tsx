@@ -212,3 +212,8 @@ export function* saga() {
     yield takeLatest(ACTION_LOGOUT_REQUEST, logout);
     yield takeLatest(ACTION_GETUSER_REQUEST, getUser);
 }
+
+export function isAuthorized() {
+    // TODO: here to add logic to authorize
+    return true;
+}
