@@ -1,16 +1,10 @@
 import * as React from "react";
 import classNames from "classnames";
-import { Link, LinkProps } from "react-router-dom";
-import ListItem from "@material-ui/core/ListItem";
+import { Link } from "react-router-dom";
+import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import {
-    Theme,
-    createStyles,
-    withStyles,
-    List,
-    Collapse,
-} from "@material-ui/core";
+import { Theme, createStyles, withStyles, List, Collapse } from "@material-ui/core";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -120,13 +114,7 @@ class VerticalMenu extends React.Component<
 
     public render() {
         const { classes, mini, data } = this.props;
-        return (
-            <List
-                className={classNames(classes.root, mini && classes.rootMini)}
-            >
-                {data && data.map(menu => this.renderMenuItem(menu, classes))}
-            </List>
-        );
+        return <List className={classNames(classes.root, mini && classes.rootMini)}>{data && data.map(menu => this.renderMenuItem(menu, classes))}</List>;
     }
 
     private getMenuKey(menu) {
@@ -153,32 +141,10 @@ class VerticalMenu extends React.Component<
         const menuKey = this.getMenuKey(menu);
         const mini = this.props.mini;
         return (
-            <li
-                key={menuKey}
-                style={this.state.itemHovered ? this.itemHoveredStyle : null}
-                onMouseEnter={() => this.setState({ itemHovered: true })}
-            >
-                <ListItem
-                    button={true}
-                    className={classes.listItem}
-                    onClick={() => this.handleMenuClick(menu)}
-                    component={
-                        menu.link
-                            ? (props: LinkProps) => (
-                                  <Link {...props} to={menu.link} />
-                              )
-                            : null
-                    }
-                >
-                    <ListItemIcon
-                        className={classes.listItemIcon}
-                        style={{ width: this.props.minWidth }}
-                    >
-                        {typeof menu.icon !== "string" ? (
-                            menu.icon
-                        ) : (
-                            <i className={menu.icon} />
-                        )}
+            <li key={menuKey} style={this.state.itemHovered ? this.itemHoveredStyle : null} onMouseEnter={() => this.setState({ itemHovered: true })}>
+                <ListItem button={true} className={classes.listItem} onClick={() => this.handleMenuClick(menu)} component={menu.link ? (props: any) => <Link to={menu.link} {...props} /> : null}>
+                    <ListItemIcon className={classes.listItemIcon} style={{ width: this.props.minWidth }}>
+                        {typeof menu.icon !== "string" ? menu.icon : <i className={menu.icon} />}
                     </ListItemIcon>
                     <ListItemText
                         className={classes.listItemText}
@@ -189,37 +155,14 @@ class VerticalMenu extends React.Component<
                         primary={menu.text}
                         secondary={menu.description}
                     />
-                    {menu.children &&
-                        !mini &&
-                        (this.state.menuStatusSet[menuKey] ? (
-                            <ExpandLessIcon
-                                className={classes.expandIcon}
-                                onClick={() => this.handleToggleChildMenu(menu)}
-                            />
-                        ) : (
-                            <ExpandMoreIcon
-                                className={classes.expandIcon}
-                                onClick={() => this.handleToggleChildMenu(menu)}
-                            />
-                        ))}
+                    {menu.children && !mini && (this.state.menuStatusSet[menuKey] ? <ExpandLessIcon className={classes.expandIcon} onClick={() => this.handleToggleChildMenu(menu)} /> : <ExpandMoreIcon className={classes.expandIcon} onClick={() => this.handleToggleChildMenu(menu)} />)}
                 </ListItem>
                 {menu.children &&
                     (mini ? (
-                        <List className={classes.childList}>
-                            {menu.children.map(child =>
-                                this.renderMenuItem(child, classes),
-                            )}
-                        </List>
+                        <List className={classes.childList}>{menu.children.map(child => this.renderMenuItem(child, classes))}</List>
                     ) : (
-                        <Collapse
-                            in={!!this.state.menuStatusSet[menuKey]}
-                            timeout="auto"
-                        >
-                            <List className={classes.childList}>
-                                {menu.children.map(child =>
-                                    this.renderMenuItem(child, classes),
-                                )}
-                            </List>
+                        <Collapse in={!!this.state.menuStatusSet[menuKey]} timeout="auto">
+                            <List className={classes.childList}>{menu.children.map(child => this.renderMenuItem(child, classes))}</List>
                         </Collapse>
                     ))}
             </li>
