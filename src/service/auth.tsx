@@ -1,22 +1,26 @@
-import { AxiosPromise } from 'axios';
-import { Ajax, AjaxError } from '../helpers/ajax';
-import { store } from '../redux';
-import { config } from '../config';
-import { push } from 'connected-react-router';
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { actions as globalActions } from './global';
+import { AxiosPromise } from "axios";
+import { Ajax, AjaxError } from "../helpers/ajax";
+import { store } from "../redux";
+import { config } from "../config";
+import { push } from "connected-react-router";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { actions as globalActions } from "./global";
 
-export const ACTION_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
-export const ACTION_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
-export const ACTION_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
+export const ACTION_AUTH_REQUEST = "USER_AUTH_REQUEST";
+export const ACTION_AUTH_SUCCESS = "USER_AUTH_SUCCESS";
+export const ACTION_AUTH_FAILURE = "USER_AUTH_FAILURE";
 
-export const ACTION_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
-export const ACTION_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
-export const ACTION_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE';
+export const ACTION_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
+export const ACTION_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const ACTION_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
 
-export const ACTION_GETUSER_REQUEST = 'USER_GETUSER_REQUEST';
-export const ACTION_GETUSER_SUCCESS = 'USER_GETUSER_SUCCESS';
-export const ACTION_GETUSER_FAULURE = 'USER_GETUSER_FAILURE';
+export const ACTION_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";
+export const ACTION_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
+export const ACTION_LOGOUT_FAILURE = "USER_LOGOUT_FAILURE";
+
+export const ACTION_GETUSER_REQUEST = "USER_GETUSER_REQUEST";
+export const ACTION_GETUSER_SUCCESS = "USER_GETUSER_SUCCESS";
+export const ACTION_GETUSER_FAULURE = "USER_GETUSER_FAILURE";
 
 export interface AuthState {
     user?: any;
@@ -50,6 +54,16 @@ export interface UserInfo {
 }
 
 export const actions = {
+    auth: () => {
+        location.href = ``;
+        return {
+            type: ACTION_AUTH_REQUEST,
+        };
+    },
+    authSuccess: (token: string) => ({
+        type: ACTION_AUTH_SUCCESS,
+        payload: token,
+    }),
     login: (data: LoginData) => ({
         type: ACTION_LOGIN_REQUEST,
         payload: data,
@@ -58,7 +72,7 @@ export const actions = {
         type: ACTION_LOGIN_SUCCESS,
         payload: response,
     }),
-    loginFailure: (error) => ({
+    loginFailure: error => ({
         type: ACTION_LOGIN_FAILURE,
         payload: error,
     }),
@@ -78,9 +92,14 @@ export const actions = {
     }),
 };
 
-
 export function reducer(state: AuthState = {}, action): AuthState {
     switch (action.type) {
+        case ACTION_AUTH_SUCCESS:
+            return {
+                ...state,
+                accessToken: action.payload,
+            };
+
         case ACTION_LOGIN_REQUEST:
             return { ...state };
         case ACTION_LOGIN_SUCCESS:
@@ -103,29 +122,36 @@ export function reducer(state: AuthState = {}, action): AuthState {
     }
 }
 
-
 export const service = {
     login: (data: LoginData) => {
-        data.grant_type = 'password';
+        data.grant_type = "password";
         data.client_id = config.clientId;
         data.client_secret = config.clientSecret;
         return new Ajax({
             baseURL: config.oauthBaseUri,
-        }).postForm('/oauth/token', data);
+        }).postForm("/oauth/token", data);
     },
     getUser: (): AxiosPromise => {
         return new Ajax({
             baseURL: config.oauthBaseUri,
             headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
-        }).get('/oauth/me');
+        }).get("/oauth/me");
     },
     logout: (): AxiosPromise => {
         return new Ajax({
             baseURL: config.oauthBaseUri,
             headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
-        }).get('/login?logout');
+        }).get("/login?logout");
     },
 };
+
+function* auth() {
+    yield put(globalActions.showLoading("Redirecting to authorize..."));
+}
+
+function* authSuccess(action) {
+    yield put(actions.getUserInfo(action.payload));
+}
 
 function* login(action) {
     try {
@@ -133,12 +159,12 @@ function* login(action) {
         // trigger off the code that we want to call that is asynchronous
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
-        yield put(globalActions.showLoading('Logging in...'));
+        yield put(globalActions.showLoading("Logging in..."));
         const loginSuccessData: LoginSuccessData = yield call(service.login, { ...loginData, client_id: config.clientId });
         yield put(actions.loginSuccess(loginSuccessData));
         yield put(actions.getUserInfo(loginSuccessData.access_token));
         yield put(globalActions.hideLoading());
-        yield put(push('/admin'));
+        yield put(push("/admin"));
     } catch (err) {
         yield put(globalActions.hideLoading());
         if (err) {
@@ -148,18 +174,18 @@ function* login(action) {
             yield put(globalActions.notifyError(`Service Unavailable`));
         }
         // TODO: remove in prod
-        yield put(push('/admin'));
+        yield put(push("/admin"));
     }
 }
 
 function* logout(action) {
     try {
-        yield put(globalActions.showLoading('Logging out...'));
+        yield put(globalActions.showLoading("Logging out..."));
         // request backend to terminate session
         yield call(service.logout);
         yield put(actions.logoutSuccess());
         yield put(globalActions.hideLoading());
-        yield put(push('/logout'));
+        yield put(push("/logout"));
     } catch (e) {
         yield put(globalActions.hideLoading());
     }
@@ -167,11 +193,11 @@ function* logout(action) {
 
 function* getUser(action) {
     try {
-        yield put(globalActions.showLoading('Getting user info...'));
-        const response = yield call(service.getUser, '/oauth/me');
+        yield put(globalActions.showLoading("Getting user info..."));
+        const response = yield call(service.getUser, "/oauth/me");
         yield put(actions.getUserInfoSuccess(response as UserInfo));
         yield put(globalActions.hideLoading());
-        yield put(push('/admin'));
+        yield put(push("/admin"));
     } catch (e) {
         yield put(globalActions.hideLoading());
     }
@@ -180,6 +206,8 @@ function* getUser(action) {
 export function* saga() {
     // takeEvery:
     // listen for certain actions that are going to be dispatched and take them and run through our worker saga.
+    yield takeLatest(ACTION_AUTH_REQUEST, auth);
+    yield takeLatest(ACTION_AUTH_SUCCESS, authSuccess);
     yield takeLatest(ACTION_LOGIN_REQUEST, login);
     yield takeLatest(ACTION_LOGOUT_REQUEST, logout);
     yield takeLatest(ACTION_GETUSER_REQUEST, getUser);

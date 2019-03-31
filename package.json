@@ -36,6 +36,7 @@
     "connected-react-router": "^5.0.1",
     "github-markdown-css": "^2.10.0",
     "lodash-es": "^4.17.11",
+    "query-string": "^6.4.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-intl": "^2.7.2",
