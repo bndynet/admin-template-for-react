@@ -109,13 +109,6 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                     <img className={classes.forkMe} src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
                 </a>
                 <main className={classes.main}>
-                    <Link to="/login">
-                        <Button variant="outlined" className={classes.btn}>
-                            <Typography>
-                                <FormattedMessage id="login" />
-                            </Typography>
-                        </Button>
-                    </Link>
                     <Link to="/admin">
                         <Button variant="outlined" className={classes.btn}>
                             <Typography>

@@ -1,5 +1,7 @@
 # Admin Template for React
 
+[DEMO](https://admin-react.bndy.net/) - username: **test**, password: **test**
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f1d6e125-33e2-42a7-a97e-67a912d878af/deploy-status)](https://app.netlify.com/sites/admin-react/deploys)
 ![](https://img.shields.io/badge/Language-TypeScript-blue.svg)
 ![](https://img.shields.io/badge/Language-SCSS-blue.svg)
@@ -20,8 +22,6 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 - UI component: **[material-ui](https://material-ui.com/)**
 - REACT stack: react, react-dom, react-redux, react-router-config, react-router-dom, redux, redux-saga
 
-**Demo Address**: [http://admin-react.bndy.net/](http://admin-react.bndy.net/)
-
 ## Getting Started
 
 1. Clone repo `git clone <git-url>`
@@ -33,36 +33,27 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 
 ### Application Configurations
 
-```ts
-export interface Config {
-    // following options used to log in
-    clientId?: string;
-    clientSecret?: string;
-    oauthBaseUri?: string;
-    // define your resource base url
-    resourceBaseUri?: string;
-    // default locale for language and datetime format
-    defaultLocale?: LocaleType;
-}
-```
-
+- ./src/config/app.common.tsx
 - ./src/config/app.dev.tsx
 - ./src/config/app.prod.tsx
-- ./src/config/app.common.tsx
+- ./src/config/app.github.tsx
 
 ### Customize more environments
 
 1. New file **./src/config/app.[env_name].tsx** to override your configurations
-2. Use below code to merge settings in **./src/config/index.tsx**
-    ```ts
-    switch (env) {
-        case 'production':
-            return (window.__APP_CONF__ = _merge(require('./app.common'), require('./app.[env_name]')));
+
+2. Add below code in **./src/config/index.tsx** or **./index.html**
+
+    Import configurations in **app.dev.tsx**
     ```
-3. Add below code in **./src/config/index.tsx** or **./index.html**
-    ```ts
-    window.__APP_ENV__ = 'your env';
+    import config = require("./app.your-env");
     ```
+
+    Or add below code in **./src/config/index.tsx** or **./index.html** to freeze your environment
+    ```ts
+    window.__APP_ENV__ = 'your-env';
+    ```
+
 4. `npm start` and `npm run build` will always use the environment you defined
 
 ### Components based on Material UI or some else
