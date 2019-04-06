@@ -7,7 +7,7 @@ import Login from "../components/pages/auth/Login";
 import Logout from "../components/pages/auth/Logout";
 import Admin from "../components/layout/Admin";
 import PageNotFound from "../components/pages/PageNotFound";
-import { isAuthorized } from "app/service/auth";
+import { isAuthorized, getAuthUri } from "app/service/auth";
 
 const routes = [
     {
@@ -24,13 +24,27 @@ const routes = [
         component: Logout,
     },
     {
-        path: "/callback",
+        path: "/auth/callback",
         component: Callback,
     },
     {
         path: "/admin",
         // `render()` method support in react-router-config v5.0
-        render: () => (isAuthorized() ? <Admin /> : <Redirect to="/login" />),
+        render: () => {
+            if (isAuthorized()) {
+                return <Admin />;
+            } else {
+                if (
+                    !getAuthUri()
+                        .toLowerCase()
+                        .startsWith("http")
+                ) {
+                    return <Redirect to={getAuthUri()} />;
+                }
+            }
+            location.href = getAuthUri();
+            return null;
+        },
     },
     {
         component: PageNotFound,

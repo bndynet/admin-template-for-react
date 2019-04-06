@@ -1,10 +1,11 @@
 import { AxiosPromise } from "axios";
 import { Ajax, AjaxError } from "../helpers/ajax";
 import { store } from "../redux";
-import { config } from "../config";
+import { config, AuthType } from "../config";
 import { push } from "connected-react-router";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { actions as globalActions } from "./global";
+import { Url } from "app/helpers/url";
 
 export const ACTION_AUTH_REQUEST = "USER_AUTH_REQUEST";
 export const ACTION_AUTH_SUCCESS = "USER_AUTH_SUCCESS";
@@ -22,8 +23,14 @@ export const ACTION_GETUSER_REQUEST = "USER_GETUSER_REQUEST";
 export const ACTION_GETUSER_SUCCESS = "USER_GETUSER_SUCCESS";
 export const ACTION_GETUSER_FAULURE = "USER_GETUSER_FAILURE";
 
+export interface UserInfo {
+    id?: string;
+    name?: string;
+    email?: string;
+}
+
 export interface AuthState {
-    user?: any;
+    user?: UserInfo;
     accessToken?: string;
     tokenType?: string;
     expiresIn?: number;
@@ -48,18 +55,7 @@ export interface LoginSuccessData {
     scope: string;
 }
 
-export interface UserInfo {
-    username: string;
-    email: string;
-}
-
 export const actions = {
-    auth: () => {
-        location.href = ``;
-        return {
-            type: ACTION_AUTH_REQUEST,
-        };
-    },
     authSuccess: (token: string) => ({
         type: ACTION_AUTH_SUCCESS,
         payload: token,
@@ -116,7 +112,7 @@ export function reducer(state: AuthState = {}, action): AuthState {
                 user: action.payload,
             };
         case ACTION_LOGOUT_REQUEST:
-            return { ...state, user: null };
+            return { ...state, user: null, accessToken: null };
         default:
             return state;
     }
@@ -125,23 +121,23 @@ export function reducer(state: AuthState = {}, action): AuthState {
 export const service = {
     login: (data: LoginData) => {
         data.grant_type = "password";
-        data.client_id = config.clientId;
-        data.client_secret = config.clientSecret;
-        return new Ajax({
-            baseURL: config.oauthBaseUri,
-        }).postForm("/oauth/token", data);
+        data.client_id = config.authConfig.clientId;
+        data.client_secret = config.authConfig.clientSecret;
+        return new Ajax().postForm(config.authConfig.authorizationUri, data);
     },
     getUser: (): AxiosPromise => {
         return new Ajax({
-            baseURL: config.oauthBaseUri,
-            headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
-        }).get("/oauth/me");
+            headerAuthorization: () => `${store.getState().auth.tokenType || "Bearer"} ${store.getState().auth.accessToken}`,
+        }).get(config.authConfig.userProfileUri);
     },
-    logout: (): AxiosPromise => {
-        return new Ajax({
-            baseURL: config.oauthBaseUri,
-            headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
-        }).get("/login?logout");
+    logout: (): AxiosPromise | any => {
+        if (config.logoutHandler) {
+            return config.logoutHandler(config.authConfig.logoutUri, store.getState().auth as AuthState);
+        } else {
+            return new Ajax({
+                headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
+            }).get(config.authConfig.logoutUri);
+        }
     },
 };
 
@@ -160,7 +156,7 @@ function* login(action) {
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
         yield put(globalActions.showLoading("Logging in..."));
-        const loginSuccessData: LoginSuccessData = yield call(service.login, { ...loginData, client_id: config.clientId });
+        const loginSuccessData: LoginSuccessData = yield call(service.login, { ...loginData, client_id: config.authConfig.clientId });
         yield put(actions.loginSuccess(loginSuccessData));
         yield put(actions.getUserInfo(loginSuccessData.access_token));
         yield put(globalActions.hideLoading());
@@ -179,23 +175,15 @@ function* login(action) {
 }
 
 function* logout(action) {
-    try {
-        yield put(globalActions.showLoading("Logging out..."));
-        // request backend to terminate session
-        yield call(service.logout);
-        yield put(actions.logoutSuccess());
-        yield put(globalActions.hideLoading());
-        yield put(push("/logout"));
-    } catch (e) {
-        yield put(globalActions.hideLoading());
-    }
+    yield put(push("/logout"));
 }
 
 function* getUser(action) {
     try {
         yield put(globalActions.showLoading("Getting user info..."));
-        const response = yield call(service.getUser, "/oauth/me");
-        yield put(actions.getUserInfoSuccess(response as UserInfo));
+        const response = yield call(service.getUser);
+        const userInfo: UserInfo = typeof config.userConverter === "function" ? config.userConverter(response) : { ...response };
+        yield put(actions.getUserInfoSuccess(userInfo));
         yield put(globalActions.hideLoading());
         yield put(push("/admin"));
     } catch (e) {
@@ -213,7 +201,17 @@ export function* saga() {
     yield takeLatest(ACTION_GETUSER_REQUEST, getUser);
 }
 
-export function isAuthorized() {
+export function isAuthorized(): boolean {
     // TODO: here to add logic to authorize
-    return true;
+    return store.getState().auth.accessToken;
+}
+
+export function getAuthUri(): string {
+    if (config.authType === AuthType.Custom || config.authType === AuthType.OAuthPassword) {
+        return "/login";
+    }
+
+    if (config.authType === AuthType.OAuth || config.authType === AuthType.OAuthCode) {
+        return config.authConfig.authorizationUri.replace("{url_callback}", Url.current().merge("/auth/callback"));
+    }
 }

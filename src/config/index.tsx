@@ -1,15 +1,32 @@
 import _merge from "lodash-es/merge";
 import { LocaleType } from "../locales";
+import { UserInfo, AuthState } from "app/service/auth";
 
 // Uncomment or define it in index.html to specify your environment.
 // window.__APP_ENV__ = 'your env';
 
+export enum AuthType {
+    OAuth, // alias for OAuthCode
+    OAuthCode,
+    OAuthPassword,
+    Custom,
+}
+
 export interface Config {
-    clientId?: string;
-    clientSecret?: string;
-    oauthBaseUri?: string;
     resourceBaseUri?: string;
     defaultLocale?: LocaleType;
+    authType?: AuthType;
+    authConfig?: OAuthConfig;
+    userConverter?: (backendUser: any) => UserInfo;
+    logoutHandler?: (url: string, authState: AuthState) => void;
+}
+
+export interface OAuthConfig {
+    clientId: string;
+    clientSecret: string;
+    authorizationUri: string;
+    userProfileUri: string;
+    logoutUri: string;
 }
 
 const getConfig = (): Config => {
@@ -20,16 +37,10 @@ const getConfig = (): Config => {
 
     switch (env) {
         case "production":
-            return (window.__APP_CONF__ = _merge(
-                require("./app.common"),
-                require("./app.prod"),
-            ));
+            return (window.__APP_CONF__ = _merge(require("./app.common"), require("./app.prod")));
 
         case "development":
-            return (window.__APP_CONF__ = _merge(
-                require("./app.common"),
-                require("./app.dev"),
-            ));
+            return (window.__APP_CONF__ = _merge(require("./app.common"), require("./app.dev")));
 
         // more cases you can define here.
 

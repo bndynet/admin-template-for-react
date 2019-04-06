@@ -177,7 +177,6 @@ class Admin extends React.Component<
         isDarkTheme: boolean;
         width: Breakpoint;
         push: (path: string) => void;
-        onLogout: () => void;
         onThemeChange: (toDark: boolean) => void;
     },
     { largeMainMenu: boolean; avatarMenuAnchor: any; sidePanelOpen: boolean }
@@ -221,9 +220,9 @@ class Admin extends React.Component<
                                 <NotificationsIcon fontSize="large" />
                             </Badge>
                         </IconButton>
-                        <Tooltip title={user.username || "Not logged in"}>
+                        <Tooltip title={user.name || "Not logged in"}>
                             <Avatar aria-owns={avatarMenuAnchor ? "avatar-menu" : undefined} aria-haspopup="true" className={classes.avatar} onClick={this.handleAvatarClick}>
-                                {user.username && user.username[0]}
+                                {user.name && user.name[0]}
                             </Avatar>
                         </Tooltip>
                         <Menu id="avatar-menu" classes={{ paper: classes.avatarMenu }} anchorEl={avatarMenuAnchor} open={Boolean(avatarMenuAnchor)} onClose={this.handleAvatarMenuClose}>
@@ -284,7 +283,7 @@ class Admin extends React.Component<
 
     private handleLogout = () => {
         this.handleAvatarMenuClose();
-        this.props.onLogout();
+        this.props.push("/logout");
     };
 
     private handleSidePanelClose = () => {
@@ -302,9 +301,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     push: (path: string) => {
         dispatch(push(path));
-    },
-    onLogout: () => {
-        dispatch(authActions.logout());
     },
     onThemeChange: (toDark: boolean) => {
         dispatch(

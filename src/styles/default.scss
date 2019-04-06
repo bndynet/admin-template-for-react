@@ -35,8 +35,14 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    min-height: 100vh;
+    height: 100vh;
+    & > * {
+        margin-top: -10rem;
+    }
+}
+
+.text-left {
+    text-align: left;
 }
 
 .text-center {

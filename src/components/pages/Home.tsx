@@ -90,25 +90,14 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     public render() {
         const { classes } = this.props;
         const btn = this.props.user ? (
-            <Tooltip title={this.props.user.username}>
-                <Fab
-                    disabled={!!this.state.logoutDelay}
-                    classes={{ root: classes.fab, disabled: "disabled" }}
-                    onClick={this.handleLogout}
-                    color="secondary"
-                >
-                    {this.state.logoutDelay && this.state.logoutDelay > 0
-                        ? this.state.logoutDelay
-                        : this.props.user.username[0]}
+            <Tooltip title={this.props.user.name}>
+                <Fab disabled={!!this.state.logoutDelay} classes={{ root: classes.fab, disabled: "disabled" }} onClick={this.handleLogout} color="secondary">
+                    {this.state.logoutDelay && this.state.logoutDelay > 0 ? this.state.logoutDelay : this.props.user.name[0]}
                 </Fab>
             </Tooltip>
         ) : (
             <Tooltip title="Log in">
-                <Fab
-                    classes={{ root: classes.fab, disabled: "disabled" }}
-                    onClick={this.handleLogin}
-                    color="primary"
-                >
+                <Fab classes={{ root: classes.fab, disabled: "disabled" }} onClick={this.handleLogin} color="primary">
                     <AccountCircleIcon />
                 </Fab>
             </Tooltip>
@@ -117,11 +106,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         return (
             <div className={classes.body}>
                 <a href="https://github.com/bndynet/admin-template-for-react">
-                    <img
-                        className={classes.forkMe}
-                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
-                        alt="Fork me on GitHub"
-                    />
+                    <img className={classes.forkMe} src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
                 </a>
                 <main className={classes.main}>
                     <Link to="/login">
@@ -139,19 +124,11 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                         </Button>
                     </Link>
                     {Object.keys(supportLocales).map((key: string) => (
-                        <Button
-                            className={classes.btn}
-                            key={key}
-                            variant="outlined"
-                            onClick={() => this.props.onChangeLocale(key)}
-                        >
+                        <Button className={classes.btn} key={key} variant="outlined" onClick={() => this.props.onChangeLocale(key)}>
                             {supportLocales[key]}
                         </Button>
                     ))}
-                    <ReactMarkdown
-                        source={this.props.readme}
-                        className={"markdown-body"}
-                    />
+                    <ReactMarkdown source={this.props.readme} className={"markdown-body"} />
                     {btn}
                 </main>
             </div>

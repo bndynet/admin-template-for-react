@@ -13,7 +13,6 @@ const KEY_ERROR = "error_description";
 
 class CallbackComponent extends React.Component<{
     onAuthSuccess: (token: string) => void;
-    onAuth: () => void;
 }> {
     private error: any;
 
@@ -38,14 +37,15 @@ class CallbackComponent extends React.Component<{
     }
 
     public render() {
-        return <Alert className={classNames("screen-center")} title={this.error ? "Oops..." : "Authorizing..."} message={this.error || "Application is obtaining authorization from 3rd-party application, please waiting..."} variant={this.error ? "error" : "info"} />;
+        return (
+            <div className="screen-center text-left">
+                <Alert title={this.error ? "Oops..." : "Authorizing..."} message={this.error || "Application is obtaining authorization from 3rd-party application, please waiting..."} variant={this.error ? "error" : "info"} />
+            </div>
+        );
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    onAuth: () => {
-        dispatch(authActions.auth());
-    },
     onAuthSuccess: (token: string) => {
         dispatch(authActions.authSuccess(token));
     },
