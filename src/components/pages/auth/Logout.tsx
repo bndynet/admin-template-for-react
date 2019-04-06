@@ -7,7 +7,7 @@ import { Panel } from "app/ui";
 import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 
-import { service as authService } from "../../../service/auth";
+import { actions as authActions, service as authService } from "../../../service/auth";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -39,6 +39,7 @@ const styles = (theme: Theme) =>
 
 interface LogoutComponentProps {
     classes: any;
+    handleLogout: () => void;
 }
 
 class Logout extends React.Component<
@@ -57,6 +58,7 @@ class Logout extends React.Component<
     }
 
     public componentWillMount() {
+        this.props.handleLogout();
         const logoutResult = authService.logout();
         if (logoutResult && logoutResult.then) {
             logoutResult
@@ -113,7 +115,11 @@ class Logout extends React.Component<
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    handleLogout: () => {
+        dispatch(authActions.logout());
+    },
+});
 
 export default connect(
     null,

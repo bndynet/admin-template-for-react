@@ -175,7 +175,7 @@ function* login(action) {
 }
 
 function* logout(action) {
-    yield put(push("/logout"));
+    yield put(actions.logoutSuccess());
 }
 
 function* getUser(action) {

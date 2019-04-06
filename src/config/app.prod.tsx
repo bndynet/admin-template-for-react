@@ -1,7 +1,7 @@
-import { Config, AuthType } from ".";
+import config = require("./app.sso");
 
-const config: Config = {
-    authType: AuthType.OAuthPassword,
+module.exports = {
+    ...config,
     authConfig: {
         clientId: "188c0da703",
         clientSecret: "f3dd317369ae622113f0",
@@ -10,5 +10,3 @@ const config: Config = {
         logoutUri: "https://cloud.bndy.net/service-sso/login?logout",
     },
 };
-
-module.exports = config;
