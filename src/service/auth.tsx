@@ -31,10 +31,7 @@ export interface UserInfo {
 
 export interface AuthState {
     user?: UserInfo;
-    accessToken?: string;
-    tokenType?: string;
-    expiresIn?: number;
-    scope?: string;
+    token?: TokenInfo;
     error?: any;
 }
 
@@ -47,24 +44,24 @@ export interface LoginData {
     grant_type?: string;
 }
 
-export interface LoginSuccessData {
+export interface TokenInfo {
     access_token: string;
-    refresh_token: string;
-    token_type: string;
-    expires_in: number;
-    scope: string;
+    refresh_token?: string;
+    token_type?: string;
+    expires_in?: number;
+    scope?: string;
 }
 
 export const actions = {
-    authSuccess: (token: string) => ({
+    authSuccess: (tokenInfo: TokenInfo) => ({
         type: ACTION_AUTH_SUCCESS,
-        payload: token,
+        payload: tokenInfo,
     }),
     login: (data: LoginData) => ({
         type: ACTION_LOGIN_REQUEST,
         payload: data,
     }),
-    loginSuccess: (response: LoginSuccessData) => ({
+    loginSuccess: (response: TokenInfo) => ({
         type: ACTION_LOGIN_SUCCESS,
         payload: response,
     }),
@@ -93,7 +90,7 @@ export function reducer(state: AuthState = {}, action): AuthState {
         case ACTION_AUTH_SUCCESS:
             return {
                 ...state,
-                accessToken: action.payload,
+                token: action.payload,
             };
 
         case ACTION_LOGIN_REQUEST:
@@ -101,18 +98,17 @@ export function reducer(state: AuthState = {}, action): AuthState {
         case ACTION_LOGIN_SUCCESS:
             return {
                 ...state,
-                accessToken: action.payload.access_token,
-                tokenType: action.payload.token_type,
-                expiresIn: action.payload.expires_in,
-                scope: action.payload.scope,
+                token: action.payload,
             };
         case ACTION_GETUSER_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
             };
-        case ACTION_LOGOUT_REQUEST:
-            return { ...state, user: null, accessToken: null };
+
+        case ACTION_LOGOUT_SUCCESS:
+            return { ...state, user: null, token: null };
+
         default:
             return state;
     }
@@ -127,16 +123,21 @@ export const service = {
     },
     getUser: (): AxiosPromise => {
         return new Ajax({
-            headerAuthorization: () => `${store.getState().auth.tokenType || "Bearer"} ${store.getState().auth.accessToken}`,
+            headerAuthorization: () => `${getState().token.token_type || "Bearer"} ${getState().token.access_token}`,
         }).get(config.authConfig.userProfileUri);
     },
     logout: (): AxiosPromise | any => {
         if (config.logoutHandler) {
-            return config.logoutHandler(config.authConfig.logoutUri, store.getState().auth as AuthState);
+            return config.logoutHandler(config.authConfig.logoutUri, getState());
         } else {
             return new Ajax({
-                headerAuthorization: () => `${store.getState().auth.tokenType} ${store.getState().auth.accessToken}`,
-            }).get(config.authConfig.logoutUri);
+                headerAuthorization: () => {
+                    if (getState().token) {
+                        return `${getState().token.token_type} ${getState().token.access_token}`;
+                    }
+                    return "";
+                },
+            }).remove(config.authConfig.logoutUri);
         }
     },
 };
@@ -156,9 +157,9 @@ function* login(action) {
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
         yield put(globalActions.showLoading("Logging in..."));
-        const loginSuccessData: LoginSuccessData = yield call(service.login, { ...loginData, client_id: config.authConfig.clientId });
-        yield put(actions.loginSuccess(loginSuccessData));
-        yield put(actions.getUserInfo(loginSuccessData.access_token));
+        const tokenInfo: TokenInfo = yield call(service.login, { ...loginData, client_id: config.authConfig.clientId });
+        yield put(actions.loginSuccess(tokenInfo));
+        yield put(actions.getUserInfo(tokenInfo.access_token));
         yield put(globalActions.hideLoading());
         yield put(push("/admin"));
     } catch (err) {
@@ -201,9 +202,12 @@ export function* saga() {
     yield takeLatest(ACTION_GETUSER_REQUEST, getUser);
 }
 
+export function getState(): AuthState {
+    return store.getState().auth as AuthState;
+}
+
 export function isAuthorized(): boolean {
-    // TODO: here to add logic to authorize
-    return store.getState().auth.accessToken;
+    return !!getState().token;
 }
 
 export function getAuthUri(): string {
@@ -212,6 +216,32 @@ export function getAuthUri(): string {
     }
 
     if (config.authType === AuthType.OAuth || config.authType === AuthType.OAuthCode) {
-        return config.authConfig.authorizationUri.replace("{url_callback}", Url.current().merge("/auth/callback"));
+        let authUrl = config.authConfig.authorizationUri;
+        if (!config.authConfig.callbackUri) {
+            const callbackUri = Url.current().merge("/auth/callback");
+            authUrl = authUrl.replace("{callbackUri}", callbackUri);
+        }
+
+        Object.keys(config.authConfig).forEach(key => {
+            authUrl = authUrl.replace(`{${key}}`, config.authConfig[key]);
+        });
+
+        return authUrl;
+    }
+}
+
+export function getAccessTokenUri(code: string): string {
+    if (config.authType === AuthType.OAuth || config.authType === AuthType.OAuthCode) {
+        let tokenUrl = config.authConfig.accessTokenUri;
+        tokenUrl = tokenUrl.replace("{code}", code);
+        if (!config.authConfig.callbackUri) {
+            const callbackUri = Url.current().merge("/auth/callback");
+            tokenUrl = tokenUrl.replace("{callbackUri}", callbackUri);
+
+            Object.keys(config.authConfig).forEach(key => {
+                tokenUrl = tokenUrl.replace(`{${key}}`, config.authConfig[key]);
+            });
+        }
+        return tokenUrl;
     }
 }

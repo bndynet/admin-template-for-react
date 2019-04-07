@@ -25,8 +25,11 @@ export interface OAuthConfig {
     clientId: string;
     clientSecret: string;
     authorizationUri: string;
+    accessTokenUri?: string;
     userProfileUri: string;
     logoutUri: string;
+    callbackUri?: string;
+    scope?: string;
 }
 
 const getConfig = (): Config => {

@@ -6,10 +6,10 @@ const config: Config = {
     authConfig: {
         clientId: "500bd7533a",
         clientSecret: "bc55228ce6c70e97f4ee",
-        authorizationUri: "http://localhost:9100/authorize?redirect_uri={url_callback}&target=github",
+        authorizationUri: "http://localhost:9100/authorize?redirect_uri={callbackUrl}&target=github",
         // clientId: "eb6ab71a97ef2692d857",
         // clientSecret: "014e9f84049964807d751c81658d133a1e37acd3",
-        // authorizationUri: "https://cloud.bndy.net/service-oauth/authorize?redirect_uri={url_callback}&target=github",
+        // authorizationUri: "https://cloud.bndy.net/service-oauth/authorize?redirect_uri={callbackUrl}&target=github",
         userProfileUri: "https://api.github.com/user",
         logoutUri: "https://github.com/logout",
     },

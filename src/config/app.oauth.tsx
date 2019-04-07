@@ -1,0 +1,22 @@
+import { Config, AuthType } from ".";
+
+const config: Config = {
+    authType: AuthType.OAuth,
+    authConfig: {
+        clientId: "foo",
+        clientSecret: "1",
+        authorizationUri: "http://localhost:9110/oauth/authorize?response_type=code&client_id={clientId}&redirect_uri={callbackUri}&&scope={scope}",
+        accessTokenUri: "http://localhost:9110/oauth/token?client_id={clientId}&client_secret={clientSecret}&grant_type=authorization_code&code={code}&redirect_uri={callbackUri}",
+        userProfileUri: "http://localhost:9110/oauth/me",
+        logoutUri: "http://localhost:9110/oauth/logout",
+        scope: "user_info",
+    },
+    userConverter: (backendUser: any) => {
+        return {
+            name: backendUser.username,
+            email: backendUser.email,
+        };
+    },
+};
+
+module.exports = config;

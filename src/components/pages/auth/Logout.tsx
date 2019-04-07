@@ -58,7 +58,6 @@ class Logout extends React.Component<
     }
 
     public componentWillMount() {
-        this.props.handleLogout();
         const logoutResult = authService.logout();
         if (logoutResult && logoutResult.then) {
             logoutResult
@@ -71,6 +70,7 @@ class Logout extends React.Component<
                     });
                 });
         }
+        this.props.handleLogout();
     }
 
     public render() {

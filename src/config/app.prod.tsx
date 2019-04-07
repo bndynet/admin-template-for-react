@@ -1,4 +1,4 @@
-import config = require("./app.sso");
+import config = require("./app.sso-password");
 
 module.exports = {
     ...config,

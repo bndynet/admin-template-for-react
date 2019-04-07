@@ -222,7 +222,7 @@ class Admin extends React.Component<
                         </IconButton>
                         <Tooltip title={user.name || "Not logged in"}>
                             <Avatar aria-owns={avatarMenuAnchor ? "avatar-menu" : undefined} aria-haspopup="true" className={classes.avatar} onClick={this.handleAvatarClick}>
-                                {user.name && user.name[0]}
+                                {user.name && user.name[0] && user.name[0].toUpperCase()}
                             </Avatar>
                         </Tooltip>
                         <Menu id="avatar-menu" classes={{ paper: classes.avatarMenu }} anchorEl={avatarMenuAnchor} open={Boolean(avatarMenuAnchor)} onClose={this.handleAvatarMenuClose}>

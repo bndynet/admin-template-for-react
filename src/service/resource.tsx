@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { config } from "../config";
 import { Ajax } from "../helpers/ajax";
 import { actions as globalActions } from "./global";
+import { getState } from "./auth";
 
 export const ACTION_README_GET = "README_GET";
 export const ACTION_README_GET_SUCCESS = "README_GET_SUCCESS";
@@ -25,6 +26,12 @@ export function reducer(state = {}, action) {
 class ResourceService extends Ajax {
     constructor() {
         super({
+            headerAuthorization: () => {
+                if (getState().token) {
+                    return `${getState().token.token_type} ${getState().token.access_token}`;
+                }
+                return "";
+            },
             baseURL: config.resourceBaseUri,
             onResponseError: error => {
                 // TODO: handle global exceptions

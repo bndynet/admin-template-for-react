@@ -3,8 +3,8 @@ import { Theme, createStyles, withStyles } from "@material-ui/core";
 import { Chart } from "@bndynet/recharts-wrapper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 
+let chartIsMounted = false;
 const data = [{ name: "Mon", Visits: 0, Orders: 20 }, { name: "Tue", Visits: 100, Orders: 0 }, { name: "Wed", Visits: 0, Orders: 430 }];
-
 function loadData() {
     return new Promise<any[]>((resolve, reject) => {
         setTimeout(() => {
@@ -59,7 +59,9 @@ function loadData() {
                     s3: 0,
                 },
             ];
-            resolve(response);
+            if (chartIsMounted) {
+                resolve(response);
+            }
         }, 5000);
     });
 }
@@ -74,6 +76,14 @@ const styles = (theme: Theme) =>
 class ChartExample extends React.Component<{
     classes: { loadingElement: any };
 }> {
+    public componentDidMount() {
+        chartIsMounted = true;
+    }
+
+    public componentWillUnmount() {
+        chartIsMounted = false;
+    }
+
     public render() {
         return <Chart classes={{ loadingElement: this.props.classes.loadingElement }} data={data} xKey="name" dataSource={loadData} series={[{ key: "Visits", color: "#82ca9d", type: "bar" }, { key: "Orders", color: "#8884d8", type: "area" }, { key: "ShoppingCart", color: "#ff0000" }]} loadingElement={<span>Loading...</span>} />;
     }

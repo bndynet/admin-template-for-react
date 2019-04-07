@@ -5,22 +5,35 @@ import { Alert } from "app/ui";
 import { Url } from "app/helpers/url";
 import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
 
-import { actions as authActions } from "../../../service/auth";
+import { actions as authActions, getAccessTokenUri, TokenInfo } from "../../../service/auth";
+import { Ajax } from "app/helpers/ajax";
 
+const KEY_CODE = "code";
 const KEY_TOKEN = "access_token";
 const KEY_ERROR = "error_description";
 
 class CallbackComponent extends React.Component<{
-    onAuthSuccess: (token: string) => void;
+    onAuthSuccess: (tokenInfo: TokenInfo) => void;
+    push: (path: string) => void;
 }> {
     private error: any;
 
     constructor(props) {
         super(props);
         const currentUrl = Url.current();
-        if (currentUrl.queries[KEY_TOKEN]) {
-            this.props.onAuthSuccess(currentUrl.queries[KEY_TOKEN] as string);
+        if (currentUrl.queries[KEY_CODE]) {
+            const code = currentUrl.queries[KEY_CODE] as string;
+            const ajax = new Ajax().post(getAccessTokenUri(code), null);
+            ajax.then((tokenInfo: any) => {
+                this.props.onAuthSuccess(tokenInfo);
+                this.props.push("/admin");
+            });
+        } else if (currentUrl.queries[KEY_TOKEN]) {
+            this.props.onAuthSuccess({
+                access_token: currentUrl.queries[KEY_TOKEN] as string,
+            });
         } else {
             this.error = currentUrl.queries[KEY_ERROR];
             if (!this.error) {
@@ -46,8 +59,11 @@ class CallbackComponent extends React.Component<{
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    onAuthSuccess: (token: string) => {
-        dispatch(authActions.authSuccess(token));
+    onAuthSuccess: (tokenInfo: TokenInfo) => {
+        dispatch(authActions.authSuccess(tokenInfo));
+    },
+    push: (path: string) => {
+        dispatch(push(path));
     },
 });
 
