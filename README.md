@@ -31,30 +31,32 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 
 ## Development
 
-### Application Configurations
+### Application Configuration Examples
 
-- ./src/config/app.common.tsx
-- ./src/config/app.dev.tsx
-- ./src/config/app.prod.tsx
-- ./src/config/app.github.tsx
+- ./src/config/app.common.tsx           - *all common configurations*
+- ./src/config/app.dev.tsx              - *configurations used in local*
+- ./src/config/app.prod.tsx             - *configurations used in production*
+- ./src/config/app.github.tsx           - *example for github authorization*
+- ./src/config/app.auth-code.tsx        - *example for authorization code grant type*
+- ./src/config/app.auth-password.tsx    - *example for password grant type*
 
 ### Customize more environments
 
 1. New file **./src/config/app.[env_name].tsx** to override your configurations
 
-2. Add below code in **./src/config/index.tsx** or **./index.html**
+2. Recommend to import configurations in **app.dev.tsx**
 
-    Import configurations in **app.dev.tsx**
-    ```
+    ```ts
     import config = require("./app.your-env");
     ```
 
     Or add below code in **./src/config/index.tsx** or **./index.html** to freeze your environment
+
     ```ts
     window.__APP_ENV__ = 'your-env';
     ```
 
-4. `npm start` and `npm run build` will always use the environment you defined
+3. `npm start` and `npm run build` will always use the environment you defined
 
 ### Components based on Material UI or some else
 
