@@ -1,41 +1,41 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch, Action } from 'redux';
+import * as React from "react";
+import { connect } from "react-redux";
+import { Dispatch, Action } from "redux";
 
-import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import AccountCircleRounded from '@material-ui/icons/AccountCircleRounded';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import AccountCircleRounded from "@material-ui/icons/AccountCircleRounded";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
-import { actions as authActions } from 'app/service/auth';
-import { actions as globalActions } from 'app/service/global';
+import { actions as authActions } from "app/service/auth";
+import { actions as globalActions } from "app/service/global";
 
 const styles = (theme: Theme) =>
     createStyles({
         main: {
-            width: 'auto',
-            display: 'block',
+            width: "auto",
+            display: "block",
             marginLeft: theme.spacing.unit * 3,
             marginRight: theme.spacing.unit * 3,
             [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
                 width: 400,
-                marginLeft: 'auto',
-                marginRight: 'auto',
+                marginLeft: "auto",
+                marginRight: "auto",
             },
         },
         paper: {
             marginTop: theme.spacing.unit * 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
         },
         avatar: {
@@ -46,7 +46,7 @@ const styles = (theme: Theme) =>
             fontSize: 110,
         },
         form: {
-            width: '100%',
+            width: "100%",
             marginTop: theme.spacing.unit,
         },
         submit: {
@@ -57,7 +57,7 @@ const styles = (theme: Theme) =>
 interface LoginComponentProps {
     history: any;
     classes: any;
-    onLogin: (username: string, password: string) => boolean;
+    onLogin: (username: string, password: string, rememberMe: boolean) => boolean;
 }
 
 interface LoginComponentState {
@@ -70,8 +70,8 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
+            username: "",
+            password: "",
             rememberMe: true,
         };
         this.onLogin = this.onLogin.bind(this);
@@ -84,33 +84,33 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
                 <CssBaseline />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <AccountCircleRounded fontSize='inherit' />
+                        <AccountCircleRounded fontSize="inherit" />
                     </Avatar>
-                    <Typography component='h1' variant='h5'>
+                    <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
                     <form className={classes.form}>
-                        <FormControl margin='normal' required={true} fullWidth={true}>
-                            <InputLabel htmlFor='username'>Username</InputLabel>
+                        <FormControl margin="normal" required={true} fullWidth={true}>
+                            <InputLabel htmlFor="username">Username</InputLabel>
                             <Input
-                                id='username'
-                                name='username'
-                                type='text'
-                                autoComplete='username'
+                                id="username"
+                                name="username"
+                                type="text"
+                                autoComplete="username"
                                 autoFocus={true}
-                                onChange={(e) => {
+                                onChange={e => {
                                     this.setState({ username: e.target.value });
                                 }}
                             />
                         </FormControl>
-                        <FormControl margin='normal' required={true} fullWidth={true}>
-                            <InputLabel htmlFor='password'>Password</InputLabel>
+                        <FormControl margin="normal" required={true} fullWidth={true}>
+                            <InputLabel htmlFor="password">Password</InputLabel>
                             <Input
-                                name='password'
-                                type='password'
-                                id='password'
-                                autoComplete='current-password'
-                                onChange={(e) => {
+                                name="password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                onChange={e => {
                                     this.setState({ password: e.target.value });
                                 }}
                             />
@@ -118,23 +118,17 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    value='remember'
-                                    color='primary'
+                                    value="remember"
+                                    color="primary"
                                     checked={this.state.rememberMe}
                                     onChange={(e, v) => {
                                         this.setState({ rememberMe: v });
                                     }}
                                 />
                             }
-                            label='Remember me'
+                            label="Remember me"
                         />
-                        <Button
-                            type='submit'
-                            fullWidth={true}
-                            variant='contained'
-                            color='primary'
-                            className={classes.submit}
-                            onClick={this.onLogin}>
+                        <Button type="submit" fullWidth={true} variant="contained" color="primary" className={classes.submit} onClick={this.onLogin}>
                             Sign in
                         </Button>
                     </form>
@@ -144,12 +138,12 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
     }
 
     private onLogin(event) {
-        this.props.onLogin(this.state.username, this.state.password);
+        this.props.onLogin(this.state.username, this.state.password, this.state.rememberMe);
         event.preventDefault();
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     user: state.auth.user,
 });
 
@@ -158,16 +152,19 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         if (!username || !password) {
             dispatch(
                 globalActions.notify({
-                    message: 'Please enter your username and password!',
-                    variant: 'error',
-                    placement: 'bottom center',
+                    message: "Please enter your username and password!",
+                    variant: "error",
+                    placement: "bottom center",
                 }),
             );
             return false;
         }
-        dispatch(authActions.login({username, password, rememberMe}));
+        dispatch(authActions.login({ username, password, rememberMe }));
         return true;
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(withStyles(styles)(Login));
