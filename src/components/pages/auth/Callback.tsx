@@ -7,10 +7,11 @@ import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 
-import { actions as authActions, getAccessTokenUri, TokenInfo } from "../../../service/auth";
+import { actions as authActions, getAccessTokenUri, TokenInfo, getValidState } from "../../../service/auth";
 import { Ajax } from "app/helpers/ajax";
 
 const KEY_CODE = "code";
+const KEY_STATE = "state";
 const KEY_TOKEN = "access_token";
 const KEY_ERROR = "error_description";
 
@@ -24,12 +25,18 @@ class CallbackComponent extends React.Component<{
         super(props);
         const currentUrl = Url.current();
         if (currentUrl.queries[KEY_CODE]) {
-            const code = currentUrl.queries[KEY_CODE] as string;
-            const ajax = new Ajax().post(getAccessTokenUri(code), null);
-            ajax.then((tokenInfo: any) => {
-                this.props.onAuthSuccess(tokenInfo);
-                this.props.push("/admin");
-            });
+            // validate the state
+            const state = currentUrl.queries[KEY_STATE] as string;
+            if (state === getValidState()) {
+                const code = currentUrl.queries[KEY_CODE] as string;
+                const ajax = new Ajax().post(getAccessTokenUri(code), null);
+                ajax.then((tokenInfo: any) => {
+                    this.props.onAuthSuccess(tokenInfo);
+                    this.props.push("/admin");
+                });
+            } else {
+                this.error = "Invalid state from server.";
+            }
         } else if (currentUrl.queries[KEY_TOKEN]) {
             this.props.onAuthSuccess({
                 access_token: currentUrl.queries[KEY_TOKEN] as string,

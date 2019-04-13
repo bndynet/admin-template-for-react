@@ -6,6 +6,8 @@ import { push } from "connected-react-router";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { actions as globalActions } from "./global";
 import { Url } from "app/helpers/url";
+import storage from "app/helpers/storage";
+import utils from "app/helpers/utils";
 
 export const ACTION_AUTH_REQUEST = "USER_AUTH_REQUEST";
 export const ACTION_AUTH_SUCCESS = "USER_AUTH_SUCCESS";
@@ -226,8 +228,17 @@ export function getAuthUri(): string {
             authUrl = authUrl.replace(`{${key}}`, config.authConfig[key]);
         });
 
-        return authUrl;
+        return `${authUrl}&state=${getValidState()}`;
     }
+}
+
+export function getValidState(): string {
+    const KEY_AUTH_STATE = "AUTH_STATE";
+    if (!storage.getSession(KEY_AUTH_STATE)) {
+        storage.setSession(KEY_AUTH_STATE, utils.randomString(10));
+    }
+
+    return storage.getSession(KEY_AUTH_STATE);
 }
 
 export function getAccessTokenUri(code: string): string {
