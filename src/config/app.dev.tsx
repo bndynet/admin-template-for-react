@@ -1,3 +1,3 @@
-import config = require("./app.oauth-password");
+import config = require("./app.oauth-code");
 
 module.exports = config;
