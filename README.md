@@ -13,7 +13,6 @@
 ![](https://img.shields.io/badge/React-Redux%20Saga-brightgreen.svg?logo=react)
 [![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
 
 ![](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home.png)
@@ -39,6 +38,7 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 - ./src/config/app.github.tsx           - *example for github authorization*
 - ./src/config/app.auth-code.tsx        - *example for authorization code grant type*
 - ./src/config/app.auth-password.tsx    - *example for password grant type*
+- ./src/config/app.mock.tsx             - *just for local development without login system*
 
 ### Customize more environments
 
@@ -75,6 +75,11 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 
 <Formatter value={1459832991883} formatAs='fromNow' />
 ```
+
+### Available Services
+
+- `import { service as resourceService } from "app/service/resource";` to call APIs which has appended access token in request header
+- `import { getState as getAuthState } from "app/service/auth";` to get current user information
 
 ### Debug with **Chrome** in **Visual Studio Code**
 
