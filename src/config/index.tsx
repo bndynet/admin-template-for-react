@@ -10,6 +10,7 @@ export enum AuthType {
     OAuthCode,
     OAuthPassword,
     Custom,
+    Mock,
 }
 
 export interface Config {

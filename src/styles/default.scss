@@ -76,3 +76,8 @@ a {
         }
     }
 }
+
+/* TODO: remove after the dialog bugfix */
+.notification-item {
+    max-width: 360px;
+}

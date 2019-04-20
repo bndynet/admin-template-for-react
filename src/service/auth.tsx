@@ -118,17 +118,54 @@ export function reducer(state: AuthState = {}, action): AuthState {
 
 export const service = {
     login: (data: LoginData) => {
-        data.grant_type = "password";
-        data.client_id = config.authConfig.clientId;
-        data.client_secret = config.authConfig.clientSecret;
-        return new Ajax().postForm(config.authConfig.authorizationUri, data);
+        switch (config.authType) {
+            case AuthType.OAuthPassword:
+                data.grant_type = "password";
+                data.client_id = config.authConfig.clientId;
+                data.client_secret = config.authConfig.clientSecret;
+                return new Ajax().postForm(config.authConfig.authorizationUri, data);
+
+            case AuthType.Mock:
+                return new Promise((resolve, reject) => {
+                    const token: TokenInfo = {
+                        access_token: JSON.stringify(data),
+                    };
+                    resolve(token);
+                });
+
+            default:
+                return new Promise((resolve, reject) => {
+                    const error: AjaxError = {
+                        data: {
+                            error_description: `No handler found for ${config.authType}`,
+                        },
+                        status: 404,
+                        statusText: "No `AuthType` matched.",
+                        headers: null,
+                        config: null,
+                        request: null,
+                    };
+                    reject(error);
+                });
+        }
     },
-    getUser: (): AxiosPromise => {
+    getUser: (): AxiosPromise | any => {
+        if (config.authType === AuthType.Mock) {
+            return new Promise((resolve, reject) => {
+                const user: UserInfo = JSON.parse(getState().token.access_token) as UserInfo;
+                resolve(user);
+            });
+        }
         return new Ajax({
             headerAuthorization: () => `${getState().token.token_type || "Bearer"} ${getState().token.access_token}`,
         }).get(config.authConfig.userProfileUri);
     },
     logout: (): AxiosPromise | any => {
+        if (config.authType === AuthType.Mock) {
+            return new Promise((resolve, reject) => {
+                resolve("ok");
+            });
+        }
         if (config.logoutHandler) {
             return config.logoutHandler(config.authConfig.logoutUri, getState());
         } else {
@@ -159,7 +196,7 @@ function* login(action) {
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
         yield put(globalActions.showLoading("Logging in..."));
-        const tokenInfo: TokenInfo = yield call(service.login, { ...loginData, client_id: config.authConfig.clientId });
+        const tokenInfo: TokenInfo = yield call(service.login, { ...loginData });
         yield put(actions.loginSuccess(tokenInfo));
         yield put(actions.getUserInfo(tokenInfo.access_token));
         yield put(globalActions.hideLoading());
@@ -172,8 +209,6 @@ function* login(action) {
         } else {
             yield put(globalActions.notifyError(`Service Unavailable`));
         }
-        // TODO: remove in prod
-        yield put(push("/admin"));
     }
 }
 
@@ -213,7 +248,7 @@ export function isAuthorized(): boolean {
 }
 
 export function getAuthUri(): string {
-    if (config.authType === AuthType.Custom || config.authType === AuthType.OAuthPassword) {
+    if (config.authType === AuthType.Custom || config.authType === AuthType.OAuthPassword || config.authType === AuthType.Mock) {
         return "/login";
     }
 

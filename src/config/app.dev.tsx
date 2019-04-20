@@ -1,3 +1,3 @@
-import config = require("./app.oauth-code");
+import config = require("./app.mock");
 
 module.exports = config;

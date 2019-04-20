@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+import { notify } from "@bndynet/dialog";
 import { config } from "../config";
 import { Ajax } from "../helpers/ajax";
 import { actions as globalActions } from "./global";
@@ -34,7 +35,7 @@ class ResourceService extends Ajax {
             },
             baseURL: config.resourceBaseUri,
             onResponseError: error => {
-                // TODO: handle global exceptions
+                notify(JSON.stringify(error), "error");
             },
         });
     }
