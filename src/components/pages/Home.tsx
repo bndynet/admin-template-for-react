@@ -9,9 +9,10 @@ import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Typography, Button, Fab } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { loading } from "@bndynet/dialog";
 
-import { actions as resourceActions } from "app/service/resource";
-import { actions as authActions } from "app/service/auth";
+import { service as resourceService } from "app/service/resource";
+import { actions as authActions, getState } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
 
 import { LocaleType, supportLocales } from "app/locales";
@@ -63,12 +64,12 @@ interface HomeComponentProps {
     readme: string;
     onLogout(): void;
     onPreLogout(): void;
-    onGetReadme(): void;
     onChangeLocale(locale: string): void;
 }
 
 interface HomeComponentState {
     logoutDelay?: number;
+    readme?: string;
 }
 
 class Home extends React.Component<HomeComponentProps, HomeComponentState> {
@@ -80,11 +81,22 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
             logoutDelay: null,
+            readme: "",
         };
     }
 
     public componentWillMount() {
-        this.props.onGetReadme();
+        loading();
+        resourceService
+            .get("/README.md")
+            .then((res: any) => {
+                this.setState({
+                    readme: res,
+                });
+            })
+            .finally(() => {
+                loading(false);
+            });
     }
 
     public render() {
@@ -121,7 +133,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                             {supportLocales[key]}
                         </Button>
                     ))}
-                    <ReactMarkdown source={this.props.readme} className={"markdown-body"} />
+                    <ReactMarkdown source={this.state.readme} className={"markdown-body"} />
                     {btn}
                 </main>
             </div>
@@ -152,8 +164,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
 }
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    readme: state.resource.readme,
+    user: getState().user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -169,9 +180,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
                 placement: "bottom left",
             }),
         );
-    },
-    onGetReadme: () => {
-        dispatch(resourceActions.getReadme());
     },
     onChangeLocale: (locale: LocaleType) => {
         dispatch(globalActions.changeLocale(locale));
