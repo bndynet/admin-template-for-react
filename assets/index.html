@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://static.bndy.net/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="https://static.bndy.net/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="https://static.bndy.net/favicon-16x16.png" />
+        <link rel="mask-icon" href="https://static.bndy.net/safari-pinned-tab.svg" color="#5bbad5" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+    </head>
 
-<head>
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://static.bndy.net/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://static.bndy.net/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://static.bndy.net/favicon-16x16.png">
-    <link rel="mask-icon" href="https://static.bndy.net/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-        crossorigin="anonymous">
-</head>
-
-<body>
-    <div id="app">
-        <div class="screen-center text-center starting">
-            <img class="animated infinite bounce" src="https://static.bndy.net/images/logo.png" >
-            <br />
-            Starting Application...
+    <body>
+        <noscript>
+            <div class="app-error">
+                JavaScript is not enabled. Please enable it and reload the page.
+            </div>
+        </noscript>
+        <!--[if lt IE 11]>
+            <div class="app-error">
+                You are using an <strong>outdated</strong> version of Internet Explorer. Please <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">upgrade your browser</a> to version 11 or higher.
+            </div>
+        <![endif]-->
+        <div id="app">
+            <div class="screen-center text-center starting">
+                <img class="animated infinite bounce" src="https://static.bndy.net/images/logo.png" />
+                <br />
+                Starting Application...
+            </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>
