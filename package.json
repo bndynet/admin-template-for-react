@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/bndynet/admin-template-for-react#readme",
   "dependencies": {
-    "@bndynet/dialog": "^2.4.0",
+    "@bndynet/dialog": "^2.6.1",
     "@bndynet/recharts-wrapper": "^1.2.1",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.1",
