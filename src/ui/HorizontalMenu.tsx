@@ -1,16 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
-import {
-    Theme,
-    createStyles,
-    withStyles,
-    Popper,
-    Grow,
-    ClickAwayListener,
-    MenuList,
-    Paper,
-    MenuItem,
-} from "@material-ui/core";
+import { Theme, createStyles, withStyles, Popper, Grow, ClickAwayListener, MenuList, Paper, MenuItem } from "@material-ui/core";
 import { LinkButton } from "app/ui";
 import { MenuItem as TMenuItem } from "app/types";
 
@@ -28,8 +18,8 @@ const styles = (theme: Theme) =>
             color: theme.palette.common.white,
             fontSize: "1.5em",
             height: "100%",
-            paddingLeft: theme.spacing.unit * 2,
-            paddingRight: theme.spacing.unit * 2,
+            paddingLeft: theme.spacing.unit * 1.5,
+            paddingRight: theme.spacing.unit * 1.5,
             borderRadius: 0,
         },
         subMenuWrapper: {
@@ -48,10 +38,7 @@ const styles = (theme: Theme) =>
         },
     });
 
-class HorizontalMenu extends React.Component<
-    { classes: any; data: TMenuItem[] },
-    { menuStatusSet: { [key: string]: boolean } }
-> {
+class HorizontalMenu extends React.Component<{ classes: any; data: TMenuItem[] }, { menuStatusSet: { [key: string]: boolean } }> {
     private anchors;
 
     constructor(props) {
@@ -71,39 +58,16 @@ class HorizontalMenu extends React.Component<
                         item.children ? (
                             <div key={item.text}>
                                 {this.getMenuElement(item, true)}
-                                <Popper
-                                    open={
-                                        !!this.state.menuStatusSet[
-                                            this.getMenuKey(item)
-                                        ]
-                                    }
-                                    anchorEl={
-                                        this.anchors[this.getMenuKey(item)]
-                                    }
-                                    transition={true}
-                                    disablePortal={true}
-                                >
+                                <Popper open={!!this.state.menuStatusSet[this.getMenuKey(item)]} anchorEl={this.anchors[this.getMenuKey(item)]} transition={true} disablePortal={true}>
                                     {({ TransitionProps, placement }) => (
                                         <Grow
                                             {...TransitionProps}
                                             style={{
-                                                transformOrigin:
-                                                    placement === "bottom"
-                                                        ? "center top"
-                                                        : "center bottom",
+                                                transformOrigin: placement === "bottom" ? "center top" : "center bottom",
                                             }}
                                         >
                                             <Paper square={true}>
-                                                <ClickAwayListener
-                                                    onClickAway={e =>
-                                                        this.handleClose(
-                                                            e,
-                                                            item,
-                                                        )
-                                                    }
-                                                >
-                                                    {this.generateSubMenu(item)}
-                                                </ClickAwayListener>
+                                                <ClickAwayListener onClickAway={e => this.handleClose(e, item)}>{this.generateSubMenu(item)}</ClickAwayListener>
                                             </Paper>
                                         </Grow>
                                     )}
@@ -129,25 +93,16 @@ class HorizontalMenu extends React.Component<
                 contentAlign="left"
                 key={menu.text}
                 to={menu.link}
-                className={classNames(
-                    classes.menuItem,
-                    !isRoot && classes.subMenuItem,
-                )}
+                className={classNames(classes.menuItem, !isRoot && classes.subMenuItem)}
                 buttonRef={node => {
                     this.anchors[menuKey] = node;
                 }}
                 color="inherit"
                 aria-haspopup="true"
-                aria-owns={
-                    this.state.menuStatusSet[menuKey] ? menuKey : undefined
-                }
+                aria-owns={this.state.menuStatusSet[menuKey] ? menuKey : undefined}
                 onClick={e => this.handleToggle(menu)}
             >
-                {typeof menu.icon !== "string" ? (
-                    menu.icon
-                ) : (
-                    <i className={menu.icon} />
-                )}
+                {typeof menu.icon !== "string" ? menu.icon : <i className={menu.icon} />}
                 <span className={classes.text}>{menu.text}</span>
             </LinkButton>
         );
@@ -160,16 +115,8 @@ class HorizontalMenu extends React.Component<
             menu.children.length > 0 && (
                 <MenuList>
                     {menu.children.map(subItem => (
-                        <div
-                            key={subItem.text}
-                            className={classes.subMenuWrapper}
-                        >
-                            <MenuItem
-                                onClick={e => this.handleClose(e, subItem)}
-                                component={props =>
-                                    this.menuItem(props, subItem, false)
-                                }
-                            />
+                        <div key={subItem.text} className={classes.subMenuWrapper}>
+                            <MenuItem onClick={e => this.handleClose(e, subItem)} component={props => this.menuItem(props, subItem, false)} />
                             {this.generateSubMenu(subItem)}
                         </div>
                     ))}
@@ -187,8 +134,7 @@ class HorizontalMenu extends React.Component<
         });
     };
 
-    private menuItem = (props, menu, isRoot) =>
-        this.getMenuElement(menu, isRoot);
+    private menuItem = (props, menu, isRoot) => this.getMenuElement(menu, isRoot);
 
     private handleClose = (event, menu) => {
         const menuKey = this.getMenuKey(menu);

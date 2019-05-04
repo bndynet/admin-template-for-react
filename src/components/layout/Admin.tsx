@@ -27,7 +27,6 @@ import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
 import { SlidePanel, HorizontalMenu, VerticalMenu } from "app/ui";
 import { themeConfig } from "app/theme";
 import { adminMenus, adminRoutes } from "app/config";
-import { actions as authActions } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
 
 const styles = (theme: Theme) =>
@@ -47,16 +46,10 @@ const styles = (theme: Theme) =>
             zIndex: theme.zIndex.drawer + 1,
             flexDirection: "row",
         },
-        brand: {
-            height: themeConfig.headerHeight,
-            display: "flex",
-            alignItems: "center",
-            paddingLeft: theme.spacing.unit * 2,
-            paddingRight: theme.spacing.unit * 2,
-        },
         menuButton: {
             padding: theme.spacing.unit,
-            transform: "scale(1.5)",
+            borderRadius: 0,
+            width: themeConfig.sidebarWidthMini,
             [theme.breakpoints.down("sm")]: {
                 display: "inherit",
                 marginLeft: 0,
@@ -70,6 +63,8 @@ const styles = (theme: Theme) =>
         },
         brandTitle: {
             color: "#ffffff",
+            width: themeConfig.sidebarWidth,
+            textAlign: "center",
             [theme.breakpoints.down("sm")]: {
                 display: "none",
             },
@@ -198,14 +193,13 @@ class Admin extends React.Component<
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="absolute" className={classes.appBar}>
-                    <div className={classes.brand}>
-                        <Link to="/" className={classNames("clickable", classes.brandTitle)} hidden={!this.state.largeMainMenu}>
-                            <img src="https://static.bndy.net/images/logo_white.svg" style={{ height: 60 }} />
-                        </Link>
-                        <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton, this.state.largeMainMenu && classes.menuButtonHidden)}>
-                            <MenuIcon />
-                        </IconButton>
-                    </div>
+                    <Link to="/" className={classNames("clickable", classes.brandTitle)} hidden={!this.state.largeMainMenu}>
+                        <img src="https://static.bndy.net/images/logo_white.svg" style={{ height: 60 }} />
+                    </Link>
+
+                    <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton)}>
+                        <i className={classNames("fas fa-bars animated", !this.state.largeMainMenu && "rotateIn")} />
+                    </IconButton>
 
                     <HorizontalMenu data={adminMenus} />
 

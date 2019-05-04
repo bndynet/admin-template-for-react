@@ -1,7 +1,16 @@
 @import "variables";
+@import "mixins";
 
 @include generateTRBL("margin", 0, 1, 2);
 @include generateTRBL("padding", 0, 1, 2);
+@include colorVariant("primary", $color-primary);
+@include colorVariant("secondary", $color-secondary);
+@include colorVariant("success", $color-success);
+@include colorVariant("error", $color-error);
+@include colorVariant("warning", $color-warning);
+@include colorVariant("info", $color-info);
+@include colorVariant("dark", $color-dark);
+@include colorVariant("light", $color-light);
 
 html, body {
     margin: 0;

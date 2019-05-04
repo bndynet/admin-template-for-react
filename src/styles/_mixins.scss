@@ -1,0 +1,71 @@
+@mixin hover {
+    &:hover {
+        @content;
+    }
+}
+
+@mixin hover-focus {
+    &:hover,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin plain-hover-focus {
+    &,
+    &:hover,
+    &:focus {
+        @content;
+    }
+}
+
+@mixin hover-focus-active {
+    &:hover,
+    &:focus,
+    &:active {
+        @content;
+    }
+}
+
+@mixin colorVariant($variant, $color) {
+    .bg-#{$variant} {
+        background-color: $color !important;
+    }
+    a.bg-#{$variant},
+    button.bg-#{$variant} {
+        @include hover-focus {
+            background-color: darken($color, 10%) !important;
+        }
+    }
+    .text-#{$variant} {
+        color: $color !important;
+    }
+    .border-#{$variant} {
+        border-color: $color !important;
+    }
+}
+
+@mixin generateTRBL($property, $units...) {
+    @each $unit in $units {
+        @if $unit == 1 {
+            .#{$property} {
+                #{$property}: $unit * 8px;
+            }
+        } @else {
+            .#{$property}-#{$unit} {
+                #{$property}: $unit * 8px;
+            }
+        }
+        @each $item in $TRBL {
+            @if $unit == 1 {
+                .#{$property}-#{$item} {
+                    #{$property}-#{$item}: $unit * 8px;
+                }
+            } @else {
+                .#{$property}-#{$item}-#{$unit} {
+                    #{$property}-#{$item}: $unit * 8px;
+                }
+            }
+        }
+    }
+}

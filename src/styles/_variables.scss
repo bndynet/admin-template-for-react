@@ -1,27 +1,10 @@
-
 $TRBL: top, right, bottom, left;
 
-@mixin generateTRBL($property, $units...) {
-    @each $unit in $units {
-        @if $unit == 1 {
-            .#{$property} {
-                #{$property}: $unit * 8px;
-            }
-        } @else {
-            .#{$property}-#{$unit} {
-                #{$property}: $unit * 8px;
-            }
-        }
-        @each $item in $TRBL {
-            @if $unit == 1 {
-                .#{$property}-#{$item} {
-                    #{$property}-#{$item}: $unit * 8px;
-                }
-            } @else {
-                .#{$property}-#{$item}-#{$unit} {
-                    #{$property}-#{$item}: $unit * 8px;
-                }
-            }
-        }
-    }
-}
+$color-primary: #007bff !default;
+$color-secondary: #6c757d !default;
+$color-success: #28a745 !default;
+$color-error: #dc3545 !default;
+$color-warning: #ffc107 !default;
+$color-info: #17a2b8 !default;
+$color-dark: #343a40 !default;
+$color-light: #f8f9fa !default;

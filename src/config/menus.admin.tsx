@@ -1,5 +1,4 @@
 import * as React from "react";
-import HomeIcon from "@material-ui/icons/Home";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import BuildIcon from "@material-ui/icons/Build";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -26,7 +25,7 @@ const menus: MenuItem[] = [
     },
     {
         icon: <InputIcon />,
-        text: "Markdown Editor",
+        text: "Markdown",
         description: "",
         link: "/admin/markdown",
     },
