@@ -16,7 +16,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import MenuIcon from "@material-ui/icons/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -65,7 +64,16 @@ const styles = (theme: Theme) =>
             color: "#ffffff",
             width: themeConfig.sidebarWidth,
             textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            paddingLeft: theme.spacing.unit,
+            paddingRight: theme.spacing.unit,
+            fontSize: 22,
+            justifyContent: "center",
             [theme.breakpoints.down("sm")]: {
+                display: "none",
+            },
+            "&.hidden": {
                 display: "none",
             },
         },
@@ -193,8 +201,9 @@ class Admin extends React.Component<
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="absolute" className={classes.appBar}>
-                    <Link to="/" className={classNames("clickable", classes.brandTitle)} hidden={!this.state.largeMainMenu}>
-                        <img src="https://static.bndy.net/images/logo_white.svg" style={{ height: 60 }} />
+                    <Link to="/" className={classNames("clickable", classes.brandTitle, { hidden: !this.state.largeMainMenu })}>
+                        <img src="https://static.bndy.net/images/logo_white.svg" style={{ maxHeight: themeConfig.headerHeight }} />
+                        Admin Panel
                     </Link>
 
                     <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton)}>
