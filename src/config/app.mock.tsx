@@ -7,6 +7,7 @@ const config: Config = {
             id: "-1",
             name: mockUser.username,
             email: "zb@bndy.net",
+            avatar: "https://static.bndy.net/images/logo.png",
         };
     },
 };

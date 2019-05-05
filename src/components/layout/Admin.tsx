@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { renderRoutes } from "react-router-config";
 import { Link } from "react-router-dom";
-import { withStyles, Theme, createStyles, Avatar, Tooltip, Menu, MenuItem, withWidth } from "@material-ui/core";
+import { withStyles, Theme, createStyles, Avatar, Tooltip, withWidth, Popover, List, ListItem, ListItemText } from "@material-ui/core";
 import { isWidthUp } from "@material-ui/core/withWidth";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,8 +20,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
-import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
 
 import { SlidePanel, HorizontalMenu, VerticalMenu } from "app/ui";
 import { themeConfig } from "app/theme";
@@ -44,11 +42,15 @@ const styles = (theme: Theme) =>
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
             flexDirection: "row",
+            $IconButton: {
+                borderRadius: 0,
+            },
         },
         menuButton: {
-            padding: theme.spacing.unit,
+            paddingLeft: theme.spacing.unit,
+            paddingRight: theme.spacing.unit,
             borderRadius: 0,
-            width: themeConfig.sidebarWidthMini,
+            minWidth: 45,
             [theme.breakpoints.down("sm")]: {
                 display: "inherit",
                 marginLeft: 0,
@@ -82,14 +84,23 @@ const styles = (theme: Theme) =>
             flex: "inherit",
             minHeight: themeConfig.headerHeight,
             paddingRight: 0,
+            display: "flex",
+            alignItems: "stretch",
         },
         avatar: {
-            marginLeft: theme.spacing.unit * 1.5,
-            backgroundColor: theme.palette.secondary.main,
-            cursor: "pointer",
+            backgroundColor: theme.palette.grey[100],
+            width: 30,
+            height: 30,
         },
-        avatarMenu: {
-            minWidth: 160,
+        bigAvatar: {
+            width: 100,
+            height: 100,
+            margin: "0 auto 5px auto",
+            backgroundColor: theme.palette.grey[100],
+        },
+        avatarPopup: {
+            minWidth: 200,
+            maxHeight: "50vh",
         },
         drawerPaper: {
             position: "relative",
@@ -182,19 +193,19 @@ class Admin extends React.Component<
         push: (path: string) => void;
         onThemeChange: (toDark: boolean) => void;
     },
-    { largeMainMenu: boolean; avatarMenuAnchor: any; sidePanelOpen: boolean }
+    { largeMainMenu: boolean; avatarPopupAnchor: any; sidePanelOpen: boolean }
 > {
     constructor(props) {
         super(props);
         this.state = {
             largeMainMenu: isWidthUp("sm", this.props.width),
-            avatarMenuAnchor: null,
+            avatarPopupAnchor: null,
             sidePanelOpen: false,
         };
     }
 
     public render() {
-        const { avatarMenuAnchor } = this.state;
+        const { avatarPopupAnchor } = this.state;
         const { classes, isDarkTheme } = this.props;
         const user = this.props.user || {};
         return (
@@ -206,7 +217,7 @@ class Admin extends React.Component<
                         Admin Panel
                     </Link>
 
-                    <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton)}>
+                    <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton)} style={{ width: themeConfig.sidebarWidthMini }}>
                         <i className={classNames("fas fa-bars animated", !this.state.largeMainMenu && "rotateIn")} />
                     </IconButton>
 
@@ -214,26 +225,55 @@ class Admin extends React.Component<
 
                     <Toolbar disableGutters={!this.state.largeMainMenu} className={classes.toolbar}>
                         <Tooltip title="Toggle light/dark theme">
-                            <IconButton color="inherit" onClick={() => this.handleThemeChange()}>
-                                {isDarkTheme ? <BrightnessLowIcon fontSize="large" /> : <BrightnessHighIcon fontSize="large" />}
+                            <IconButton color="inherit" onClick={() => this.handleThemeChange()} className={classNames(classes.menuButton)}>
+                                <i className={classNames("fa-lightbulb", isDarkTheme ? "fas" : "far")} />
                             </IconButton>
                         </Tooltip>
-                        <IconButton color="inherit">
+                        <IconButton color="inherit" className={classNames(classes.menuButton)}>
                             <Badge badgeContent={4} color="secondary" classes={{ badge: classes.badge }}>
                                 <NotificationsIcon fontSize="large" />
                             </Badge>
                         </IconButton>
                         <Tooltip title={user.name || "Not logged in"}>
-                            <Avatar aria-owns={avatarMenuAnchor ? "avatar-menu" : undefined} aria-haspopup="true" className={classes.avatar} onClick={this.handleAvatarClick}>
-                                {user.name && user.name[0] && user.name[0].toUpperCase()}
-                            </Avatar>
+                            <IconButton color="inherit" aria-haspopup="true" aria-owns={avatarPopupAnchor ? "avatar-popup" : undefined} className={classNames(classes.menuButton)} onClick={this.handleAvatarClick}>
+                                <Avatar alt={user.name} src={user.avatar} className={classes.avatar}>
+                                    {!user.avatar && user.name && user.name[0] && user.name[0].toUpperCase()}
+                                </Avatar>
+                            </IconButton>
                         </Tooltip>
-                        <Menu id="avatar-menu" classes={{ paper: classes.avatarMenu }} anchorEl={avatarMenuAnchor} open={Boolean(avatarMenuAnchor)} onClose={this.handleAvatarMenuClose}>
-                            <MenuItem dense={true} onClick={this.handleLogout}>
-                                Logout
-                            </MenuItem>
-                        </Menu>
-                        <IconButton color="inherit" onClick={() => this.setState({ sidePanelOpen: true })}>
+                        <Popover
+                            id="avatar-popup"
+                            classes={{ paper: classes.avatarPopup }}
+                            anchorEl={avatarPopupAnchor}
+                            open={Boolean(avatarPopupAnchor)}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "right",
+                            }}
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            onClose={this.handleavatarPopupClose}
+                        >
+                            <div className="text-center padding-2">
+                                <Avatar alt={user.name} src={user.avatar} className={classes.bigAvatar}>
+                                    {!user.avatar && user.name && user.name[0] && user.name[0].toUpperCase()}
+                                </Avatar>
+                                <Typography variant="subtitle1">{user.name}</Typography>
+                                <Typography>{user.email}</Typography>
+                            </div>
+                            <Divider />
+                            <List component="nav">
+                                <ListItem button={true}>
+                                    <ListItemText primary="Profile" />
+                                </ListItem>
+                                <ListItem button={true} onClick={this.handleLogout}>
+                                    <ListItemText primary="Sign out" />
+                                </ListItem>
+                            </List>
+                        </Popover>
+                        <IconButton color="inherit" className={classNames(classes.menuButton)} onClick={() => this.setState({ sidePanelOpen: true })}>
                             <MoreVertIcon fontSize="large" />
                         </IconButton>
                     </Toolbar>
@@ -273,19 +313,19 @@ class Admin extends React.Component<
             this.props.push("/login");
             return;
         }
-        this.setState({ avatarMenuAnchor: e.currentTarget });
+        this.setState({ avatarPopupAnchor: e.currentTarget });
     };
 
     private handleThemeChange = () => {
         this.props.onThemeChange(!this.props.isDarkTheme);
     };
 
-    private handleAvatarMenuClose = () => {
-        this.setState({ avatarMenuAnchor: null });
+    private handleavatarPopupClose = () => {
+        this.setState({ avatarPopupAnchor: null });
     };
 
     private handleLogout = () => {
-        this.handleAvatarMenuClose();
+        this.handleavatarPopupClose();
         this.props.push("/logout");
     };
 
