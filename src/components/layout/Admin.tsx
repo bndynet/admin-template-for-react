@@ -88,15 +88,18 @@ const styles = (theme: Theme) =>
             alignItems: "stretch",
         },
         avatar: {
-            backgroundColor: theme.palette.grey[100],
             width: 30,
             height: 30,
+            backgroundColor: theme.palette.grey[100],
+            color: theme.palette.primary.main,
         },
         bigAvatar: {
             width: 100,
             height: 100,
             margin: "0 auto 5px auto",
+            fontSize: 70,
             backgroundColor: theme.palette.grey[100],
+            color: theme.palette.primary.main,
         },
         avatarPopup: {
             minWidth: 200,
@@ -266,7 +269,7 @@ class Admin extends React.Component<
                             <Divider />
                             <List component="nav">
                                 <ListItem button={true}>
-                                    <ListItemText primary="Profile" />
+                                    <ListItemText primary="Your profile" />
                                 </ListItem>
                                 <ListItem button={true} onClick={this.handleLogout}>
                                     <ListItemText primary="Sign out" />

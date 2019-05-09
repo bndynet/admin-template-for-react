@@ -17,6 +17,7 @@ const config: Config = {
         return {
             name: backendUser.name,
             email: backendUser.email,
+            avatar: backendUser.avatar_url,
             // TODO: here to map more backend user informations
         };
     },
