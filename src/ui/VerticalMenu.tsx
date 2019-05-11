@@ -9,6 +9,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { MenuItem } from "app/types";
+import { themeConfig } from "app/theme";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -25,6 +26,7 @@ const styles = (theme: Theme) =>
                 width: "100%",
             },
             "& > li:hover": {
+                width: themeConfig.sidebarWidth,
                 backgroundColor: theme.palette.background.paper,
                 borderTopRightRadius: theme.shape.borderRadius,
                 borderBottomRightRadius: theme.shape.borderRadius,
@@ -105,7 +107,7 @@ class VerticalMenu extends React.Component<
             menuStatusSet: {},
         };
         this.itemHoveredStyle = {
-            width: this.props.width || 200,
+            // width: this.props.width || 200,
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
