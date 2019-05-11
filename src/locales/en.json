@@ -1,6 +1,7 @@
 {
 	"admin.brand": "Admin Panel",
 	"all": "All",
+	"column": "Column",
 	"delete": "Delete",
 	"downloadCsv": "Download CSV",
 	"errors.404.description": "The page you are looking for might have been removed had its name changed or is temporarily unavailable.",

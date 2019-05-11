@@ -13,4 +13,4 @@ export { default as SlidePanel } from "./SlidePanel";
 export { default as LinkButton } from "./LinkButton";
 export { default as VerticalMenu } from "./VerticalMenu";
 export { default as HorizontalMenu } from "./HorizontalMenu";
-export { default as DataTable } from "./DataTable";
+export { default as DataTable, DataTableColumn } from "./DataTable";

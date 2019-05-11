@@ -72,6 +72,10 @@ class Dashboard extends React.Component<
 > {
     public render() {
         const { classes } = this.props;
+        // table
+        const columns = ["Name", "Title", "Location", "Age", "Salary"];
+
+        const data = [{ name: "Joe James" }, { name: "John Walsh" }, { name: "Bob Herm" }, { name: "James Houston" }, { name: "Joe James1" }, { name: "John Walsh" }, { name: "Bob Herm" }, { name: "James Houston" }, { name: "Joe James2" }, { name: "John Walsh" }, { name: "Bob Herm" }, { name: "James Houston" }];
         return (
             <div data-name="top">
                 <PageHeader
@@ -153,7 +157,7 @@ class Dashboard extends React.Component<
                 </Grid>
 
                 <PageHeader title="Table" toolbox={<Typography>Based on MUI-Datatables</Typography>} />
-                <DataTable />
+                <DataTable title="Emploee List" data={data} />
 
                 <PageHeader title="Formatters" toolbox={<Typography>Here is the toolbox placeholder.</Typography>} />
                 <FormatterPanel />

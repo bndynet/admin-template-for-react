@@ -1,6 +1,7 @@
 {
 	"admin.brand": "控制台",
 	"all": "全部",
+	"column": "列",
 	"delete": "删除",
 	"downloadCsv": "下载表格",
 	"errors.404.description": "您访问的页面，可能被删除，名称改变，又或是短时间内不能访问。",
