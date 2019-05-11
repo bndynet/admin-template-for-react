@@ -8,6 +8,7 @@ import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 
 import { actions as authActions, service as authService } from "../../../service/auth";
+import { FormattedMessage } from "react-intl";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -98,14 +99,14 @@ class Logout extends React.Component<
                             <div>
                                 <i className={classNames("far fa-check-circle fa-5x", classes.icon, classes.success)} />
                                 <Typography gutterBottom={true} component="h1" variant="h6">
-                                    You have logged out successfully.
+                                    <FormattedMessage id="logout.success" />
                                 </Typography>
                             </div>
                         ))}
                     {!this.state.loading && (
                         <Typography variant="body1">
                             <Link className={classes.textColor} to="/">
-                                Go home
+                                <FormattedMessage id="goHome" />
                             </Link>
                         </Typography>
                     )}

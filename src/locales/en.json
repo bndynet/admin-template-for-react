@@ -1,11 +1,32 @@
 {
-    "hi": "Hi {name}",
-
-    "login": "Log in",
-    "adminPanel": "Admin Panel",
-
-    "other": "Other",
-
-    "errors.404.title": "404 - Page Not Found",
-    "errors.404.description": "The page you are looking for might have been removed had its name changed or is temporarily unavailable."
+	"admin.brand": "Admin Panel",
+	"all": "All",
+	"delete": "Delete",
+	"downloadCsv": "Download CSV",
+	"errors.404.description": "The page you are looking for might have been removed had its name changed or is temporarily unavailable.",
+	"errors.404.title": "404 - Page Not Found",
+	"filter": "Filter",
+	"filters": "Filters",
+	"goHome": "Go Home",
+	"hi": "Hi {name}",
+	"home": "Home",
+	"itemsSelected": "item(s) selected",
+	"logout.success": "You have logged out successfully.",
+	"myProfile": "My Profile",
+	"nextPage": "Next Page",
+	"noData": "Sorry we could not find any data!",
+	"of": "of",
+	"other": "Other",
+	"password": "Password",
+	"previousPage": "Previous Page",
+	"print": "Print",
+	"rememberMe": "Remember me",
+	"reset": "Reset",
+	"rowsPerPage": "Rows per page:",
+	"search": "Search",
+	"signIn": "Sign in",
+	"signOut": "Sign out",
+	"toggleColumns": "Show/Hide Table Columns",
+	"username": "Username",
+	"viewColumns": "View Columns"
 }

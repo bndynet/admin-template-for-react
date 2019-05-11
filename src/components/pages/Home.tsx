@@ -108,11 +108,9 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                 </Fab>
             </Tooltip>
         ) : (
-            <Tooltip title="Log in">
-                <Fab classes={{ root: classes.fab, disabled: "disabled" }} onClick={this.handleLogin} color="primary">
-                    <AccountCircleIcon />
-                </Fab>
-            </Tooltip>
+            <Fab classes={{ root: classes.fab, disabled: "disabled" }} onClick={this.handleLogin} color="primary">
+                <AccountCircleIcon />
+            </Fab>
         );
 
         return (
@@ -124,7 +122,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                     <Link to="/admin">
                         <Button variant="outlined" className={classes.btn}>
                             <Typography>
-                                <FormattedMessage id="adminPanel" />
+                                <FormattedMessage id="admin.brand" />
                             </Typography>
                         </Button>
                     </Link>

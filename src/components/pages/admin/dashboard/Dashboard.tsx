@@ -2,18 +2,11 @@ import * as React from "react";
 
 import Typography from "@material-ui/core/Typography";
 import { GridSpacing } from "@material-ui/core/Grid";
-import {
-    Theme,
-    createStyles,
-    withStyles,
-    Grid,
-    IconButton,
-    Button,
-} from "@material-ui/core";
+import { Theme, createStyles, withStyles, Grid, IconButton, Button } from "@material-ui/core";
 import HelpIcon from "@material-ui/icons/Help";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
-import { Alert, PageHeader, Panel, MiniCard, Tag } from "app/ui";
+import { Alert, PageHeader, Panel, MiniCard, Tag, DataTable } from "app/ui";
 import ChartExample from "./ChartExample";
 import FormatterPanel from "./FormaterPanel";
 
@@ -47,13 +40,7 @@ const styles = (theme: Theme) =>
 const renderCard = props => {
     return (
         <Grid item={true} md={3} xs={6}>
-            <MiniCard
-                title="150"
-                description="New Orders"
-                {...props}
-                links={{ Home: "/", "More info": "/admin/dashboard" }}
-                icon={<ShoppingCartIcon />}
-            />
+            <MiniCard title="150" description="New Orders" {...props} links={{ Home: "/", "More info": "/admin/dashboard" }} icon={<ShoppingCartIcon />} />
         </Grid>
     );
 };
@@ -62,14 +49,7 @@ const renderAlert = props => {
     /* tslint:disable */
     return (
         <Grid item={true} sm={6}>
-            <Alert
-                title="Alert Title"
-                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."
-                variant={props.variant}
-                shadow={props.shadow}
-                square={props.square}
-                closeable={props.closeable}
-            />
+            <Alert title="Alert Title" message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam." variant={props.variant} shadow={props.shadow} square={props.square} closeable={props.closeable} />
         </Grid>
     );
 };
@@ -77,17 +57,8 @@ const renderAlert = props => {
 const renderPanel = props => {
     return (
         <Grid item={true} sm={6}>
-            <Panel
-                title="Panel Title"
-                variant={props.variant}
-                closeable={props.closeable}
-                minimizeable={props.minimizeable}
-                actions={props.actions}
-            >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                blanditiis tenetur unde suscipit, quam beatae rerum inventore
-                consectetur, neque doloribus, cupiditate numquam dignissimos
-                laborum fugiat deleniti? Eum quasi quidem quibusdam.
+            <Panel title="Panel Title" variant={props.variant} closeable={props.closeable} minimizeable={props.minimizeable} actions={props.actions}>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
             </Panel>
         </Grid>
     );
@@ -181,14 +152,10 @@ class Dashboard extends React.Component<
                     })}
                 </Grid>
 
-                <PageHeader
-                    title="Formatters"
-                    toolbox={
-                        <Typography>
-                            Here is the toolbox placeholder.
-                        </Typography>
-                    }
-                />
+                <PageHeader title="Table" toolbox={<Typography>Based on MUI-Datatables</Typography>} />
+                <DataTable />
+
+                <PageHeader title="Formatters" toolbox={<Typography>Here is the toolbox placeholder.</Typography>} />
                 <FormatterPanel />
             </div>
         );

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { renderRoutes } from "react-router-config";
 import { Link } from "react-router-dom";
+import { injectIntl, InjectedIntl } from "react-intl";
 import { withStyles, Theme, createStyles, Avatar, Tooltip, withWidth, Popover, List, ListItem, ListItemText } from "@material-ui/core";
 import { isWidthUp } from "@material-ui/core/withWidth";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
@@ -193,6 +194,7 @@ class Admin extends React.Component<
         history: any;
         isDarkTheme: boolean;
         width: Breakpoint;
+        intl: InjectedIntl;
         push: (path: string) => void;
         onThemeChange: (toDark: boolean) => void;
     },
@@ -209,7 +211,7 @@ class Admin extends React.Component<
 
     public render() {
         const { avatarPopupAnchor } = this.state;
-        const { classes, isDarkTheme } = this.props;
+        const { classes, intl, isDarkTheme } = this.props;
         const user = this.props.user || {};
         return (
             <div className={classes.root}>
@@ -217,7 +219,7 @@ class Admin extends React.Component<
                 <AppBar position="absolute" className={classes.appBar}>
                     <Link to="/" className={classNames("clickable", classes.brandTitle, { hidden: !this.state.largeMainMenu })}>
                         <img src="https://static.bndy.net/images/logo_white.svg" style={{ maxHeight: themeConfig.headerHeight }} />
-                        Admin Panel
+                        {intl.formatMessage({ id: "admin.brand" })}
                     </Link>
 
                     <IconButton color="inherit" aria-label="Open drawer" onClick={this.handleDrawerToggle} className={classNames(classes.menuButton)} style={{ width: themeConfig.sidebarWidthMini }}>
@@ -269,10 +271,10 @@ class Admin extends React.Component<
                             <Divider />
                             <List component="nav">
                                 <ListItem button={true}>
-                                    <ListItemText primary="Your profile" />
+                                    <ListItemText primary={intl.formatMessage({ id: "myProfile" })} />
                                 </ListItem>
                                 <ListItem button={true} onClick={this.handleLogout}>
-                                    <ListItemText primary="Sign out" />
+                                    <ListItemText primary={intl.formatMessage({ id: "signOut" })} />
                                 </ListItem>
                             </List>
                         </Popover>
@@ -362,4 +364,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(withStyles(styles)(withWidth()(Admin)));
+)(withStyles(styles)(withWidth()(injectIntl(Admin))));
