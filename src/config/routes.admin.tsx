@@ -1,4 +1,4 @@
-import { Dashboard, Markdown } from "../components/pages/admin";
+import { Dashboard, Markdown, DataTableExample } from "../components/pages/admin";
 import PageNotFound from "../components/pages/PageNotFound";
 
 const routes = [
@@ -16,6 +16,11 @@ const routes = [
         path: "/admin/markdown",
         exact: true,
         component: Markdown,
+    },
+    {
+        path: "/admin/examples/datatable",
+        exact: true,
+        component: DataTableExample,
     },
     {
         component: PageNotFound,

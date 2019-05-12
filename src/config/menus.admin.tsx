@@ -1,13 +1,10 @@
 import * as React from "react";
-import TimelineIcon from "@material-ui/icons/Timeline";
 import BuildIcon from "@material-ui/icons/Build";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ScheduleIcon from "@material-ui/icons/Schedule";
 import DnsIcon from "@material-ui/icons/Dns";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import InputIcon from "@material-ui/icons/Input";
 import { MenuItem } from "app/types";
 
 const menus: MenuItem[] = [
@@ -18,28 +15,28 @@ const menus: MenuItem[] = [
         link: "/",
     },
     {
-        icon: <DashboardIcon />,
+        icon: "fas fa-tachometer-alt",
         text: "Dashboard",
         description: "",
         link: "/admin/dashboard",
     },
     {
-        icon: <InputIcon />,
+        icon: "fas fa-edit",
         text: "Markdown",
         description: "",
         link: "/admin/markdown",
     },
     {
-        icon: <ScheduleIcon />,
+        icon: "fas fa-table",
+        text: "DataTable",
+        description: "",
+        link: "/admin/examples/datatable",
+    },
+    {
+        icon: "fas fa-exclamation-triangle",
         text: "404 Page",
         description: "",
         link: "/admin/this_page_not_found",
-    },
-    {
-        icon: <TimelineIcon />,
-        text: "Audience",
-        description: "",
-        link: "",
     },
     {
         icon: <DnsIcon />,
@@ -55,13 +52,13 @@ const menus: MenuItem[] = [
     },
     {
         icon: <DashboardIcon />,
-        text: "Others",
+        text: "Examples",
         description: "",
         link: "",
         children: [
             {
                 icon: <PeopleIcon />,
-                text: "Customers",
+                text: "Users",
                 description: "",
                 link: "",
             },

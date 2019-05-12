@@ -12,6 +12,7 @@
 	"hi": "Hi {name}",
 	"home": "Home",
 	"itemsSelected": "item(s) selected",
+	"loadingData": "Loading data...",
 	"logout.success": "You have logged out successfully.",
 	"myProfile": "My Profile",
 	"nextPage": "Next Page",

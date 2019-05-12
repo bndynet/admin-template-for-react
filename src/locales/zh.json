@@ -12,6 +12,7 @@
 	"hi": "{name} 您好！",
 	"home": "主页",
 	"itemsSelected": "项已选择",
+	"loadingData": "正在加载...",
 	"logout.success": "您已成功退出登录。",
 	"myProfile": "我的设置",
 	"nextPage": "下页",
