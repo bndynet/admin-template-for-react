@@ -94,17 +94,16 @@ const storage = {
         const cookies = document.cookie ? document.cookie.split("; ") : [];
         let index = 0;
         for (; index < cookies.length; index++) {
-            const parts = cookies[index].split("=");
-            const cookie = parts.slice(1).join("=");
-
-            try {
-                const name = decode(parts[0]);
-                result = JSON.parse(decode(cookie));
-                if (key === name) {
-                    break;
+            const arr = cookies[index].split("=");
+            const name = arr[0];
+            result = arr.slice(1).join("=");
+            if (key === name) {
+                try {
+                    result = JSON.parse(decode(result));
+                } catch (e) {
+                    // nothing to do
                 }
-            } catch (e) {
-                // nothing to do
+                break;
             }
         }
         return result;

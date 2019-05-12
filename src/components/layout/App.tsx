@@ -1,35 +1,35 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch, Action } from 'redux';
-import { renderRoutes } from 'react-router-config';
-import { IntlProvider } from 'react-intl';
-import _merge from 'lodash-es/merge';
+import * as React from "react";
+import * as intl from "react-intl-universal";
+import { connect } from "react-redux";
+import { Dispatch, Action } from "redux";
+import { renderRoutes } from "react-router-config";
+import _merge from "lodash-es/merge";
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Theme, createStyles, withStyles, LinearProgress } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { Theme, createStyles, withStyles, LinearProgress } from "@material-ui/core";
 
-import { routes } from 'app/config';
-import { themeConfig } from 'app/theme';
-import { Notifier, NotifierOptions, Overlay, Loading } from 'app/ui';
-import { messages, defaultLocale } from 'app/locales';
-import { KEY_LOCALE, KEY_THEME, actions as globalActions } from 'app/service/global';
-import storage from 'app/helpers/storage';
+import { routes } from "app/config";
+import { themeConfig } from "app/theme";
+import { Notifier, NotifierOptions, Overlay, Loading } from "app/ui";
+import { supportedLocales, getCurrentLocale, KEY_LOCALE } from "app/locales";
+import { KEY_THEME, actions as globalActions } from "app/service/global";
+import storage from "app/helpers/storage";
 
 const styles = (theme: Theme) => {
     return createStyles({
-        '@global': {
+        "@global": {
             a: {
-                color: 'inherit',
+                color: "inherit",
             },
-            '.recharts-tooltip-label': {
+            ".recharts-tooltip-label": {
                 color: theme.palette.common.black,
             },
         },
         progressBar: {
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
-            width: '100%',
+            width: "100%",
             zIndex: 2000,
         },
     });
@@ -43,40 +43,63 @@ interface AppComponentProps {
     showNotifier: boolean;
     notifierOptions: NotifierOptions;
     theme: any;
-    locale: string;
     onCloseNotifier: () => void;
 }
 
-class App extends React.Component<AppComponentProps> {
+interface AppComponentState {
+    initDone: boolean;
+}
+
+class App extends React.Component<AppComponentProps, AppComponentState> {
     constructor(props) {
         super(props);
+        this.state = {
+            initDone: false,
+        };
+    }
+
+    public componentDidMount() {
+        this.loadLocales();
     }
 
     public render() {
         const { classes, theme, notifierOptions, showNotifier } = this.props;
         return (
-            <div className={theme.palette.type}>
-                <IntlProvider locale={this.props.locale} key={this.props.locale} messages={messages[this.props.locale]}>
+            this.state.initDone && (
+                <div className={theme.palette.type}>
                     <MuiThemeProvider theme={theme}>
-                        <LinearProgress hidden={!this.props.requesting} color='secondary' className={classes.progressBar} />
-                        <Notifier
-                            options={notifierOptions}
-                            open={showNotifier}
-                            onCloseButtonClick={this.props.onCloseNotifier}
-                            hasCloseButton={true}
-                        />
+                        <LinearProgress hidden={!this.props.requesting} color="secondary" className={classes.progressBar} />
+                        <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
                         <Overlay open={this.props.loading}>
                             <Loading loadingText={this.props.loadingText} />
                         </Overlay>
                         {renderRoutes(routes)}
                     </MuiThemeProvider>
-                </IntlProvider>
-            </div>
+                </div>
+            )
         );
+    }
+
+    private loadLocales() {
+        const locales = {};
+        supportedLocales.forEach(item => {
+            locales[item.value] = item.messages;
+        });
+        // const currentLocale = intl.determineLocale({
+        //     urlLocaleKey: KEY_LOCALE,
+        //     cookieLocaleKey: KEY_LOCALE,
+        // });
+        intl.init({
+            currentLocale: getCurrentLocale(),
+            fallbackLocale: supportedLocales[0].value,
+            locales,
+        }).then(() => {
+            this.setState({ initDone: true });
+        });
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const clientTheme = state.global.theme || storage.get(KEY_THEME);
     const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
     const muiFinalTheme = createMuiTheme(finalTheme);
@@ -87,7 +110,6 @@ const mapStateToProps = (state) => {
         notifierOptions: state.global.notifierOptions,
         showNotifier: state.global.showNotifier,
         theme: muiFinalTheme,
-        locale: state.global.locale || storage.get(KEY_LOCALE) || defaultLocale,
     };
 };
 
@@ -95,4 +117,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     onCloseNotifier: () => dispatch(globalActions.unnotify()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(withStyles(styles)(App));

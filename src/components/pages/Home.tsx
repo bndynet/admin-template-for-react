@@ -1,13 +1,12 @@
 import * as React from "react";
+import * as intl from "react-intl-universal";
 import * as ReactMarkdown from "react-markdown";
-import { FormattedMessage } from "react-intl";
 import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Typography, Button, Fab } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
+import { Typography, Button, Fab, MenuItem, Select, Tooltip } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { loading } from "@bndynet/dialog";
 
@@ -15,7 +14,8 @@ import { service as resourceService } from "app/service/resource";
 import { actions as authActions, getState } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
 
-import { LocaleType, supportLocales } from "app/locales";
+import { supportedLocales, KEY_LOCALE, getCurrentLocale } from "app/locales";
+import storage from "app/helpers/storage";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -51,10 +51,6 @@ const styles = (theme: Theme) =>
             right: 0,
             border: 0,
         },
-        btn: {
-            marginRight: theme.spacing.unit,
-            marginBottom: theme.spacing.unit * 4,
-        },
     });
 
 interface HomeComponentProps {
@@ -64,10 +60,10 @@ interface HomeComponentProps {
     readme: string;
     onLogout(): void;
     onPreLogout(): void;
-    onChangeLocale(locale: string): void;
 }
 
 interface HomeComponentState {
+    locale?: string;
     logoutDelay?: number;
     readme?: string;
 }
@@ -80,6 +76,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
+            locale: getCurrentLocale(),
             logoutDelay: null,
             readme: "",
         };
@@ -119,18 +116,23 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                     <img className={classes.forkMe} src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
                 </a>
                 <main className={classes.main}>
-                    <Link to="/admin">
-                        <Button variant="outlined" className={classes.btn}>
-                            <Typography>
-                                <FormattedMessage id="admin.brand" />
-                            </Typography>
-                        </Button>
-                    </Link>
-                    {Object.keys(supportLocales).map((key: string) => (
-                        <Button className={classes.btn} key={key} variant="outlined" onClick={() => this.props.onChangeLocale(key)}>
-                            {supportLocales[key]}
-                        </Button>
-                    ))}
+                    <div className="margin-bottom-2">
+                        <Link to="/admin">
+                            <Button variant="outlined">
+                                <Typography>{intl.get("admin.brand")}</Typography>
+                            </Button>
+                        </Link>
+                        <Select className="margin-left-2" value={this.state.locale} onChange={evt => this.handleChangeLocale(evt)} displayEmpty={true}>
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {supportedLocales.map(locale => (
+                                <MenuItem key={locale.value} value={locale.value} selected={this.state.locale === locale.value}>
+                                    {locale.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
                     <ReactMarkdown source={this.state.readme} className={"markdown-body"} />
                     {btn}
                 </main>
@@ -159,6 +161,19 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     private handleLogin() {
         this.props.history.push("/login");
     }
+
+    private handleChangeLocale(evt) {
+        const locale = evt.target.value;
+        if (locale) {
+            storage.setCookie(KEY_LOCALE, evt.target.value);
+        } else {
+            storage.removeCookie(KEY_LOCALE);
+        }
+        this.setState({
+            locale: evt.target.value,
+        });
+        location.reload();
+    }
 }
 
 const mapStateToProps = state => ({
@@ -178,9 +193,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
                 placement: "bottom left",
             }),
         );
-    },
-    onChangeLocale: (locale: LocaleType) => {
-        dispatch(globalActions.changeLocale(locale));
     },
 });
 

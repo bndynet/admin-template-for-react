@@ -1,5 +1,4 @@
 import _merge from "lodash-es/merge";
-import { LocaleType } from "../locales";
 import { UserInfo, AuthState } from "app/service/auth";
 
 // Uncomment or define it in index.html to specify your environment.
@@ -15,7 +14,7 @@ export enum AuthType {
 
 export interface Config {
     resourceBaseUri?: string;
-    defaultLocale?: LocaleType;
+    defaultLocale?: string;
     authType?: AuthType;
     authConfig?: OAuthConfig;
     userConverter?: (backendUser: any) => UserInfo;

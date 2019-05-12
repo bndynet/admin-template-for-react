@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as intl from "react-intl-universal";
 import { connect } from "react-redux";
 import { Dispatch, Action } from "redux";
 
@@ -17,7 +18,6 @@ import Typography from "@material-ui/core/Typography";
 
 import { actions as authActions } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
-import { injectIntl, InjectedIntl } from "react-intl";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -58,7 +58,6 @@ const styles = (theme: Theme) =>
 interface LoginComponentProps {
     history: any;
     classes: any;
-    intl: InjectedIntl;
     onLogin: (username: string, password: string, rememberMe: boolean) => boolean;
 }
 
@@ -80,7 +79,7 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
     }
 
     public render() {
-        const { classes, intl } = this.props;
+        const { classes } = this.props;
         return (
             <main className={classes.main}>
                 <CssBaseline />
@@ -89,11 +88,11 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
                         <AccountCircleRounded fontSize="inherit" />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        {intl.formatMessage({ id: "admin.brand" })}
+                        {intl.get("admin.brand")}
                     </Typography>
                     <form className={classes.form}>
                         <FormControl margin="normal" required={true} fullWidth={true}>
-                            <InputLabel htmlFor="username">{intl.formatMessage({ id: "username" })}</InputLabel>
+                            <InputLabel htmlFor="username">{intl.get("username")}</InputLabel>
                             <Input
                                 id="username"
                                 name="username"
@@ -106,7 +105,7 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
                             />
                         </FormControl>
                         <FormControl margin="normal" required={true} fullWidth={true}>
-                            <InputLabel htmlFor="password">{intl.formatMessage({ id: "password" })}</InputLabel>
+                            <InputLabel htmlFor="password">{intl.get("password")}</InputLabel>
                             <Input
                                 name="password"
                                 type="password"
@@ -128,10 +127,10 @@ class Login extends React.Component<LoginComponentProps, LoginComponentState> {
                                     }}
                                 />
                             }
-                            label={intl.formatMessage({ id: "rememberMe" })}
+                            label={intl.get("rememberMe")}
                         />
                         <Button type="submit" fullWidth={true} variant="contained" color="primary" className={classes.submit} onClick={this.onLogin}>
-                            {intl.formatMessage({ id: "signIn" })}
+                            {intl.get("signIn")}
                         </Button>
                     </form>
                 </Paper>
@@ -169,4 +168,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(withStyles(styles)(injectIntl(Login)));
+)(withStyles(styles)(Login));

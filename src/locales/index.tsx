@@ -1,25 +1,25 @@
-import { addLocaleData } from 'react-intl';
-import * as en from 'react-intl/locale-data/en';
-import * as zh from 'react-intl/locale-data/zh';
-import { config } from 'app/config';
+import { config } from "app/config";
+import storage from "app/helpers/storage";
 
-addLocaleData([...en, ...zh]);
+export const KEY_LOCALE = "locale";
 
-export type LocaleType = 'en' | 'zh';
+export const supportedLocales: Array<{ name: string; value: string; messages: any }> = [
+    {
+        name: "English",
+        value: "en-US",
+        messages: require("./en-US.json"),
+    },
+    {
+        name: "简体中文",
+        value: "zh-CN",
+        messages: require("./zh-CN.json"),
+    },
+];
 
-export const messages = {
-    en: require('./en.json'),
-    zh: require('./zh.json'),
-};
-
-const clientLanguage: LocaleType = navigator.language.split(/[-_]/)[0] as LocaleType;  // language without region code
-
-export const defaultLocale = config.defaultLocale || clientLanguage;
-
-export const supportLocales: {[key: string]: string} = {
-    en: 'English',
-    zh: '中文',
-};
+const defaultLocale = config.defaultLocale || navigator.language;
+export function getCurrentLocale() {
+    return storage.getCookie(KEY_LOCALE) || defaultLocale;
+}
 
 // tslint:disable-next-line:no-console
-console.info(`Locale is '${defaultLocale}'.`);
+console.info(`Locale is '${getCurrentLocale()}'.`);
