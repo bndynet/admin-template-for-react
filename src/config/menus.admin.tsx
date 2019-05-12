@@ -52,7 +52,7 @@ const menus: MenuItem[] = [
     },
     {
         icon: <DashboardIcon />,
-        text: "Examples",
+        text: "Others",
         description: "",
         link: "",
         children: [

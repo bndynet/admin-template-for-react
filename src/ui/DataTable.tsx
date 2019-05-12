@@ -65,7 +65,8 @@ export interface DataTableProps {
     rowsPerPageOptions?: number[];
     pagination?: boolean;
     scrollable?: boolean;
-    dataPromise?: (DataTableRequestParameters?) => Promise<DataTablePageMeta>;
+    onRowClick?: (rowData: any, dataIndex: number) => void;
+    dataPromise?: (parameters?: DataTableRequestParameters) => Promise<DataTablePageMeta>;
 }
 
 export interface DataTableState extends DataTableRequestParameters {
@@ -161,6 +162,11 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             page: this.state.page - 1,
             rowsPerPage: this.state.pageSize,
             rowsPerPageOptions: this.props.rowsPerPageOptions,
+            onRowClick: (rowData: string[], rowMeta: { dataIndex: number; rowIndex: number }) => {
+                if (this.props.onRowClick) {
+                    this.props.onRowClick(this.data[rowMeta.dataIndex], rowMeta.dataIndex);
+                }
+            },
             onSearchChange: (searchText: string) => {
                 if (this.searchDelayTimer) {
                     clearTimeout(this.searchDelayTimer);

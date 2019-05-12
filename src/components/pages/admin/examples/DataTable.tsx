@@ -1,8 +1,9 @@
 import * as React from "react";
-import { DataTable, PageHeader, DataTableRequestParameters, DataTablePageMeta } from "app/ui";
+import { alert } from "@bndynet/dialog";
 
-import { service as resourceService } from "app/service/resource";
 import utils from "app/helpers/utils";
+import { service as resourceService } from "app/service/resource";
+import { DataTable, PageHeader, DataTableRequestParameters, DataTablePageMeta } from "app/ui";
 
 class DataTableExample extends React.Component {
     private arrayData = [["Name", "Location", "Age", "Salary"], ["Andy1", "Hefei", 30, "$121,120"], ["Andy2", "Hefei", 33, "$121,110"], ["Andy3", "Hefei", 32, "$121,140"], ["Andy4", "Hefei", 35, "$121,130"], ["Andy5", "Hefei", 31, "$121,120"]];
@@ -25,14 +26,18 @@ class DataTableExample extends React.Component {
         return (
             <div>
                 <PageHeader title="DataTable" />
-                <DataTable title="Remote Data" dataPromise={this.tableDataPromise} scrollable={true} />
+                <DataTable title="Remote Data" dataPromise={this.tableDataPromise} scrollable={true} onRowClick={this.handleRowClick} />
                 <br />
-                <DataTable title="Array Data" data={this.arrayData} pagination={false} />
+                <DataTable title="Array Data" data={this.arrayData} pagination={false} onRowClick={this.handleRowClick} />
                 <br />
-                <DataTable title="Object Data" data={this.objectData} />
+                <DataTable title="Object Data" data={this.objectData} onRowClick={this.handleRowClick} />
                 <br />
             </div>
         );
+    }
+
+    private handleRowClick(rowData: any) {
+        alert(JSON.stringify(rowData));
     }
 
     private tableDataPromise(args: DataTableRequestParameters): Promise<DataTablePageMeta> {
