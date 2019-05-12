@@ -65,7 +65,9 @@ export interface DataTableProps {
     rowsPerPageOptions?: number[];
     pagination?: boolean;
     scrollable?: boolean;
+    selectable?: "multiple" | "single" | "none" | boolean;
     onRowClick?: (rowData: any, dataIndex: number) => void;
+    onRowsDelete?: (rowsData: any[]) => Promise<any>;
     dataPromise?: (parameters?: DataTableRequestParameters) => Promise<DataTablePageMeta>;
 }
 
@@ -107,6 +109,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
         const defaultOptions = {
             filterType: "dropdown",
             responsive: "scroll",
+            selectableRows: this.props.selectable === true ? "multiple" : this.props.selectable === false ? "none" : this.props.selectable,
             textLabels: {
                 body: {
                     noMatch: isLoading ? intl.formatMessage({ id: "loadingData" }) : intl.formatMessage({ id: "noData" }),
@@ -166,6 +169,19 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                 if (this.props.onRowClick) {
                     this.props.onRowClick(this.data[rowMeta.dataIndex], rowMeta.dataIndex);
                 }
+            },
+            onRowsDelete: (rowsDeleted: { lookup: { [dataIndex: number]: boolean }; data: Array<{ index: number; dataIndex: number }> }) => {
+                if (this.props.onRowsDelete) {
+                    const needDeleteRows = [];
+                    rowsDeleted.data.forEach(item => {
+                        needDeleteRows.push(this.data[item.dataIndex]);
+                    });
+                    this.props.onRowsDelete(needDeleteRows).then(() => {
+                        this.getData();
+                    });
+                }
+                // TODO: update package to latest version for fixing the preventing delete issue
+                return false;
             },
             onSearchChange: (searchText: string) => {
                 if (this.searchDelayTimer) {

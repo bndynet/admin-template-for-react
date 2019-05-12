@@ -1,8 +1,10 @@
 {
 	"admin.brand": "控制台",
 	"all": "全部",
+	"cancel": "取消",
 	"column": "列",
 	"delete": "删除",
+	"deleteConfirmMessage": "您确定要执行删除操作吗？",
 	"downloadCsv": "下载表格",
 	"errors.404.description": "您访问的页面，可能被删除，名称改变，又或是短时间内不能访问。",
 	"errors.404.title": "404 - 页面没有找到",
@@ -18,6 +20,7 @@
 	"nextPage": "下页",
 	"noData": "很抱歉，我们没有找到任何数据!",
 	"of": "/",
+	"ok": "确定",
 	"other": "其它",
 	"password": "密码",
 	"previousPage": "上页",

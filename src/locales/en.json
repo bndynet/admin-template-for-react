@@ -1,8 +1,10 @@
 {
 	"admin.brand": "Admin Panel",
 	"all": "All",
+	"cancel": "Cancel",
 	"column": "Column",
 	"delete": "Delete",
+	"deleteConfirmMessage": "Are you sure you want to delete the items?",
 	"downloadCsv": "Download CSV",
 	"errors.404.description": "The page you are looking for might have been removed had its name changed or is temporarily unavailable.",
 	"errors.404.title": "404 - Page Not Found",
@@ -18,6 +20,7 @@
 	"nextPage": "Next Page",
 	"noData": "Sorry we could not find any data!",
 	"of": "of",
+	"ok": "OK",
 	"other": "Other",
 	"password": "Password",
 	"previousPage": "Previous Page",
