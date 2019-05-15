@@ -46,15 +46,12 @@ class DataTableExample extends React.Component {
     }
 
     private handleRowsDelete() {
-        return new Promise((resolve, reject) => {
-            confirm(intl.get("deleteConfirmMessage"), () => {
-                // here to call api
-                loading();
-                setTimeout(() => {
-                    resolve();
-                    loading(false);
-                }, 3000);
-            });
+        return confirm(intl.get("deleteConfirmMessage")).then(() => {
+            // here to call api
+            loading();
+            setTimeout(() => {
+                loading(false);
+            }, 3000);
         });
     }
 

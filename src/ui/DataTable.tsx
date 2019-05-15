@@ -65,6 +65,7 @@ export interface DataTableProps {
     pagination?: boolean;
     scrollable?: boolean;
     selectable?: "multiple" | "single" | "none" | boolean;
+    localePrefix?: string;
     onRowClick?: (rowData: any, dataIndex: number) => void;
     onRowsDelete?: (rowsData: any[]) => Promise<any>;
     dataPromise?: (parameters?: DataTableRequestParameters) => Promise<DataTablePageMeta>;
@@ -308,7 +309,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                 this.columns = [];
                 for (const key of Object.keys(this.data[0])) {
                     this.columns.push({
-                        name: intl.get(key),
+                        name: intl.get(`${this.props.localePrefix || ""}${key}`).defaultMessage(key),
                         label: key,
                         options: {
                             filter: true,
