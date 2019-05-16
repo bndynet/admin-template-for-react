@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as intl from "react-intl-universal";
+import _merge from "lodash-es/merge";
 import { connect } from "react-redux";
 import { Dispatch, Action } from "redux";
 import { renderRoutes } from "react-router-config";
-import _merge from "lodash-es/merge";
 
+import { setup as dialogSetup } from "@bndynet/dialog";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Theme, createStyles, withStyles, LinearProgress } from "@material-ui/core";
+import { Theme, createStyles, withStyles, LinearProgress, Dialog } from "@material-ui/core";
 
 import { routes } from "app/config";
 import { themeConfig } from "app/theme";
@@ -90,6 +91,7 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
                 fallbackLocale: supportedLocales[0].value,
                 locales: l,
             }).then(() => {
+                this.callbackAfterLocaleReady();
                 this.setState({ initDone: true });
             });
         };
@@ -106,6 +108,13 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
                 });
             });
         }
+    }
+
+    private callbackAfterLocaleReady() {
+        dialogSetup({
+            labelOK: intl.get("ok"),
+            labelCancel: intl.get("cancel"),
+        });
     }
 }
 
