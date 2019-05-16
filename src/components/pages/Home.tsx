@@ -14,7 +14,7 @@ import { service as resourceService } from "app/service/resource";
 import { actions as authActions, getState } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
 
-import { supportedLocales, KEY_LOCALE, getCurrentLocale } from "app/locales";
+import { supportedLocales, KEY_LOCALE, getCurrentLocale } from "app/service/locales";
 import storage from "app/helpers/storage";
 
 const styles = (theme: Theme) =>

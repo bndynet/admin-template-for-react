@@ -11,9 +11,10 @@ import { Theme, createStyles, withStyles, LinearProgress } from "@material-ui/co
 import { routes } from "app/config";
 import { themeConfig } from "app/theme";
 import { Notifier, NotifierOptions, Overlay, Loading } from "app/ui";
-import { supportedLocales, getCurrentLocale, KEY_LOCALE } from "app/locales";
+import { supportedLocales, getCurrentLocale, KEY_LOCALE } from "app/service/locales";
 import { KEY_THEME, actions as globalActions } from "app/service/global";
 import storage from "app/helpers/storage";
+import ajax from "app/helpers/ajax";
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -82,20 +83,29 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
 
     private loadLocales() {
         const locales = {};
+        const currentLocale = getCurrentLocale();
+        const initLocale = l => {
+            intl.init({
+                currentLocale,
+                fallbackLocale: supportedLocales[0].value,
+                locales: l,
+            }).then(() => {
+                this.setState({ initDone: true });
+            });
+        };
         supportedLocales.forEach(item => {
             locales[item.value] = item.messages;
         });
-        // const currentLocale = intl.determineLocale({
-        //     urlLocaleKey: KEY_LOCALE,
-        //     cookieLocaleKey: KEY_LOCALE,
-        // });
-        intl.init({
-            currentLocale: getCurrentLocale(),
-            fallbackLocale: supportedLocales[0].value,
-            locales,
-        }).then(() => {
-            this.setState({ initDone: true });
-        });
+        if (locales[currentLocale]) {
+            initLocale(locales);
+        } else {
+            // load messages from remote file if the messages not specified in service/locales.tsx
+            ajax.get(`locales/${currentLocale}.json`).then(messages => {
+                initLocale({
+                    [currentLocale]: messages,
+                });
+            });
+        }
     }
 }
 

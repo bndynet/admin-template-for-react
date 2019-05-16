@@ -1,6 +1,6 @@
 import { NotifierOptions } from "../ui";
 import storage from "app/helpers/storage";
-import { KEY_LOCALE } from "app/locales";
+import { KEY_LOCALE } from "app/service/locales";
 
 export const ACTION_LOADING_SHOW = "G_LOADING_SHOW";
 export const ACTION_LOADING_HIDE = "G_LOADING_HIDE";
