@@ -1,5 +1,5 @@
-import { Dashboard, Markdown, DataTableExample } from "../components/pages/admin";
-import PageNotFound from "../components/pages/PageNotFound";
+import { Dashboard, Markdown, DataTableExample } from "app/pages/admin";
+import { PageNotFound } from "app/pages/public";
 
 const routes = [
     {

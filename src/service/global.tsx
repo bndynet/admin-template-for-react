@@ -1,6 +1,5 @@
 import { NotifierOptions } from "../ui";
 import storage from "app/helpers/storage";
-import { KEY_LOCALE } from "app/service/locales";
 
 export const ACTION_LOADING_SHOW = "G_LOADING_SHOW";
 export const ACTION_LOADING_HIDE = "G_LOADING_HIDE";
@@ -100,10 +99,6 @@ export const reducer = (state = { loading: false }, action) => {
         case ACTION_THEME_CHANGE:
             storage.set(KEY_THEME, action.theme);
             return { ...state, theme: action.theme };
-
-        case ACTION_LOCALE_CHANGE:
-            storage.set(KEY_LOCALE, action.locale);
-            return { ...state, locale: action.locale };
 
         default:
             return state;

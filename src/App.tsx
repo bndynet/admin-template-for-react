@@ -1,21 +1,18 @@
 import * as React from "react";
-import * as intl from "react-intl-universal";
 import _merge from "lodash-es/merge";
 import { connect } from "react-redux";
 import { Dispatch, Action } from "redux";
 import { renderRoutes } from "react-router-config";
 
-import { setup as dialogSetup } from "@bndynet/dialog";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Theme, createStyles, withStyles, LinearProgress, Dialog } from "@material-ui/core";
 
 import { routes } from "app/config";
 import { themeConfig } from "app/theme";
 import { Notifier, NotifierOptions, Overlay, Loading } from "app/ui";
-import { supportedLocales, getCurrentLocale, KEY_LOCALE } from "app/service/locales";
+import { initLocales } from "app/service/locales";
 import { KEY_THEME, actions as globalActions } from "app/service/global";
 import storage from "app/helpers/storage";
-import ajax from "app/helpers/ajax";
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -61,7 +58,9 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
     }
 
     public componentDidMount() {
-        this.loadLocales();
+        initLocales(null, () => {
+            this.setState({ initDone: true });
+        });
     }
 
     public render() {
@@ -80,41 +79,6 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
                 </div>
             )
         );
-    }
-
-    private loadLocales() {
-        const locales = {};
-        const currentLocale = getCurrentLocale();
-        const initLocale = l => {
-            intl.init({
-                currentLocale,
-                fallbackLocale: supportedLocales[0].value,
-                locales: l,
-            }).then(() => {
-                this.callbackAfterLocaleReady();
-                this.setState({ initDone: true });
-            });
-        };
-        supportedLocales.forEach(item => {
-            locales[item.value] = item.messages;
-        });
-        if (locales[currentLocale]) {
-            initLocale(locales);
-        } else {
-            // load messages from remote file if the messages not specified in service/locales.tsx
-            ajax.get(`locales/${currentLocale}.json`).then(messages => {
-                initLocale({
-                    [currentLocale]: messages,
-                });
-            });
-        }
-    }
-
-    private callbackAfterLocaleReady() {
-        dialogSetup({
-            labelOK: intl.get("ok"),
-            labelCancel: intl.get("cancel"),
-        });
     }
 }
 

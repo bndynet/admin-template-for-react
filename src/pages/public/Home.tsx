@@ -14,8 +14,8 @@ import { service as resourceService } from "app/service/resource";
 import { actions as authActions, getState } from "app/service/auth";
 import { actions as globalActions } from "app/service/global";
 
-import { supportedLocales, KEY_LOCALE, getCurrentLocale } from "app/service/locales";
-import storage from "app/helpers/storage";
+import { config } from "app/config";
+import { setLocale } from "app/service/locales";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -76,7 +76,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
-            locale: getCurrentLocale(),
+            locale: intl.getInitOptions().currentLocale,
             logoutDelay: null,
             readme: "",
         };
@@ -126,7 +126,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
-                            {supportedLocales.map(locale => (
+                            {config.locales.map(locale => (
                                 <MenuItem key={locale.value} value={locale.value} selected={this.state.locale === locale.value}>
                                     {locale.name}
                                 </MenuItem>
@@ -164,15 +164,11 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
 
     private handleChangeLocale(evt) {
         const locale = evt.target.value;
-        if (locale) {
-            storage.setCookie(KEY_LOCALE, evt.target.value);
-        } else {
-            storage.removeCookie(KEY_LOCALE);
-        }
-        this.setState({
-            locale: evt.target.value,
+        setLocale(locale, () => {
+            this.setState({
+                locale: evt.target.value,
+            });
         });
-        location.reload();
     }
 }
 

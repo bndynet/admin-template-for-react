@@ -15,6 +15,7 @@ export enum AuthType {
 export interface Config {
     resourceBaseUri?: string;
     defaultLocale?: string;
+    locales?: Array<{ name: string; value: string; messages?: any }>;
     authType?: AuthType;
     authConfig?: OAuthConfig;
     userConverter?: (backendUser: any) => UserInfo;
