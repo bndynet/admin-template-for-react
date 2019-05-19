@@ -1,29 +1,30 @@
-import { AxiosPromise } from "axios";
-import { Ajax, AjaxError } from "../helpers/ajax";
-import { store } from "../redux";
-import { config, AuthType } from "../config";
-import { push } from "connected-react-router";
-import { call, put, takeLatest } from "redux-saga/effects";
-import { actions as globalActions } from "./global";
-import { Url } from "app/helpers/url";
-import storage from "app/helpers/storage";
-import utils from "app/helpers/utils";
+/* eslint-disable */
+import { AxiosPromise } from 'axios';
+import { Ajax, AjaxError } from '../helpers/ajax';
+import { store } from '../redux';
+import { config, AuthType } from '../config';
+import { push } from 'connected-react-router';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { actions as globalActions } from './global';
+import { Url } from 'app/helpers/url';
+import storage from 'app/helpers/storage';
+import utils from 'app/helpers/utils';
 
-export const ACTION_AUTH_REQUEST = "USER_AUTH_REQUEST";
-export const ACTION_AUTH_SUCCESS = "USER_AUTH_SUCCESS";
-export const ACTION_AUTH_FAILURE = "USER_AUTH_FAILURE";
+export const ACTION_AUTH_REQUEST = 'USER_AUTH_REQUEST';
+export const ACTION_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
+export const ACTION_AUTH_FAILURE = 'USER_AUTH_FAILURE';
 
-export const ACTION_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
-export const ACTION_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
-export const ACTION_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
+export const ACTION_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
+export const ACTION_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const ACTION_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
 
-export const ACTION_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";
-export const ACTION_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
-export const ACTION_LOGOUT_FAILURE = "USER_LOGOUT_FAILURE";
+export const ACTION_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
+export const ACTION_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
+export const ACTION_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE';
 
-export const ACTION_GETUSER_REQUEST = "USER_GETUSER_REQUEST";
-export const ACTION_GETUSER_SUCCESS = "USER_GETUSER_SUCCESS";
-export const ACTION_GETUSER_FAULURE = "USER_GETUSER_FAILURE";
+export const ACTION_GETUSER_REQUEST = 'USER_GETUSER_REQUEST';
+export const ACTION_GETUSER_SUCCESS = 'USER_GETUSER_SUCCESS';
+export const ACTION_GETUSER_FAULURE = 'USER_GETUSER_FAILURE';
 
 export interface UserInfo {
     id?: string;
@@ -121,10 +122,13 @@ export const service = {
     login: (data: LoginData) => {
         switch (config.authType) {
             case AuthType.OAuthPassword:
-                data.grant_type = "password";
+                data.grant_type = 'password';
                 data.client_id = config.authConfig.clientId;
                 data.client_secret = config.authConfig.clientSecret;
-                return new Ajax().postForm(config.authConfig.authorizationUri, data);
+                return new Ajax().postForm(
+                    config.authConfig.authorizationUri,
+                    data,
+                );
 
             case AuthType.Mock:
                 return new Promise((resolve, reject) => {
@@ -138,10 +142,12 @@ export const service = {
                 return new Promise((resolve, reject) => {
                     const error: AjaxError = {
                         data: {
-                            error_description: `No handler found for ${config.authType}`,
+                            error_description: `No handler found for ${
+                                config.authType
+                            }`,
                         },
                         status: 404,
-                        statusText: "No `AuthType` matched.",
+                        statusText: 'No `AuthType` matched.',
                         headers: null,
                         config: null,
                         request: null,
@@ -153,29 +159,39 @@ export const service = {
     getUser: (): AxiosPromise | any => {
         if (config.authType === AuthType.Mock) {
             return new Promise((resolve, reject) => {
-                const user: UserInfo = JSON.parse(getState().token.access_token) as UserInfo;
+                const user: UserInfo = JSON.parse(
+                    getState().token.access_token,
+                ) as UserInfo;
                 resolve(user);
             });
         }
         return new Ajax({
-            headerAuthorization: () => `${getState().token.token_type || "Bearer"} ${getState().token.access_token}`,
+            headerAuthorization: () =>
+                `${getState().token.token_type || 'Bearer'} ${
+                    getState().token.access_token
+                }`,
         }).get(config.authConfig.userProfileUri);
     },
     logout: (): AxiosPromise | any => {
         if (config.authType === AuthType.Mock) {
             return new Promise((resolve, reject) => {
-                resolve("ok");
+                resolve('ok');
             });
         }
         if (config.logoutHandler) {
-            return config.logoutHandler(config.authConfig.logoutUri, getState());
+            return config.logoutHandler(
+                config.authConfig.logoutUri,
+                getState(),
+            );
         } else {
             return new Ajax({
                 headerAuthorization: () => {
                     if (getState().token) {
-                        return `${getState().token.token_type} ${getState().token.access_token}`;
+                        return `${getState().token.token_type} ${
+                            getState().token.access_token
+                        }`;
                     }
-                    return "";
+                    return '';
                 },
             }).remove(config.authConfig.logoutUri);
         }
@@ -183,7 +199,7 @@ export const service = {
 };
 
 function* auth() {
-    yield put(globalActions.showLoading("Redirecting to authorize..."));
+    yield put(globalActions.showLoading('Redirecting to authorize...'));
 }
 
 function* authSuccess(action) {
@@ -196,17 +212,23 @@ function* login(action) {
         // trigger off the code that we want to call that is asynchronous
         // and also dispatched the result from that asynchrous code.
         const loginData: LoginData = action.payload;
-        yield put(globalActions.showLoading("Logging in..."));
-        const tokenInfo: TokenInfo = yield call(service.login, { ...loginData });
+        yield put(globalActions.showLoading('Logging in...'));
+        const tokenInfo: TokenInfo = yield call(service.login, {
+            ...loginData,
+        });
         yield put(actions.loginSuccess(tokenInfo));
         yield put(actions.getUserInfo(tokenInfo.access_token));
         yield put(globalActions.hideLoading());
-        yield put(push("/admin"));
+        yield put(push('/admin'));
     } catch (err) {
         yield put(globalActions.hideLoading());
         if (err) {
             const ajaxError = err as AjaxError;
-            yield put(globalActions.notifyError(`${ajaxError.status}: ${ajaxError.data.error_description}`));
+            yield put(
+                globalActions.notifyError(
+                    `${ajaxError.status}: ${ajaxError.data.error_description}`,
+                ),
+            );
         } else {
             yield put(globalActions.notifyError(`Service Unavailable`));
         }
@@ -219,12 +241,15 @@ function* logout(action) {
 
 function* getUser(action) {
     try {
-        yield put(globalActions.showLoading("Getting user info..."));
+        yield put(globalActions.showLoading('Getting user info...'));
         const response = yield call(service.getUser);
-        const userInfo: UserInfo = typeof config.userConverter === "function" ? config.userConverter(response) : { ...response };
+        const userInfo: UserInfo =
+            typeof config.userConverter === 'function'
+                ? config.userConverter(response)
+                : { ...response };
         yield put(actions.getUserInfoSuccess(userInfo));
         yield put(globalActions.hideLoading());
-        yield put(push("/admin"));
+        yield put(push('/admin'));
     } catch (e) {
         yield put(globalActions.hideLoading());
     }
@@ -249,15 +274,22 @@ export function isAuthorized(): boolean {
 }
 
 export function getAuthUri(): string {
-    if (config.authType === AuthType.Custom || config.authType === AuthType.OAuthPassword || config.authType === AuthType.Mock) {
-        return "/login";
+    if (
+        config.authType === AuthType.Custom ||
+        config.authType === AuthType.OAuthPassword ||
+        config.authType === AuthType.Mock
+    ) {
+        return '/login';
     }
 
-    if (config.authType === AuthType.OAuth || config.authType === AuthType.OAuthCode) {
+    if (
+        config.authType === AuthType.OAuth ||
+        config.authType === AuthType.OAuthCode
+    ) {
         let authUrl = config.authConfig.authorizationUri;
         if (!config.authConfig.callbackUri) {
-            const callbackUri = Url.current().merge("/auth/callback");
-            authUrl = authUrl.replace("{callbackUri}", callbackUri);
+            const callbackUri = Url.current().merge('/auth/callback');
+            authUrl = authUrl.replace('{callbackUri}', callbackUri);
         }
 
         Object.keys(config.authConfig).forEach(key => {
@@ -269,7 +301,7 @@ export function getAuthUri(): string {
 }
 
 export function getValidState(): string {
-    const KEY_AUTH_STATE = "AUTH_STATE";
+    const KEY_AUTH_STATE = 'AUTH_STATE';
     if (!storage.getSession(KEY_AUTH_STATE)) {
         storage.setSession(KEY_AUTH_STATE, utils.randomString(10));
     }
@@ -278,12 +310,15 @@ export function getValidState(): string {
 }
 
 export function getAccessTokenUri(code: string): string {
-    if (config.authType === AuthType.OAuth || config.authType === AuthType.OAuthCode) {
+    if (
+        config.authType === AuthType.OAuth ||
+        config.authType === AuthType.OAuthCode
+    ) {
         let tokenUrl = config.authConfig.accessTokenUri;
-        tokenUrl = tokenUrl.replace("{code}", code);
+        tokenUrl = tokenUrl.replace('{code}', code);
         if (!config.authConfig.callbackUri) {
-            const callbackUri = Url.current().merge("/auth/callback");
-            tokenUrl = tokenUrl.replace("{callbackUri}", callbackUri);
+            const callbackUri = Url.current().merge('/auth/callback');
+            tokenUrl = tokenUrl.replace('{callbackUri}', callbackUri);
 
             Object.keys(config.authConfig).forEach(key => {
                 tokenUrl = tokenUrl.replace(`{${key}}`, config.authConfig[key]);

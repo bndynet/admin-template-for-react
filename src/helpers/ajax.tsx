@@ -1,4 +1,10 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise, AxiosResponse, AxiosError } from 'axios';
+import axios, {
+    AxiosInstance,
+    AxiosRequestConfig,
+    AxiosPromise,
+    AxiosResponse,
+    AxiosError,
+} from 'axios';
 import _merge from 'lodash-es/merge';
 
 export interface AjaxOptions {
@@ -56,19 +62,24 @@ export class Ajax {
     }
 
     private static instance(options?: AjaxOptions): AxiosInstance {
-        const result: AxiosInstance = options ? axios.create(Ajax.buildOptions(options)) : axios.create();
+        const result: AxiosInstance = options
+            ? axios.create(Ajax.buildOptions(options))
+            : axios.create();
 
         if (options) {
             if (options.onRequest || options.onRequestError) {
                 result.interceptors.request.use(
-                    options.onRequest || ((config: AxiosRequestConfig) => config),
-                    options.onRequestError || ((error: any) => Promise.reject(error)),
+                    options.onRequest ||
+                        ((config: AxiosRequestConfig) => config),
+                    options.onRequestError ||
+                        ((error: any) => Promise.reject(error)),
                 );
             }
             if (options.onResponse || options.onResponseError) {
                 result.interceptors.response.use(
                     options.onResponse || ((response: any) => response),
-                    options.onResponseError || ((error: any) => Promise.reject(error)),
+                    options.onResponseError ||
+                        ((error: any) => Promise.reject(error)),
                 );
             }
         }
@@ -83,7 +94,7 @@ export class Ajax {
 
     private options: AjaxOptions;
 
-    constructor(options?: AjaxOptions) {
+    public constructor(options?: AjaxOptions) {
         this.options = options;
     }
 
@@ -91,26 +102,26 @@ export class Ajax {
 
     public get = (url: string): AxiosPromise => {
         return this.instance().get(url) as AxiosPromise;
-    }
+    };
     public post = (url: string, data: any): AxiosPromise => {
         return this.instance().post(url, data);
-    }
+    };
     public postForm = (url: string, data: any): AxiosPromise => {
         const formData = new FormData(); // Must be FormData so that the ajax request will be Form post
-        Object.keys(data).forEach((k) => {
+        Object.keys(data).forEach(k => {
             formData.append(k, data[k]);
         });
         return this.instance().post(url, formData);
-    }
+    };
     public remove = (url: string): AxiosPromise => {
         return this.instance().delete(url);
-    }
+    };
     public put = (url: string, data: any): AxiosPromise => {
         return this.instance().put(url, data);
-    }
+    };
     public patch = (url: string, data: any): AxiosPromise => {
         return this.instance().patch(url, data);
-    }
+    };
 }
 
 const ajax = new Ajax();

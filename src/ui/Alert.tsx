@@ -3,7 +3,14 @@ import classNames from 'classnames';
 
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
-import { createStyles, Theme, withStyles, Typography, Collapse, IconButton } from '@material-ui/core';
+import {
+    createStyles,
+    Theme,
+    withStyles,
+    Typography,
+    Collapse,
+    IconButton,
+} from '@material-ui/core';
 
 import { variantIcon, variantColor } from '../theme';
 
@@ -12,7 +19,8 @@ const styles = (theme: Theme) =>
         ...variantColor(theme),
         root: {
             position: 'relative',
-            padding: `${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 2}px`,
+            padding: `${theme.spacing.unit * 1.5}px ${theme.spacing.unit *
+                2}px`,
             marginBottom: theme.spacing.unit * 2,
         },
         header: {
@@ -51,7 +59,7 @@ class Alert extends React.Component<
     },
     { close: boolean }
 > {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             close: false,
@@ -60,30 +68,53 @@ class Alert extends React.Component<
     }
 
     public render() {
-        const { classes, className, title, message, shadow, variant, square, closeable } = this.props;
+        const {
+            classes,
+            className,
+            title,
+            message,
+            shadow,
+            variant,
+            square,
+            closeable,
+        } = this.props;
         const Icon = variantIcon[variant];
         return (
             <Collapse in={!this.state.close} className={className}>
-                <Paper className={classNames(classes.root, classes[variant])} elevation={shadow} square={square}>
+                <Paper
+                    className={classNames(classes.root, classes[variant])}
+                    elevation={shadow}
+                    square={square}
+                >
                     {title && (
-                        <Typography className={classes.header} variant='subtitle1' component='h3' color='inherit'>
+                        <Typography
+                            className={classes.header}
+                            variant="subtitle1"
+                            component="h3"
+                            color="inherit"
+                        >
                             <Icon className={classes.icon} />
                             <span className={classes.title}>{title}</span>
                         </Typography>
                     )}
                     {message && (
-                        <Typography className={classes.message} component='p' color='inherit'>
+                        <Typography
+                            className={classes.message}
+                            component="p"
+                            color="inherit"
+                        >
                             {message}
                         </Typography>
                     )}
                     {closeable && (
                         <IconButton
-                            key='close'
-                            aria-label='Close'
-                            color='inherit'
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
                             className={classes.close}
-                            onClick={this.handleClose}>
-                            <CloseIcon fontSize='small' />
+                            onClick={this.handleClose}
+                        >
+                            <CloseIcon fontSize="small" />
                         </IconButton>
                     )}
                 </Paper>

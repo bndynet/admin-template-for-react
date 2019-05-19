@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
     Theme,
     createStyles,
@@ -6,9 +6,9 @@ import {
     IconButton,
     Drawer,
     Typography,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { variantBorderColor } from "../theme";
+} from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { variantBorderColor } from '../theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -17,8 +17,8 @@ const styles = (theme: Theme) =>
             backgroundColor: theme.palette.background.default,
         },
         header: {
-            display: "flex",
-            alignItems: "flex-end",
+            display: 'flex',
+            alignItems: 'flex-end',
             padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
             borderBottom: `solid 1px ${theme.palette.divider}`,
         },
@@ -27,7 +27,7 @@ const styles = (theme: Theme) =>
         },
         headerToolbox: {
             flex: 1,
-            textAlign: "right",
+            textAlign: 'right',
         },
         body: {
             padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
@@ -38,7 +38,7 @@ class SlidePanel extends React.Component<{
     classes: any;
     className?: string;
     title: string | JSX.Element;
-    anchor: "top" | "right" | "left" | "bottom";
+    anchor: 'top' | 'right' | 'left' | 'bottom';
     width: number | string;
     height: number | string;
     open: boolean;
@@ -46,7 +46,7 @@ class SlidePanel extends React.Component<{
     onClose: () => void;
     onOpen: () => void;
 }> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
     }
 
@@ -61,13 +61,13 @@ class SlidePanel extends React.Component<{
             open,
         } = this.props;
         const closeable =
-            typeof this.props.closeable === "undefined"
+            typeof this.props.closeable === 'undefined'
                 ? true
                 : this.props.closeable;
         return (
             <Drawer
                 classes={{ paper: classes.root }}
-                anchor={anchor || "right"}
+                anchor={anchor || 'right'}
                 open={open}
             >
                 <div className={className} style={{ width, height }}>

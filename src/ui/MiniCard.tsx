@@ -16,13 +16,18 @@ const miniCardStyles = (theme: Theme) =>
         ...variantColor(theme),
         root: {
             position: 'relative',
-            color: theme.palette.type === 'light' ? '' : theme.palette.text.primary,
+            color:
+                theme.palette.type === 'light'
+                    ? ''
+                    : theme.palette.text.primary,
             '&:hover $icon': {
                 transform: 'scale(4)',
             },
         },
         body: {
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 2}px ${theme.spacing.unit * 1.5}px`,
+            padding: `${theme.spacing.unit}px ${theme.spacing.unit *
+                1.5}px ${theme.spacing.unit * 2}px ${theme.spacing.unit *
+                1.5}px`,
         },
         icon: {
             position: 'absolute',
@@ -62,16 +67,23 @@ class MiniCard extends React.Component<
         description: string;
         icon: any;
         variant?: string;
-        links: {[key: string]: string};
+        links: { [key: string]: string };
     },
     {}
 > {
-    constructor(props) {
+    public constructor(props) {
         super(props);
     }
 
     public render() {
-        const { classes, className, icon, title, description, links } = this.props;
+        const {
+            classes,
+            className,
+            icon,
+            title,
+            description,
+            links,
+        } = this.props;
         const linkEls = [];
         if (links) {
             for (const key of Object.keys(links)) {
@@ -79,17 +91,28 @@ class MiniCard extends React.Component<
             }
         }
         return (
-            <Paper className={classNames(classes.root, classes[this.props.variant], className)}>
+            <Paper
+                className={classNames(
+                    classes.root,
+                    classes[this.props.variant],
+                    className,
+                )}
+            >
                 <div className={classes.body}>
-                    <Typography color='inherit' variant='h4' component='h4'>
+                    <Typography color="inherit" variant="h4" component="h4">
                         {title}
                     </Typography>
-                    <Typography color='inherit' variant='caption'>
+                    <Typography color="inherit" variant="caption">
                         {description}
                     </Typography>
                 </div>
                 <div className={classes.icon}>{icon}</div>
-                <Typography className={classes.linkContainer} color='inherit' variant='caption' component='div'>
+                <Typography
+                    className={classes.linkContainer}
+                    color="inherit"
+                    variant="caption"
+                    component="div"
+                >
                     {linkEls}
                 </Typography>
             </Paper>
@@ -100,14 +123,17 @@ class MiniCard extends React.Component<
         if (url) {
             if (url.indexOf('://') > 0) {
                 return (
-                    <Typography color='inherit' variant='caption' key={text}>
-                        <a href={url} target='_blank'> {text} </a>
+                    <Typography color="inherit" variant="caption" key={text}>
+                        <a href={url} target="_blank" rel="noopener noreferrer">
+                            {' '}
+                            {text}{' '}
+                        </a>
                     </Typography>
                 );
             } else {
                 return (
-                    <Link color='default' key={text} to={url}>
-                        <Typography color='inherit' variant='caption'>
+                    <Link color="default" key={text} to={url}>
+                        <Typography color="inherit" variant="caption">
                             {text}
                         </Typography>
                     </Link>
@@ -115,7 +141,7 @@ class MiniCard extends React.Component<
             }
         } else {
             return (
-                <Typography color='inherit' variant='caption' key={text}>
+                <Typography color="inherit" variant="caption" key={text}>
                     {text}
                 </Typography>
             );

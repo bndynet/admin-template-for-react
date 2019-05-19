@@ -1,34 +1,41 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Typography from "@material-ui/core/Typography";
-import { GridSpacing } from "@material-ui/core/Grid";
-import { Theme, createStyles, withStyles, Grid, IconButton, Button } from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Typography from '@material-ui/core/Typography';
+import { GridSpacing } from '@material-ui/core/Grid';
+import {
+    Theme,
+    createStyles,
+    withStyles,
+    Grid,
+    IconButton,
+    Button,
+} from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-import { Alert, PageHeader, Panel, MiniCard, Tag } from "app/ui";
-import ChartExample from "./ChartExample";
+import { Alert, PageHeader, Panel, MiniCard, Tag } from 'app/ui';
+import ChartExample from './ChartExample';
 
 const styles = (theme: Theme) =>
     createStyles({
         contentHeader: {
-            display: "flex",
+            display: 'flex',
             paddingTop: theme.spacing.unit * 2,
             paddingBottom: theme.spacing.unit * 2,
             marginBottom: theme.spacing.unit,
-            "& h2": {
+            '& h2': {
                 flex: 1,
             },
         },
         breadcrumb: {
-            display: "flex",
-            "& > *": {
-                alignSelf: "flex-end",
-                textDecoration: "none",
+            display: 'flex',
+            '& > *': {
+                alignSelf: 'flex-end',
+                textDecoration: 'none',
             },
-            "& > *:not(:last-child):after": {
+            '& > *:not(:last-child):after': {
                 content: '">"',
-                display: "inline-block",
+                display: 'inline-block',
                 marginLeft: 5,
                 marginRight: 5,
             },
@@ -39,16 +46,29 @@ const styles = (theme: Theme) =>
 const renderCard = props => {
     return (
         <Grid item={true} md={3} xs={6}>
-            <MiniCard title="150" description="New Orders" {...props} links={{ Home: "/", "More info": "/admin/dashboard" }} icon={<ShoppingCartIcon />} />
+            <MiniCard
+                title="150"
+                description="New Orders"
+                {...props}
+                links={{ Home: '/', 'More info': '/admin/dashboard' }}
+                icon={<ShoppingCartIcon />}
+            />
         </Grid>
     );
 };
 
 const renderAlert = props => {
-    /* tslint:disable */
+    /* eslint-disable */
     return (
         <Grid item={true} sm={6}>
-            <Alert title="Alert Title" message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam." variant={props.variant} shadow={props.shadow} square={props.square} closeable={props.closeable} />
+            <Alert
+                title="Alert Title"
+                message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."
+                variant={props.variant}
+                shadow={props.shadow}
+                square={props.square}
+                closeable={props.closeable}
+            />
         </Grid>
     );
 };
@@ -56,8 +76,17 @@ const renderAlert = props => {
 const renderPanel = props => {
     return (
         <Grid item={true} sm={6}>
-            <Panel title="Panel Title" variant={props.variant} closeable={props.closeable} minimizeable={props.minimizeable} actions={props.actions}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
+            <Panel
+                title="Panel Title"
+                variant={props.variant}
+                closeable={props.closeable}
+                minimizeable={props.minimizeable}
+                actions={props.actions}
+            >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+                blanditiis tenetur unde suscipit, quam beatae rerum inventore
+                consectetur, neque doloribus, cupiditate numquam dignissimos
+                laborum fugiat deleniti? Eum quasi quidem quibusdam.
             </Panel>
         </Grid>
     );
@@ -76,14 +105,14 @@ class Dashboard extends React.Component<
                 <PageHeader
                     title="Dashboard"
                     navigation={{
-                        Home: "/",
+                        Home: '/',
                         Dashboard: null,
                     }}
                 />
                 <Grid container={true} spacing={16 as GridSpacing}>
-                    {renderCard({ variant: "info" })}
-                    {renderCard({ variant: "success" })}
-                    {renderCard({ variant: "warning" })}
+                    {renderCard({ variant: 'info' })}
+                    {renderCard({ variant: 'success' })}
+                    {renderCard({ variant: 'warning' })}
                     {renderCard({})}
                 </Grid>
 
@@ -95,23 +124,23 @@ class Dashboard extends React.Component<
                 <PageHeader title="Alerts" />
                 <Grid container={true} spacing={16 as GridSpacing}>
                     {renderAlert({
-                        variant: "info",
+                        variant: 'info',
                         square: true,
                         closeable: false,
                     })}
                     {renderAlert({
-                        variant: "success",
+                        variant: 'success',
                         square: true,
                         closeable: false,
                     })}
                     {renderAlert({
-                        variant: "warning",
+                        variant: 'warning',
                         square: false,
                         closeable: true,
                         shadow: 3,
                     })}
                     {renderAlert({
-                        variant: "error",
+                        variant: 'error',
                         square: false,
                         closeable: true,
                         shadow: 3,
@@ -129,22 +158,22 @@ class Dashboard extends React.Component<
                 />
                 <Grid container={true} spacing={16 as GridSpacing}>
                     {renderPanel({})}
-                    {renderPanel({ variant: "info" })}
-                    {renderPanel({ variant: "success" })}
+                    {renderPanel({ variant: 'info' })}
+                    {renderPanel({ variant: 'success' })}
                     {renderPanel({
-                        variant: "warning",
+                        variant: 'warning',
                         closeable: true,
                         minimizeable: true,
                     })}
                     {renderPanel({
-                        variant: "error",
+                        variant: 'error',
                         closeable: true,
                         minimizeable: true,
                         actions: [
                             <Tag key="1" variant="error">
                                 8 New Members
                             </Tag>,
-                            <IconButton key="2" onClick={() => alert("Help")}>
+                            <IconButton key="2" onClick={() => alert('Help')}>
                                 <HelpIcon />
                             </IconButton>,
                         ],

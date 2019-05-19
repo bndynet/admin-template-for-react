@@ -8,6 +8,10 @@ export default class RawHtml extends React.Component<{
     }
 
     private createMarkup() {
-        return { __html: this.props.content.replace('<', '&lt;').replace('>', '&gt;') };
+        return {
+            __html: this.props.content
+                .replace('<', '&lt;')
+                .replace('>', '&gt;'),
+        };
     }
 }

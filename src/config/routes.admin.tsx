@@ -1,24 +1,24 @@
-import { Dashboard, Markdown, DataTableExample } from "app/pages/admin";
-import { PageNotFound } from "app/pages/public";
+import { Dashboard, Markdown, DataTableExample } from 'app/pages/admin';
+import { PageNotFound } from 'app/pages/public';
 
 const routes = [
     {
-        path: "/admin",
+        path: '/admin',
         exact: true,
         component: Dashboard,
     },
     {
-        path: "/admin/dashboard",
+        path: '/admin/dashboard',
         exact: true,
         component: Dashboard,
     },
     {
-        path: "/admin/markdown",
+        path: '/admin/markdown',
         exact: true,
         component: Markdown,
     },
     {
-        path: "/admin/examples/datatable",
+        path: '/admin/examples/datatable',
         exact: true,
         component: DataTableExample,
     },

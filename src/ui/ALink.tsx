@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 
 export default class ALink extends React.Component<{
     to: string;
 }> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
     }
 
@@ -18,7 +18,7 @@ export default class ALink extends React.Component<{
             this.props.to
                 .toString()
                 .toLowerCase()
-                .startsWith("http");
+                .startsWith('http');
         if (isEmptyLink) {
             result = (
                 <a {...others}>

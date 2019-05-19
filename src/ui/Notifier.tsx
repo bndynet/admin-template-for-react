@@ -16,7 +16,11 @@ const notifierContentStyles = (theme: Theme) =>
             paddingRight: theme.spacing.unit * 5,
         },
         info: {
-            backgroundColor: ifTheme(theme, theme.palette.common.black, theme.palette.common.white),
+            backgroundColor: ifTheme(
+                theme,
+                theme.palette.common.black,
+                theme.palette.common.white,
+            ),
         },
         icon: {
             fontSize: 20,
@@ -45,45 +49,66 @@ interface NotifierContentProps {
     variant?: string;
 }
 
-class NotifierContentComponent extends React.Component<NotifierContentProps, {}> {
-    constructor(props) {
+class NotifierContentComponent extends React.Component<
+    NotifierContentProps,
+    {}
+> {
+    public constructor(props) {
         super(props);
     }
 
     public render() {
-        const { classes, className, message, onCloseButtonClick, variant } = this.props;
+        const {
+            classes,
+            className,
+            message,
+            onCloseButtonClick,
+            variant,
+        } = this.props;
         const Icon = variantIcon[variant];
         const actions = [];
 
         if (this.props.hasCloseButton) {
             actions.push(
                 <IconButton
-                    key='close'
-                    aria-label='Close'
-                    color='inherit'
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
                     className={classes.close}
-                    onClick={onCloseButtonClick}>
+                    onClick={onCloseButtonClick}
+                >
                     <CloseIcon className={classes.icon} />
                 </IconButton>,
             );
         }
         return (
             <SnackbarContent
-                className={classNames(classes.common, classes[variant], className)}
-                aria-describedby='client-snackbar'
-                message={(
-                    <span id='client-snackbar' className={classes.message}>
-                        <Icon className={classNames(classes.icon, classes.iconVariant)} />
+                className={classNames(
+                    classes.common,
+                    classes[variant],
+                    className,
+                )}
+                aria-describedby="client-snackbar"
+                message={
+                    <span id="client-snackbar" className={classes.message}>
+                        <Icon
+                            className={classNames(
+                                classes.icon,
+                                classes.iconVariant,
+                            )}
+                        />
                         {message}
                     </span>
-                )}
+                }
                 action={actions}
             />
         );
     }
 }
 
-const NotifierContent = withStyles(notifierContentStyles)(NotifierContentComponent);
+const NotifierContent = withStyles(notifierContentStyles)(
+    NotifierContentComponent,
+);
 
 export interface NotifierOptions {
     message: string;
@@ -105,7 +130,7 @@ interface NotifierState {
     open: boolean;
 }
 
-const NotifierStyles = (theme: Theme) =>
+const NotifierStyles = () =>
     createStyles({
         root: {
             maxWidth: 640,
@@ -113,7 +138,7 @@ const NotifierStyles = (theme: Theme) =>
     });
 
 class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             open: false,
@@ -142,7 +167,8 @@ class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
                 anchorOrigin={origin}
                 open={open}
                 autoHideDuration={options.duration || 5000}
-                onClose={this.handleClose}>
+                onClose={this.handleClose}
+            >
                 <NotifierContent
                     onClose={this.handleClose}
                     hasCloseButton={hasCloseButton}
@@ -154,14 +180,14 @@ class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
         );
     }
 
-    private handleClose = (e) => {
+    private handleClose = e => {
         this.setState({
             open: false,
         });
         if (this.props.onCloseButtonClick) {
             this.props.onCloseButtonClick(e);
         }
-    }
+    };
 }
 
 const Notifier = withStyles(NotifierStyles)(NotifierComponent);

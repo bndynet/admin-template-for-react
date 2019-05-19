@@ -23,10 +23,19 @@ const styles = (theme: Theme) =>
         },
     });
 
-class Overlay extends React.Component<{ classes: any; open: boolean; }, {}> {
+class Overlay extends React.Component<{ classes: any; open: boolean }, {}> {
     public render() {
-        const { classes, open} = this.props;
-        return <div className={classNames(classes.overlay, !open && classes.overlayClose)}>{this.props.children}</div>;
+        const { classes, open } = this.props;
+        return (
+            <div
+                className={classNames(
+                    classes.overlay,
+                    !open && classes.overlayClose,
+                )}
+            >
+                {this.props.children}
+            </div>
+        );
     }
 }
 

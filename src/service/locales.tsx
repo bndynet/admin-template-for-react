@@ -1,16 +1,16 @@
-import * as intl from "react-intl-universal";
-import { config } from "app/config";
-import storage from "app/helpers/storage";
-import ajax from "app/helpers/ajax";
-import { onLocaleChanged } from "../app.events";
+import * as intl from 'react-intl-universal';
+import { config } from 'app/config';
+import storage from 'app/helpers/storage';
+import ajax from 'app/helpers/ajax';
+import { onLocaleChanged } from '../app.events';
 
-const KEY_LOCALE = "locale";
+const KEY_LOCALE = 'locale';
 function getCurrentLocale() {
-    return storage.getCookie(KEY_LOCALE) || config.defaultLocale || navigator.language;
-}
-
-export function setLocale(currentLocale?: string, callback?: () => void) {
-    initLocales(currentLocale, callback);
+    return (
+        storage.getCookie(KEY_LOCALE) ||
+        config.defaultLocale ||
+        navigator.language
+    );
 }
 
 export function initLocales(currentLocale?: string, callback?: () => void) {
@@ -49,5 +49,9 @@ export function initLocales(currentLocale?: string, callback?: () => void) {
     }
 }
 
-// tslint:disable-next-line:no-console
+export function setLocale(currentLocale?: string, callback?: () => void) {
+    initLocales(currentLocale, callback);
+}
+
+// eslint-disable-next-line no-console
 console.info(`Locale is '${getCurrentLocale()}'.`);

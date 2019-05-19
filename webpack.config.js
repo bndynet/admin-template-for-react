@@ -8,10 +8,31 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
 const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
 
+function resolveTsconfigPathsToAlias({
+    tsconfigPath = './tsconfig.json',
+    webpackConfigBasePath = './',
+} = {}) {
+    const { paths } = require(tsconfigPath).compilerOptions;
+
+    const aliases = {};
+
+    Object.keys(paths).forEach(item => {
+        const key = item.replace('/*', '');
+        const value = path.resolve(
+            webpackConfigBasePath,
+            paths[item][0].replace('/*', ''),
+        );
+
+        aliases[key] = value;
+    });
+
+    return aliases;
+}
+
 module.exports = {
     entry: ['./src/index.tsx'],
     performance: {
-        hints: false
+        hints: false,
     }, // disable to show warnings about performance
     output: {
         filename: '[name].[chunkhash].js',
@@ -20,54 +41,69 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', 'css'],
-        alias:  {
+        alias: {
             ...resolveTsconfigPathsToAlias(),
-            'react': path.join(__dirname, 'node_modules/react'),
-        }
+            react: path.join(__dirname, 'node_modules/react'),
+        },
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.(png|jpg|gif)$/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192
-                    }
-                }]
-            }, {
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                        },
+                    },
+                ],
+            },
+            {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [{
-                    loader: 'url-loader',
-                }]
+                use: [
+                    {
+                        loader: 'url-loader',
+                    },
+                ],
             },
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    process.env.NODE_ENV !== 'production'
+                        ? 'style-loader'
+                        : MiniCssExtractPlugin.loader,
                     MiniCssExtractPlugin.loader,
                     'css-loader',
                     'postcss-loader',
                     'sass-loader',
                 ],
-            }, {
+            },
+            {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
-            }, {
-                test: /\.tsx$/,
+            },
+            {
+                test: /\.tsx?$/,
                 enforce: 'pre',
-                use: [{
-                    loader: 'tslint-loader',
-                    options: { /* Loader options go here */ }
-                }]
-            }, {
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    failOnWarning: false,
+                    failOnError: true,
+                },
+            },
+            {
                 test: /\.(js|jsx)$/,
                 enforce: 'pre',
                 exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader',
-                }],
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                ],
             },
-        ]
+        ],
     },
     plugins: [
         new PrintTimeWebpackPlugin(),
@@ -90,11 +126,14 @@ module.exports = {
             React: 'react',
             ReactDOM: 'react-dom',
         }),
-        new CopyWebpackPlugin([{
-            from: './assets',
-        }, {
-            from: './README.md',
-        }]),
+        new CopyWebpackPlugin([
+            {
+                from: './assets',
+            },
+            {
+                from: './README.md',
+            },
+        ]),
         new MiniCssExtractPlugin({
             filename: '[name].[hash].css',
             chunkFilename: '[id].[hash].css',
@@ -117,29 +156,9 @@ module.exports = {
                 },
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                    priority: -10,
                 },
-            }
-        }
+            },
+        },
     },
 };
-
-function resolveTsconfigPathsToAlias({
-    tsconfigPath = './tsconfig.json',
-    webpackConfigBasePath = './'
-} = {}, ) {
-    const {
-        paths
-    } = require(tsconfigPath).compilerOptions;
-
-    const aliases = {};
-
-    Object.keys(paths).forEach((item) => {
-        const key = item.replace('/*', '');
-        const value = path.resolve(webpackConfigBasePath, paths[item][0].replace('/*', ''));
-
-        aliases[key] = value;
-    });
-
-    return aliases;
-}

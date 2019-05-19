@@ -1,14 +1,14 @@
-import * as React from "react";
-import * as intl from "react-intl-universal";
-import { connect } from "react-redux";
-import { createStyles, withStyles, Typography } from "@material-ui/core";
+import * as React from 'react';
+import * as intl from 'react-intl-universal';
+import { connect } from 'react-redux';
+import { createStyles, withStyles, Typography } from '@material-ui/core';
 
 const styles = createStyles({
     root: {
         marginTop: 100,
         width: 400,
-        margin: "auto",
-        textAlign: "center",
+        margin: 'auto',
+        textAlign: 'center',
     },
 });
 
@@ -26,11 +26,11 @@ class PageNotFound extends React.Component<
                 <br />
                 <br />
                 <Typography component="h2" variant="h4">
-                    {intl.get("errors.404.title")}
+                    {intl.get('errors.404.title')}
                 </Typography>
                 <br />
                 <br />
-                <Typography>{intl.get("errors.404.description")}</Typography>
+                <Typography>{intl.get('errors.404.description')}</Typography>
             </div>
         );
     }
