@@ -1,6 +1,9 @@
 {
     "trailingComma": "all",
     "semi": true,
+    "printWidth": 80,
     "tabWidth": 4,
+    "singleQuote": true,
+    "endOfLine": "lf",
     "jsxBracketSameLine": false
 }
