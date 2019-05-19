@@ -18,7 +18,12 @@
         "Promise": true
     },
     "rules": {
-        "prettier/prettier": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "lf"
+            }
+        ],
         "@typescript-eslint/explicit-function-return-type": [
             0,
             {
