@@ -6,9 +6,8 @@ import { Theme, createStyles, withStyles, Grid, IconButton, Button } from "@mate
 import HelpIcon from "@material-ui/icons/Help";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
-import { Alert, PageHeader, Panel, MiniCard, Tag, DataTable, DataTablePageMeta, DataTableRequestParameters } from "app/ui";
+import { Alert, PageHeader, Panel, MiniCard, Tag } from "app/ui";
 import ChartExample from "./ChartExample";
-import FormatterPanel from "./FormaterPanel";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -151,9 +150,6 @@ class Dashboard extends React.Component<
                         ],
                     })}
                 </Grid>
-
-                <PageHeader title="Formatters" toolbox={<Typography>Here is the toolbox placeholder.</Typography>} />
-                <FormatterPanel />
             </div>
         );
     }

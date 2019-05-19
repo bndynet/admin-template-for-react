@@ -1,13 +1,10 @@
 import * as React from "react";
 // tslint:disable-next-line:no-implicit-dependencies
 import { Redirect } from "react-router";
-import Home from "../components/pages/Home";
-import Callback from "../components/pages/auth/Callback";
-import Login from "../components/pages/auth/Login";
-import Logout from "../components/pages/auth/Logout";
-import Admin from "../components/layout/Admin";
-import PageNotFound from "../components/pages/PageNotFound";
 import { isAuthorized, getAuthUri } from "app/service/auth";
+import { Home, PageNotFound } from "app/pages/public";
+import { Admin } from "app/pages/admin";
+import { Login, Logout, Callback } from "app/pages/auth";
 
 const routes = [
     {

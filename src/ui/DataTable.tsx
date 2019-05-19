@@ -1,7 +1,7 @@
 import * as React from "react";
+import * as intl from "react-intl-universal";
 import _merge from "lodash-es/merge";
 import MUIDataTable from "mui-datatables";
-import { injectIntl, InjectedIntl } from "react-intl";
 import { createStyles, Theme, withStyles } from "@material-ui/core";
 
 export type SortDirection = "asc" | "desc";
@@ -56,7 +56,6 @@ export interface DataTableRequestParameters {
 
 export interface DataTableProps {
     classes: any;
-    intl: InjectedIntl;
     data?: any[];
     columns?: DataTableColumn[];
     options?: DataTableOptions | any;
@@ -66,6 +65,7 @@ export interface DataTableProps {
     pagination?: boolean;
     scrollable?: boolean;
     selectable?: "multiple" | "single" | "none" | boolean;
+    localePrefix?: string;
     onRowClick?: (rowData: any, dataIndex: number) => void;
     onRowsDelete?: (rowsData: any[]) => Promise<any>;
     dataPromise?: (parameters?: DataTableRequestParameters) => Promise<DataTablePageMeta>;
@@ -104,7 +104,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
 
     public render() {
         this.data = this.props.data || this.state.data;
-        const { classes, className, intl, title, options } = this.props;
+        const { classes, className, title, options } = this.props;
         const { isLoading } = this.state;
         const defaultOptions = {
             filterType: "dropdown",
@@ -112,34 +112,34 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             selectableRows: this.props.selectable === true ? "multiple" : this.props.selectable === false ? "none" : this.props.selectable,
             textLabels: {
                 body: {
-                    noMatch: isLoading ? intl.formatMessage({ id: "loadingData" }) : intl.formatMessage({ id: "noData" }),
+                    noMatch: isLoading ? intl.get("loadingData") : intl.get("noData"),
                 },
                 filter: {
-                    all: intl.formatMessage({ id: "all" }),
-                    title: intl.formatMessage({ id: "filters" }),
-                    reset: intl.formatMessage({ id: "reset" }),
+                    all: intl.get("all"),
+                    title: intl.get("filters"),
+                    reset: intl.get("reset"),
                 },
                 selectedRows: {
-                    text: intl.formatMessage({ id: "itemsSelected" }),
-                    delete: intl.formatMessage({ id: "delete" }),
-                    deleteAria: intl.formatMessage({ id: "delete" }),
+                    text: intl.get("itemsSelected"),
+                    delete: intl.get("delete"),
+                    deleteAria: intl.get("delete"),
                 },
                 pagination: {
-                    next: intl.formatMessage({ id: "nextPage" }),
-                    previous: intl.formatMessage({ id: "previousPage" }),
-                    rowsPerPage: intl.formatMessage({ id: "rowsPerPage" }),
-                    displayRows: intl.formatMessage({ id: "of" }),
+                    next: intl.get("nextPage"),
+                    previous: intl.get("previousPage"),
+                    rowsPerPage: intl.get("rowsPerPage"),
+                    displayRows: intl.get("of"),
                 },
                 toolbar: {
-                    search: intl.formatMessage({ id: "search" }),
-                    downloadCsv: intl.formatMessage({ id: "downloadCsv" }),
-                    print: intl.formatMessage({ id: "print" }),
-                    viewColumns: intl.formatMessage({ id: "viewColumns" }),
-                    filterTable: intl.formatMessage({ id: "filter" }),
+                    search: intl.get("search"),
+                    downloadCsv: intl.get("downloadCsv"),
+                    print: intl.get("print"),
+                    viewColumns: intl.get("viewColumns"),
+                    filterTable: intl.get("filter"),
                 },
                 viewColumns: {
-                    title: intl.formatMessage({ id: "viewColumns" }),
-                    titleAria: intl.formatMessage({ id: "toggleColumns" }),
+                    title: intl.get("viewColumns"),
+                    titleAria: intl.get("toggleColumns"),
                 },
             },
         };
@@ -301,7 +301,6 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     }
 
     private generateColumnsFromData() {
-        const { intl } = this.props;
         if (this.data && this.data.length > 0) {
             if (Array.isArray(this.data[0])) {
                 this.columns = this.data[0];
@@ -310,7 +309,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                 this.columns = [];
                 for (const key of Object.keys(this.data[0])) {
                     this.columns.push({
-                        name: intl.formatMessage({ id: key }),
+                        name: intl.get(`${this.props.localePrefix || ""}${key}`).defaultMessage(key),
                         label: key,
                         options: {
                             filter: true,
@@ -323,4 +322,4 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     }
 }
 
-export default withStyles(styles)(injectIntl(DataTable));
+export default withStyles(styles)(DataTable);

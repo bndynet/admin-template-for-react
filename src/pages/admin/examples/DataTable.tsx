@@ -1,13 +1,12 @@
 import * as React from "react";
-import { injectIntl, InjectedIntl } from "react-intl";
+import * as intl from "react-intl-universal";
 import { alert, confirm, loading } from "@bndynet/dialog";
 
 import utils from "app/helpers/utils";
 import { service as resourceService } from "app/service/resource";
 import { DataTable, PageHeader, DataTableRequestParameters, DataTablePageMeta } from "app/ui";
 
-class DataTableExample extends React.Component<{ intl: InjectedIntl }> {
-    private intl: InjectedIntl;
+class DataTableExample extends React.Component {
     private arrayData = [["Name", "Location", "Age", "Salary"], ["Andy1", "Hefei", 30, "$121,120"], ["Andy2", "Hefei", 33, "$121,110"], ["Andy3", "Hefei", 32, "$121,140"], ["Andy4", "Hefei", 35, "$121,130"], ["Andy5", "Hefei", 31, "$121,120"]];
     private objectData = [
         { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
@@ -26,7 +25,6 @@ class DataTableExample extends React.Component<{ intl: InjectedIntl }> {
 
     public constructor(props) {
         super(props);
-        this.intl = props.intl;
     }
 
     public render() {
@@ -48,15 +46,12 @@ class DataTableExample extends React.Component<{ intl: InjectedIntl }> {
     }
 
     private handleRowsDelete() {
-        return new Promise((resolve, reject) => {
-            confirm(this.intl.formatMessage({ id: "deleteConfirmMessage" }), () => {
-                // here to call api
-                loading();
-                setTimeout(() => {
-                    resolve();
-                    loading(false);
-                }, 3000);
-            });
+        return confirm(intl.get("deleteConfirmMessage")).then(() => {
+            // here to call api
+            loading();
+            setTimeout(() => {
+                loading(false);
+            }, 3000);
         });
     }
 
@@ -88,4 +83,4 @@ class DataTableExample extends React.Component<{ intl: InjectedIntl }> {
     }
 }
 
-export default injectIntl(DataTableExample);
+export default DataTableExample;

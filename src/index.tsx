@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { store, history } from "./redux";
 
-import { App } from "./components";
+import App from "./App";
 
 ReactDOM.render(
     <Provider store={store}>

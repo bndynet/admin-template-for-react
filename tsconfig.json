@@ -10,11 +10,11 @@
         "paths": {
             "app/ui": ["src/ui"],
             "app/types": ["src/types"],
-            "app/components": ["src/components"],
             "app/config": ["src/config"],
             "app/theme": ["src/theme"],
             "app/redux": ["src/redux"],
             "app/locales": ["src/locales"],
+            "app/pages/*": ["src/pages/*"],
             "app/service/*": ["src/service/*"],
             "app/types/*": ["src/types/*"],
             "app/helpers/*": ["src/helpers/*"]

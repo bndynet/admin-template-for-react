@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Formatter } from "app/ui";
+import * as intl from "react-intl-universal";
 import { connect } from "react-redux";
 import { createStyles, withStyles, Typography } from "@material-ui/core";
 
@@ -26,13 +26,11 @@ class PageNotFound extends React.Component<
                 <br />
                 <br />
                 <Typography component="h2" variant="h4">
-                    <Formatter i18nKey="errors.404.title" />
+                    {intl.get("errors.404.title")}
                 </Typography>
                 <br />
                 <br />
-                <Typography>
-                    <Formatter i18nKey="errors.404.description" />
-                </Typography>
+                <Typography>{intl.get("errors.404.description")}</Typography>
             </div>
         );
     }

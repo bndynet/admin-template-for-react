@@ -7,7 +7,7 @@ import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 
-import { actions as authActions, getAccessTokenUri, TokenInfo, getValidState } from "../../../service/auth";
+import { actions as authActions, getAccessTokenUri, TokenInfo, getValidState } from "../../service/auth";
 import { Ajax } from "app/helpers/ajax";
 
 const KEY_CODE = "code";

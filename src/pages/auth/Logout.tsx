@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as intl from "react-intl-universal";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { CssBaseline, Typography, Theme, createStyles, withStyles } from "@material-ui/core";
@@ -7,8 +8,7 @@ import { Panel } from "app/ui";
 import { Dispatch, Action } from "redux";
 import { connect } from "react-redux";
 
-import { actions as authActions, service as authService } from "../../../service/auth";
-import { FormattedMessage } from "react-intl";
+import { actions as authActions, service as authService } from "../../service/auth";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -99,14 +99,14 @@ class Logout extends React.Component<
                             <div>
                                 <i className={classNames("far fa-check-circle fa-5x", classes.icon, classes.success)} />
                                 <Typography gutterBottom={true} component="h1" variant="h6">
-                                    <FormattedMessage id="logout.success" />
+                                    {intl.get("logout.success")}
                                 </Typography>
                             </div>
                         ))}
                     {!this.state.loading && (
                         <Typography variant="body1">
                             <Link className={classes.textColor} to="/">
-                                <FormattedMessage id="goHome" />
+                                {intl.get("goHome")}
                             </Link>
                         </Typography>
                     )}
