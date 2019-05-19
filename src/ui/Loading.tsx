@@ -1,27 +1,27 @@
-import * as React from "react";
+import * as React from 'react';
 import {
     createStyles,
     Theme,
     withStyles,
     CircularProgress,
     Typography,
-} from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+} from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const styles = (theme: Theme) =>
     createStyles({
         circularProgressContainer: {
             backgroundColor: theme.palette.background.paper,
             padding: theme.spacing.unit * 2,
-            borderStyle: "solid",
+            borderStyle: 'solid',
             borderWidth: 2,
             borderColor: fade(theme.palette.primary.main, 0.2),
             borderRadius: theme.shape.borderRadius,
-            textAlign: "center",
+            textAlign: 'center',
         },
         circularProgressWrapper: {
-            position: "relative",
-            display: "inline-block",
+            position: 'relative',
+            display: 'inline-block',
             margin: theme.spacing.unit * 2,
         },
         circularProgressDeterminate: {
@@ -29,13 +29,13 @@ const styles = (theme: Theme) =>
         },
         circularProgressIndeterminate: {
             color: theme.palette.primary.main,
-            animationDuration: "600ms",
-            position: "absolute",
+            animationDuration: '600ms',
+            position: 'absolute',
             left: 0,
         },
         circularProgressText: {
-            display: "block",
-            textAlign: "center",
+            display: 'block',
+            textAlign: 'center',
         },
     });
 
@@ -67,8 +67,8 @@ class Loading extends React.Component<
                     <Typography
                         classes={{ root: classes.circularProgressText }}
                     >
-                        {" "}
-                        {loadingText}{" "}
+                        {' '}
+                        {loadingText}{' '}
                     </Typography>
                 )}
             </div>

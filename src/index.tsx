@@ -1,14 +1,14 @@
-import "github-markdown-css/github-markdown.css";
-import "@bndynet/dialog/dist/dialog.css";
-import "./styles/default.scss";
+import 'github-markdown-css/github-markdown.css';
+import '@bndynet/dialog/dist/dialog.css';
+import './styles/default.scss';
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { store, history } from "./redux";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { store, history } from './redux';
 
-import App from "./App";
+import App from './App';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -16,5 +16,5 @@ ReactDOM.render(
             <App />
         </ConnectedRouter>
     </Provider>,
-    document.querySelector("#app"),
+    document.querySelector('#app'),
 );

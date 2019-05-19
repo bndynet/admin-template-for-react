@@ -1,34 +1,39 @@
-import * as React from "react";
-import _merge from "lodash-es/merge";
-import { connect } from "react-redux";
-import { Dispatch, Action } from "redux";
-import { renderRoutes } from "react-router-config";
+import * as React from 'react';
+import _merge from 'lodash-es/merge';
+import { connect } from 'react-redux';
+import { Dispatch, Action } from 'redux';
+import { renderRoutes } from 'react-router-config';
 
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Theme, createStyles, withStyles, LinearProgress, Dialog } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+    Theme,
+    createStyles,
+    withStyles,
+    LinearProgress,
+} from '@material-ui/core';
 
-import { routes } from "app/config";
-import { themeConfig } from "app/theme";
-import { Notifier, NotifierOptions, Overlay, Loading } from "app/ui";
-import { initLocales } from "app/service/locales";
-import { KEY_THEME, actions as globalActions } from "app/service/global";
-import storage from "app/helpers/storage";
+import { routes } from 'app/config';
+import { themeConfig } from 'app/theme';
+import { Notifier, NotifierOptions, Overlay, Loading } from 'app/ui';
+import { initLocales } from 'app/service/locales';
+import { KEY_THEME, actions as globalActions } from 'app/service/global';
+import storage from 'app/helpers/storage';
 
 const styles = (theme: Theme) => {
     return createStyles({
-        "@global": {
+        '@global': {
             a: {
-                color: "inherit",
+                color: 'inherit',
             },
-            ".recharts-tooltip-label": {
+            '.recharts-tooltip-label': {
                 color: theme.palette.common.black,
             },
         },
         progressBar: {
-            position: "fixed",
+            position: 'fixed',
             top: 0,
             left: 0,
-            width: "100%",
+            width: '100%',
             zIndex: 2000,
         },
     });
@@ -50,7 +55,7 @@ interface AppComponentState {
 }
 
 class App extends React.Component<AppComponentProps, AppComponentState> {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             initDone: false,
@@ -69,8 +74,17 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
             this.state.initDone && (
                 <div className={theme.palette.type}>
                     <MuiThemeProvider theme={theme}>
-                        <LinearProgress hidden={!this.props.requesting} color="secondary" className={classes.progressBar} />
-                        <Notifier options={notifierOptions} open={showNotifier} onCloseButtonClick={this.props.onCloseNotifier} hasCloseButton={true} />
+                        <LinearProgress
+                            hidden={!this.props.requesting}
+                            color="secondary"
+                            className={classes.progressBar}
+                        />
+                        <Notifier
+                            options={notifierOptions}
+                            open={showNotifier}
+                            onCloseButtonClick={this.props.onCloseNotifier}
+                            hasCloseButton={true}
+                        />
                         <Overlay open={this.props.loading}>
                             <Loading loadingText={this.props.loadingText} />
                         </Overlay>
@@ -84,7 +98,9 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
 
 const mapStateToProps = state => {
     const clientTheme = state.global.theme || storage.get(KEY_THEME);
-    const finalTheme = clientTheme ? _merge({}, themeConfig, clientTheme) : themeConfig;
+    const finalTheme = clientTheme
+        ? _merge({}, themeConfig, clientTheme)
+        : themeConfig;
     const muiFinalTheme = createMuiTheme(finalTheme);
     return {
         loading: state.global.loading,

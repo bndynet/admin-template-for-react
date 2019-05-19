@@ -1,28 +1,37 @@
-import * as React from "react";
-import * as intl from "react-intl-universal";
-import classNames from "classnames";
-import { Link } from "react-router-dom";
-import { CssBaseline, Typography, Theme, createStyles, withStyles } from "@material-ui/core";
-import { themeConfig } from "app/theme";
-import { Panel } from "app/ui";
-import { Dispatch, Action } from "redux";
-import { connect } from "react-redux";
+import * as React from 'react';
+import * as intl from 'react-intl-universal';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import {
+    CssBaseline,
+    Typography,
+    Theme,
+    createStyles,
+    withStyles,
+} from '@material-ui/core';
+import { themeConfig } from 'app/theme';
+import { Panel } from 'app/ui';
+import { Dispatch, Action } from 'redux';
+import { connect } from 'react-redux';
 
-import { actions as authActions, service as authService } from "../../service/auth";
+import {
+    actions as authActions,
+    service as authService,
+} from '../../service/auth';
 
 const styles = (theme: Theme) =>
     createStyles({
         panel: {
             marginTop: theme.spacing.unit * 8,
-            marginLeft: "auto",
-            marginRight: "auto",
+            marginLeft: 'auto',
+            marginRight: 'auto',
             paddingTop: theme.spacing.unit * 4,
             paddingBottom: theme.spacing.unit * 4,
             width: 400,
-            textAlign: "center",
+            textAlign: 'center',
         },
         body: {
-            wordBreak: "break-all",
+            wordBreak: 'break-all',
         },
         icon: {
             marginBottom: 30,
@@ -50,7 +59,7 @@ class Logout extends React.Component<
         error: any;
     }
 > {
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             loading: true,
@@ -79,10 +88,23 @@ class Logout extends React.Component<
         return (
             <main>
                 <CssBaseline />
-                <Panel variant={this.state.loading ? "default" : this.state.error ? "warning" : "success"} className={classes.panel}>
+                <Panel
+                    variant={
+                        this.state.loading
+                            ? 'default'
+                            : this.state.error
+                            ? 'warning'
+                            : 'success'
+                    }
+                    className={classes.panel}
+                >
                     {this.state.loading && (
                         <div>
-                            <Typography gutterBottom={true} component="h1" variant="h6">
+                            <Typography
+                                gutterBottom={true}
+                                component="h1"
+                                variant="h6"
+                            >
                                 Logging out your session...
                             </Typography>
                         </div>
@@ -90,23 +112,43 @@ class Logout extends React.Component<
                     {!this.state.loading &&
                         (this.state.error ? (
                             <div>
-                                <i className={classNames("fas fa-exclamation-triangle fa-5x", classes.icon, classes.warning)} />
-                                <Typography gutterBottom={true} variant="body2" className={classes.body}>
+                                <i
+                                    className={classNames(
+                                        'fas fa-exclamation-triangle fa-5x',
+                                        classes.icon,
+                                        classes.warning,
+                                    )}
+                                />
+                                <Typography
+                                    gutterBottom={true}
+                                    variant="body2"
+                                    className={classes.body}
+                                >
                                     {JSON.stringify(this.state.error)}
                                 </Typography>
                             </div>
                         ) : (
                             <div>
-                                <i className={classNames("far fa-check-circle fa-5x", classes.icon, classes.success)} />
-                                <Typography gutterBottom={true} component="h1" variant="h6">
-                                    {intl.get("logout.success")}
+                                <i
+                                    className={classNames(
+                                        'far fa-check-circle fa-5x',
+                                        classes.icon,
+                                        classes.success,
+                                    )}
+                                />
+                                <Typography
+                                    gutterBottom={true}
+                                    component="h1"
+                                    variant="h6"
+                                >
+                                    {intl.get('logout.success')}
                                 </Typography>
                             </div>
                         ))}
                     {!this.state.loading && (
                         <Typography variant="body1">
                             <Link className={classes.textColor} to="/">
-                                {intl.get("goHome")}
+                                {intl.get('goHome')}
                             </Link>
                         </Typography>
                     )}

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",
-    "format": "prettier ./src/**/*.{ts, tsx} --write",
+    "format": "prettier --write ./src/**",
     "lint": "eslint ./src/**/*.{ts,tsx} || stylelint ./src/**/*.{scss,css}",
     "precommit": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -76,6 +76,7 @@
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-react": "^1.1.7",
+    "eslint-loader": "^2.1.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.12.4",
     "file-loader": "^2.0.0",

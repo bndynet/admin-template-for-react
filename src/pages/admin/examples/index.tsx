@@ -1,1 +1,1 @@
-export { default as DataTableExample } from "./DataTable";
+export { default as DataTableExample } from './DataTable';

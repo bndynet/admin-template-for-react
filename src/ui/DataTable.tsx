@@ -1,15 +1,15 @@
-import * as React from "react";
-import * as intl from "react-intl-universal";
-import _merge from "lodash-es/merge";
-import MUIDataTable from "mui-datatables";
-import { createStyles, Theme, withStyles } from "@material-ui/core";
+import * as React from 'react';
+import * as intl from 'react-intl-universal';
+import _merge from 'lodash-es/merge';
+import MUIDataTable from 'mui-datatables';
+import { createStyles, withStyles } from '@material-ui/core';
 
-export type SortDirection = "asc" | "desc";
+export type SortDirection = 'asc' | 'desc';
 export interface DataTableColumn {
     key: string;
     title: string;
     filter?: boolean;
-    filterType?: "checkbox" | "dropdown" | "multiselect" | "textField";
+    filterType?: 'checkbox' | 'dropdown' | 'multiselect' | 'textField';
     sort?: boolean;
     sortDirection?: SortDirection;
     searchable?: boolean;
@@ -30,7 +30,7 @@ export interface DataTableOptions {
     print?: boolean;
     download?: boolean;
     viewColumns?: boolean;
-    selectableRows?: "multiple" | "single" | "none";
+    selectableRows?: 'multiple' | 'single' | 'none';
 }
 
 export interface MuiDataTableState {
@@ -64,11 +64,13 @@ export interface DataTableProps {
     rowsPerPageOptions?: number[];
     pagination?: boolean;
     scrollable?: boolean;
-    selectable?: "multiple" | "single" | "none" | boolean;
+    selectable?: 'multiple' | 'single' | 'none' | boolean;
     localePrefix?: string;
     onRowClick?: (rowData: any, dataIndex: number) => void;
     onRowsDelete?: (rowsData: any[]) => Promise<any>;
-    dataPromise?: (parameters?: DataTableRequestParameters) => Promise<DataTablePageMeta>;
+    dataPromise?: (
+        parameters?: DataTableRequestParameters,
+    ) => Promise<DataTablePageMeta>;
 }
 
 export interface DataTableState extends DataTableRequestParameters {
@@ -77,14 +79,14 @@ export interface DataTableState extends DataTableRequestParameters {
     recordCount?: number;
 }
 
-const styles = (theme: Theme) => createStyles({});
+const styles = () => createStyles({});
 
 class DataTable extends React.Component<DataTableProps, DataTableState> {
     private data: any[];
     private columns: any[];
     private searchDelayTimer: NodeJS.Timeout;
 
-    constructor(props: Readonly<DataTableProps>) {
+    public constructor(props: Readonly<DataTableProps>) {
         super(props);
         this.state = {
             page: 1,
@@ -104,42 +106,49 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
 
     public render() {
         this.data = this.props.data || this.state.data;
-        const { classes, className, title, options } = this.props;
+        const { title, options } = this.props;
         const { isLoading } = this.state;
         const defaultOptions = {
-            filterType: "dropdown",
-            responsive: "scroll",
-            selectableRows: this.props.selectable === true ? "multiple" : this.props.selectable === false ? "none" : this.props.selectable,
+            filterType: 'dropdown',
+            responsive: 'scroll',
+            selectableRows:
+                this.props.selectable === true
+                    ? 'multiple'
+                    : this.props.selectable === false
+                    ? 'none'
+                    : this.props.selectable,
             textLabels: {
                 body: {
-                    noMatch: isLoading ? intl.get("loadingData") : intl.get("noData"),
+                    noMatch: isLoading
+                        ? intl.get('loadingData')
+                        : intl.get('noData'),
                 },
                 filter: {
-                    all: intl.get("all"),
-                    title: intl.get("filters"),
-                    reset: intl.get("reset"),
+                    all: intl.get('all'),
+                    title: intl.get('filters'),
+                    reset: intl.get('reset'),
                 },
                 selectedRows: {
-                    text: intl.get("itemsSelected"),
-                    delete: intl.get("delete"),
-                    deleteAria: intl.get("delete"),
+                    text: intl.get('itemsSelected'),
+                    delete: intl.get('delete'),
+                    deleteAria: intl.get('delete'),
                 },
                 pagination: {
-                    next: intl.get("nextPage"),
-                    previous: intl.get("previousPage"),
-                    rowsPerPage: intl.get("rowsPerPage"),
-                    displayRows: intl.get("of"),
+                    next: intl.get('nextPage'),
+                    previous: intl.get('previousPage'),
+                    rowsPerPage: intl.get('rowsPerPage'),
+                    displayRows: intl.get('of'),
                 },
                 toolbar: {
-                    search: intl.get("search"),
-                    downloadCsv: intl.get("downloadCsv"),
-                    print: intl.get("print"),
-                    viewColumns: intl.get("viewColumns"),
-                    filterTable: intl.get("filter"),
+                    search: intl.get('search'),
+                    downloadCsv: intl.get('downloadCsv'),
+                    print: intl.get('print'),
+                    viewColumns: intl.get('viewColumns'),
+                    filterTable: intl.get('filter'),
                 },
                 viewColumns: {
-                    title: intl.get("viewColumns"),
-                    titleAria: intl.get("toggleColumns"),
+                    title: intl.get('viewColumns'),
+                    titleAria: intl.get('toggleColumns'),
                 },
             },
         };
@@ -153,24 +162,34 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
         if (this.state.sort) {
             this.columns.forEach(column => {
                 if (column.label === this.state.sort) {
-                    column.options.sortDirection = this.state.sortDirection || "asc";
+                    column.options.sortDirection =
+                        this.state.sortDirection || 'asc';
                 }
             });
         }
 
         const finalOptions = _merge(defaultOptions, options, {
-            responsive: this.props.scrollable ? "scroll" : "stacked",
+            responsive: this.props.scrollable ? 'scroll' : 'stacked',
             pagination: this.props.pagination,
             count: this.state.recordCount,
             page: this.state.page - 1,
             rowsPerPage: this.state.pageSize,
             rowsPerPageOptions: this.props.rowsPerPageOptions,
-            onRowClick: (rowData: string[], rowMeta: { dataIndex: number; rowIndex: number }) => {
+            onRowClick: (
+                rowData: string[],
+                rowMeta: { dataIndex: number; rowIndex: number },
+            ) => {
                 if (this.props.onRowClick) {
-                    this.props.onRowClick(this.data[rowMeta.dataIndex], rowMeta.dataIndex);
+                    this.props.onRowClick(
+                        this.data[rowMeta.dataIndex],
+                        rowMeta.dataIndex,
+                    );
                 }
             },
-            onRowsDelete: (rowsDeleted: { lookup: { [dataIndex: number]: boolean }; data: Array<{ index: number; dataIndex: number }> }) => {
+            onRowsDelete: (rowsDeleted: {
+                lookup: { [dataIndex: number]: boolean };
+                data: { index: number; dataIndex: number }[];
+            }) => {
                 if (this.props.onRowsDelete) {
                     const needDeleteRows = [];
                     rowsDeleted.data.forEach(item => {
@@ -210,10 +229,13 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                     },
                 );
             },
-            onColumnSortChange: (column: string, direction: string) => {
-                let sortDirection: SortDirection = "asc";
-                if (column === this.state.sort && this.state.sortDirection === "asc") {
-                    sortDirection = "desc";
+            onColumnSortChange: (column: string) => {
+                let sortDirection: SortDirection = 'asc';
+                if (
+                    column === this.state.sort &&
+                    this.state.sortDirection === 'asc'
+                ) {
+                    sortDirection = 'desc';
                 }
                 const changedState = this.props.dataPromise
                     ? {
@@ -231,7 +253,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             },
             onTableChange: (action: string, tableState: MuiDataTableState) => {
                 switch (action) {
-                    case "changePage":
+                    case 'changePage':
                         this.setState(
                             {
                                 page: tableState.page + 1,
@@ -241,7 +263,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                             },
                         );
                         break;
-                    case "changeRowsPerPage":
+                    case 'changeRowsPerPage':
                         this.setState(
                             {
                                 page: 1,
@@ -260,7 +282,14 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             finalOptions.serverSide = true;
         }
 
-        return <MUIDataTable title={title} data={this.data} columns={this.columns} options={finalOptions} />;
+        return (
+            <MUIDataTable
+                title={title}
+                data={this.data}
+                columns={this.columns}
+                options={finalOptions}
+            />
+        );
     }
 
     private getData() {
@@ -269,15 +298,20 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                 isLoading: true,
                 data: [],
             });
-            this.props.dataPromise(this.state).then((result: DataTablePageMeta) => {
-                const totalPages = Math.ceil(result.count / this.state.pageSize);
-                this.setState({
-                    isLoading: false,
-                    data: result.data,
-                    recordCount: result.count,
-                    page: result.page > totalPages ? totalPages : result.page,
+            this.props
+                .dataPromise(this.state)
+                .then((result: DataTablePageMeta) => {
+                    const totalPages = Math.ceil(
+                        result.count / this.state.pageSize,
+                    );
+                    this.setState({
+                        isLoading: false,
+                        data: result.data,
+                        recordCount: result.count,
+                        page:
+                            result.page > totalPages ? totalPages : result.page,
+                    });
                 });
-            });
         }
     }
 
@@ -309,7 +343,9 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                 this.columns = [];
                 for (const key of Object.keys(this.data[0])) {
                     this.columns.push({
-                        name: intl.get(`${this.props.localePrefix || ""}${key}`).defaultMessage(key),
+                        name: intl
+                            .get(`${this.props.localePrefix || ''}${key}`)
+                            .defaultMessage(key),
                         label: key,
                         options: {
                             filter: true,

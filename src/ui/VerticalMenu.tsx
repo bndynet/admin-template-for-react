@@ -1,31 +1,37 @@
-import * as React from "react";
-import classNames from "classnames";
-import { Link } from "react-router-dom";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Theme, createStyles, withStyles, List, Collapse } from "@material-ui/core";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import * as React from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import {
+    Theme,
+    createStyles,
+    withStyles,
+    List,
+    Collapse,
+} from '@material-ui/core';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { MenuItem } from "app/types";
-import { themeConfig } from "app/theme";
+import { MenuItem } from 'app/types';
+import { themeConfig } from 'app/theme';
 
 const styles = (theme: Theme) =>
     createStyles({
         root: {},
         rootMini: {
-            "& $listItem": {
-                justifyContent: "center",
-                [theme.breakpoints.down("sm")]: {
-                    overflow: "hidden",
+            '& $listItem': {
+                justifyContent: 'center',
+                [theme.breakpoints.down('sm')]: {
+                    overflow: 'hidden',
                 },
             },
-            "& > li": {
-                position: "relative",
-                width: "100%",
+            '& > li': {
+                position: 'relative',
+                width: '100%',
             },
-            "& > li:hover": {
+            '& > li:hover': {
                 width: themeConfig.sidebarWidth,
                 backgroundColor: theme.palette.background.paper,
                 borderTopRightRadius: theme.shape.borderRadius,
@@ -33,21 +39,21 @@ const styles = (theme: Theme) =>
                 boxShadow: theme.shadows[2],
                 zIndex: 100,
             },
-            "& > li $listItemText": {
-                visibility: "hidden",
+            '& > li $listItemText': {
+                visibility: 'hidden',
             },
-            "& > li:hover $listItemText": {
-                visibility: "visible",
+            '& > li:hover $listItemText': {
+                visibility: 'visible',
             },
-            "& > li:hover $childList": {
-                display: "block",
+            '& > li:hover $childList': {
+                display: 'block',
             },
 
-            "& > li $childList": {
-                display: "none",
+            '& > li $childList': {
+                display: 'none',
             },
-            "& $expandIcon": {
-                display: "none",
+            '& $expandIcon': {
+                display: 'none',
             },
         },
         listItem: {
@@ -56,26 +62,26 @@ const styles = (theme: Theme) =>
         },
         listItemIcon: {
             marginRight: 0,
-            justifyContent: "center",
+            justifyContent: 'center',
         },
         listItemText: {
             paddingLeft: 0,
             paddingRight: 0,
         },
         listItemTextPrimary: {
-            fontSize: "0.875rem",
+            fontSize: '0.875rem',
         },
         listItemTextSecondary: {
-            fontSize: "0.75rem",
+            fontSize: '0.75rem',
         },
         childList: {
-            "& $listItem": {
+            '& $listItem': {
                 paddingLeft: theme.spacing.unit,
             },
-            "& $childList $listItem": {
+            '& $childList $listItem': {
                 paddingLeft: theme.spacing.unit * 2,
             },
-            "& $childList $childList $listItem": {
+            '& $childList $childList $listItem': {
                 paddingLeft: theme.spacing.unit * 3,
             },
         },
@@ -100,7 +106,7 @@ class VerticalMenu extends React.Component<
 > {
     private itemHoveredStyle;
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
         this.state = {
             itemHovered: false,
@@ -116,11 +122,17 @@ class VerticalMenu extends React.Component<
 
     public render() {
         const { classes, mini, data } = this.props;
-        return <List className={classNames(classes.root, mini && classes.rootMini)}>{data && data.map(menu => this.renderMenuItem(menu, classes))}</List>;
+        return (
+            <List
+                className={classNames(classes.root, mini && classes.rootMini)}
+            >
+                {data && data.map(menu => this.renderMenuItem(menu, classes))}
+            </List>
+        );
     }
 
     private getMenuKey(menu) {
-        return `${menu.text}_${menu.link || ""}`;
+        return `${menu.text}_${menu.link || ''}`;
     }
 
     private handleMenuClick(menu) {
@@ -143,10 +155,30 @@ class VerticalMenu extends React.Component<
         const menuKey = this.getMenuKey(menu);
         const mini = this.props.mini;
         return (
-            <li key={menuKey} style={this.state.itemHovered ? this.itemHoveredStyle : null} onMouseEnter={() => this.setState({ itemHovered: true })}>
-                <ListItem button={true} className={classes.listItem} onClick={() => this.handleMenuClick(menu)} component={menu.link ? (props: any) => <Link to={menu.link} {...props} /> : null}>
-                    <ListItemIcon className={classes.listItemIcon} style={{ width: this.props.minWidth }}>
-                        {typeof menu.icon !== "string" ? menu.icon : <i className={menu.icon} />}
+            <li
+                key={menuKey}
+                style={this.state.itemHovered ? this.itemHoveredStyle : null}
+                onMouseEnter={() => this.setState({ itemHovered: true })}
+            >
+                <ListItem
+                    button={true}
+                    className={classes.listItem}
+                    onClick={() => this.handleMenuClick(menu)}
+                    component={
+                        menu.link
+                            ? (props: any) => <Link to={menu.link} {...props} />
+                            : null
+                    }
+                >
+                    <ListItemIcon
+                        className={classes.listItemIcon}
+                        style={{ width: this.props.minWidth }}
+                    >
+                        {typeof menu.icon !== 'string' ? (
+                            menu.icon
+                        ) : (
+                            <i className={menu.icon} />
+                        )}
                     </ListItemIcon>
                     <ListItemText
                         className={classes.listItemText}
@@ -157,14 +189,37 @@ class VerticalMenu extends React.Component<
                         primary={menu.text}
                         secondary={menu.description}
                     />
-                    {menu.children && !mini && (this.state.menuStatusSet[menuKey] ? <ExpandLessIcon className={classes.expandIcon} onClick={() => this.handleToggleChildMenu(menu)} /> : <ExpandMoreIcon className={classes.expandIcon} onClick={() => this.handleToggleChildMenu(menu)} />)}
+                    {menu.children &&
+                        !mini &&
+                        (this.state.menuStatusSet[menuKey] ? (
+                            <ExpandLessIcon
+                                className={classes.expandIcon}
+                                onClick={() => this.handleToggleChildMenu(menu)}
+                            />
+                        ) : (
+                            <ExpandMoreIcon
+                                className={classes.expandIcon}
+                                onClick={() => this.handleToggleChildMenu(menu)}
+                            />
+                        ))}
                 </ListItem>
                 {menu.children &&
                     (mini ? (
-                        <List className={classes.childList}>{menu.children.map(child => this.renderMenuItem(child, classes))}</List>
+                        <List className={classes.childList}>
+                            {menu.children.map(child =>
+                                this.renderMenuItem(child, classes),
+                            )}
+                        </List>
                     ) : (
-                        <Collapse in={!!this.state.menuStatusSet[menuKey]} timeout="auto">
-                            <List className={classes.childList}>{menu.children.map(child => this.renderMenuItem(child, classes))}</List>
+                        <Collapse
+                            in={!!this.state.menuStatusSet[menuKey]}
+                            timeout="auto"
+                        >
+                            <List className={classes.childList}>
+                                {menu.children.map(child =>
+                                    this.renderMenuItem(child, classes),
+                                )}
+                            </List>
                         </Collapse>
                     ))}
             </li>

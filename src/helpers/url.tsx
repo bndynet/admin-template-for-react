@@ -1,4 +1,4 @@
-import { parse, parseUrl, ParsedQuery, stringify } from "query-string";
+import { parse, parseUrl, ParsedQuery, stringify } from 'query-string';
 
 export class Url {
     public static current(): Url {
@@ -14,7 +14,8 @@ export class Url {
     public constructor(url?: string) {
         if (url) {
             this.originUrl = url;
-            this.rootUrl = url.replace(/^(.*\/\/[^\/?#]*).*$/, "$1");
+            // eslint-disable-next-line no-useless-escape
+            this.rootUrl = url.replace(/^(.*\/\/[^\/?#]*).*$/, '$1');
             this.url = parseUrl(url).url;
             this.queries = parse(location.search);
             this.hashs = parse(location.hash);
@@ -22,10 +23,14 @@ export class Url {
     }
 
     public appendQueries(queries: object | string): string {
-        if (typeof queries === "string") {
-            return `${this.originUrl}${this.originUrl.indexOf("?") < 0 ? "?" : ""}${queries}`;
+        if (typeof queries === 'string') {
+            return `${this.originUrl}${
+                this.originUrl.indexOf('?') < 0 ? '?' : ''
+            }${queries}`;
         } else if (queries) {
-            return `${this.originUrl}${this.originUrl.indexOf("?") < 0 ? "?" : ""}${stringify(queries)}`;
+            return `${this.originUrl}${
+                this.originUrl.indexOf('?') < 0 ? '?' : ''
+            }${stringify(queries)}`;
         } else {
             return this.originUrl;
         }
@@ -36,7 +41,7 @@ export class Url {
     }
 
     public redirect(queriesOrUrl: object | string) {
-        if (typeof queriesOrUrl === "string") {
+        if (typeof queriesOrUrl === 'string') {
             location.href = queriesOrUrl;
         } else {
             location.search = stringify(queriesOrUrl);

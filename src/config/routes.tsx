@@ -1,32 +1,32 @@
-import * as React from "react";
-// tslint:disable-next-line:no-implicit-dependencies
-import { Redirect } from "react-router";
-import { isAuthorized, getAuthUri } from "app/service/auth";
-import { Home, PageNotFound } from "app/pages/public";
-import { Admin } from "app/pages/admin";
-import { Login, Logout, Callback } from "app/pages/auth";
+import * as React from 'react';
+import { Redirect } from 'react-router';
+import { isAuthorized, getAuthUri } from 'app/service/auth';
+import { Home, PageNotFound } from 'app/pages/public';
+import { Admin } from 'app/pages/admin';
+import { Login, Logout, Callback } from 'app/pages/auth';
 
 const routes = [
     {
-        path: "/",
+        path: '/',
         exact: true,
         component: Home,
     },
     {
-        path: "/login",
+        path: '/login',
         component: Login,
     },
     {
-        path: "/logout",
+        path: '/logout',
         component: Logout,
     },
     {
-        path: "/auth/callback",
+        path: '/auth/callback',
         component: Callback,
     },
     {
-        path: "/admin",
+        path: '/admin',
         // `render()` method support in react-router-config v5.0
+        /* eslint-disable */
         render: () => {
             if (isAuthorized()) {
                 return <Admin />;
@@ -34,7 +34,7 @@ const routes = [
                 if (
                     !getAuthUri()
                         .toLowerCase()
-                        .startsWith("http")
+                        .startsWith('http')
                 ) {
                     return <Redirect to={getAuthUri()} />;
                 }

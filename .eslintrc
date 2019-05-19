@@ -10,6 +10,7 @@
     "env": {
         "es6": true,
         "browser": true,
+        "node": true,
         "jasmine": true,
         "jest": true
     },
@@ -25,6 +26,9 @@
             }
         ],
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-var-require": "off",
+        "@typescript-eslint/camelcase": "warn",
+        "@typescript-eslint/no-use-before-define": "warn",
         "@typescript-eslint/explicit-member-accessibility": "warn"
     },
     "settings": {

@@ -1,20 +1,22 @@
-import { notify } from "@bndynet/dialog";
-import { config } from "../config";
-import { Ajax } from "../helpers/ajax";
-import { getState } from "./auth";
+import { notify } from '@bndynet/dialog';
+import { config } from '../config';
+import { Ajax } from '../helpers/ajax';
+import { getState } from './auth';
 
 class ResourceService extends Ajax {
-    constructor() {
+    public constructor() {
         super({
             headerAuthorization: () => {
                 if (getState().token) {
-                    return `${getState().token.token_type} ${getState().token.access_token}`;
+                    return `${getState().token.token_type} ${
+                        getState().token.access_token
+                    }`;
                 }
-                return "";
+                return '';
             },
             baseURL: config.resourceBaseUri,
             onResponseError: error => {
-                notify(JSON.stringify(error), "error");
+                notify(JSON.stringify(error), 'error');
             },
         });
     }
