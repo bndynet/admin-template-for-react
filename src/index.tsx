@@ -1,5 +1,6 @@
 import 'github-markdown-css/github-markdown.css';
 import '@bndynet/dialog/dist/dialog.css';
+import '@bndynet/dialog-themes/dist/dialog-dark.css';
 import './styles/default.scss';
 
 import * as React from 'react';

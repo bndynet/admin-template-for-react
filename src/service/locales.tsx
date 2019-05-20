@@ -2,7 +2,7 @@ import * as intl from 'react-intl-universal';
 import { config } from 'app/config';
 import storage from 'app/helpers/storage';
 import ajax from 'app/helpers/ajax';
-import { onLocaleChanged } from '../app.events';
+import { onAppLocaleChanged } from '../app.events';
 
 const KEY_LOCALE = 'locale';
 function getCurrentLocale() {
@@ -31,7 +31,7 @@ export function initLocales(currentLocale?: string, callback?: () => void) {
             fallbackLocale: config.locales[0].value,
             locales: l,
         }).then(() => {
-            onLocaleChanged();
+            onAppLocaleChanged();
             if (callback) {
                 callback();
             }

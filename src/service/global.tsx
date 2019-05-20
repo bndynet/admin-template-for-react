@@ -1,5 +1,6 @@
 import { NotifierOptions } from '../ui';
 import storage from 'app/helpers/storage';
+import { KEY_THEME } from 'app/theme';
 
 export const ACTION_LOADING_SHOW = 'G_LOADING_SHOW';
 export const ACTION_LOADING_HIDE = 'G_LOADING_HIDE';
@@ -9,8 +10,6 @@ export const ACTION_REQUESTING_SHOW = 'G_REQUESTING_SHOW';
 export const ACTION_REQUESTING_HIDE = 'G_REQUESTING_HIDE';
 export const ACTION_THEME_CHANGE = 'G_THEME_CHANGE';
 export const ACTION_LOCALE_CHANGE = 'G_LOCALE_CHANGE';
-
-export const KEY_THEME = 'theme';
 
 export const actions = {
     showLoading: (text?: string) => ({

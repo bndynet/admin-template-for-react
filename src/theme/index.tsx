@@ -6,6 +6,9 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 import themeConfig from './config';
 import { Palette } from '@material-ui/core/styles/createPalette';
+import storage from 'app/helpers/storage';
+
+export const KEY_THEME = 'theme';
 
 export type AppPalette = Palette & {
     info: string;
@@ -79,3 +82,8 @@ export const variantBorderColor = (theme: Theme) => ({
 });
 
 export { default as themeConfig } from './config';
+
+export function getCurrentTheme(): AppTheme {
+    const result: AppTheme = { ...themeConfig, ...storage.get(KEY_THEME) };
+    return result;
+}

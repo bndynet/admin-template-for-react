@@ -15,9 +15,10 @@ import {
 import { routes } from 'app/config';
 import { themeConfig } from 'app/theme';
 import { Notifier, NotifierOptions, Overlay, Loading } from 'app/ui';
-import { initLocales } from 'app/service/locales';
-import { KEY_THEME, actions as globalActions } from 'app/service/global';
+import { actions as globalActions } from 'app/service/global';
+import { KEY_THEME } from 'app/theme';
 import storage from 'app/helpers/storage';
+import { onAppInit } from './app.events';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -63,8 +64,10 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
     }
 
     public componentDidMount() {
-        initLocales(null, () => {
-            this.setState({ initDone: true });
+        onAppInit({
+            localeDone: () => {
+                this.setState({ initDone: true });
+            },
         });
     }
 

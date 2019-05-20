@@ -37,6 +37,7 @@ import { SlidePanel, HorizontalMenu, VerticalMenu } from 'app/ui';
 import { themeConfig } from 'app/theme';
 import { adminMenus, adminRoutes } from 'app/config';
 import { actions as globalActions } from 'app/service/global';
+import { onAppThemeChanged } from '../../app.events';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -482,6 +483,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         dispatch(push(path));
     },
     onThemeChange: (toDark: boolean) => {
+        onAppThemeChanged(toDark);
         dispatch(
             globalActions.changeTheme({
                 palette: {
