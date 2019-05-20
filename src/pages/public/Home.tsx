@@ -41,6 +41,7 @@ const styles = (theme: Theme) =>
             maxWidth: 845,
             marginLeft: 'auto',
             marginRight: 'auto',
+            marginBottom: 20,
         },
         fab: {
             position: 'fixed',
@@ -90,17 +91,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     }
 
     public componentWillMount() {
-        loading();
-        resourceService
-            .get('/README.md')
-            .then((res: any) => {
-                this.setState({
-                    readme: res,
-                });
-            })
-            .finally(() => {
-                loading(false);
-            });
+        this.getReadme();
     }
 
     public render() {
@@ -206,7 +197,26 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
             this.setState({
                 locale: evt.target.value,
             });
+            this.getReadme();
         });
+    }
+
+    private getReadme() {
+        loading();
+        const filename =
+            intl.getInitOptions().currentLocale === 'en-US'
+                ? '/README.md'
+                : `/README.${intl.getInitOptions().currentLocale}.md`;
+        resourceService
+            .get(filename)
+            .then((res: any) => {
+                this.setState({
+                    readme: res,
+                });
+            })
+            .finally(() => {
+                loading(false);
+            });
     }
 }
 

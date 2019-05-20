@@ -133,6 +133,9 @@ module.exports = {
             {
                 from: './README.md',
             },
+            {
+                from: './README.zh-CN.md',
+            },
         ]),
         new MiniCssExtractPlugin({
             filename: '[name].[hash].css',

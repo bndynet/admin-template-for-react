@@ -1,6 +1,6 @@
 # Admin Template for React
 
-[DEMO](https://admin-react.bndy.net/) - username: **test**, password: **test**
+[DEMO](https://admin-react.bndy.net/) - Type any account to log in
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f1d6e125-33e2-42a7-a97e-67a912d878af/deploy-status)](https://app.netlify.com/sites/admin-react/deploys)
 ![](https://img.shields.io/badge/Language-TypeScript-blue.svg)
@@ -15,7 +15,7 @@
 
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
 
-![](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home.png)
+![screenshot](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home.png)
 
 - AJAX component: **[axios](https://github.com/axios/axios)**
 - UI component: **[material-ui](https://material-ui.com/)**
@@ -31,13 +31,13 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 
 ### Application Configuration Examples
 
-- ./src/config/app.common.tsx           - *all common configurations*
-- ./src/config/app.dev.tsx              - *configurations used in local*
-- ./src/config/app.prod.tsx             - *configurations used in production*
-- ./src/config/app.github.tsx           - *example for github authorization*
-- ./src/config/app.auth-code.tsx        - *example for authorization code grant type*
-- ./src/config/app.auth-password.tsx    - *example for password grant type*
-- ./src/config/app.mock.tsx             - *just for local development without login system*
+- ./src/config/app.common.tsx - _all common configurations_
+- ./src/config/app.dev.tsx - _configurations used in local_
+- ./src/config/app.prod.tsx - _configurations used in production_
+- ./src/config/app.github.tsx - _example for github authorization_
+- ./src/config/app.auth-code.tsx - _example for authorization code grant type_
+- ./src/config/app.auth-password.tsx - _example for password grant type_
+- ./src/config/app.mock.tsx - _just for local development without login system_
 
 ### Customize more environments
 
@@ -46,7 +46,7 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 2. Recommend to import configurations in **app.dev.tsx**
 
     ```ts
-    import config = require("./app.your-env");
+    import config = require('./app.your-env');
     ```
 
     Or add below code in **./src/config/index.tsx** or **./index.html** to freeze your environment
@@ -59,20 +59,14 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 
 ### Components based on Material UI or some else
 
-`Alert`, `Loading`, `MiniCard`, `Notifier`, `Overlay`, `Panel`, `Tag`, ...
+`Alert`, `Loading`, `MiniCard`, `Notifier`, `Overlay`, `Panel`, `Tag`, `DataTable`, ...
 
 ### i18n/l10n Support
 
 ```tsx
-<Formatter i18nKey='hi' value={{name: 'Bendy'}} description='This is a welcome message.' descriptionPlacement='top' />
+import * as intl from 'react-intl-universal';
 
-<Formatter value={10000} />
-
-<Formatter value={1459832991883} formatAs='date' />
-
-<Formatter value={1459832991883} formatAs='time' />
-
-<Formatter value={1459832991883} formatAs='fromNow' />
+const message = intl.get('i18nKey');
 ```
 
 ### Available Services
