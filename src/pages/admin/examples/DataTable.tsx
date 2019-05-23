@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as intl from 'react-intl-universal';
 import { alert, confirm, loading } from '@bndynet/dialog';
 
-import utils from 'app/helpers/utils';
 import { service as resourceService } from 'app/service/resource';
 import {
     DataTable,
@@ -96,7 +95,7 @@ class DataTableExample extends React.Component {
                     onRowsDelete={this.handleRowsDelete}
                 />
                 <br />
-                <DataTable
+                {/* <DataTable
                     title="Array Data"
                     data={this.arrayData}
                     pagination={false}
@@ -111,7 +110,7 @@ class DataTableExample extends React.Component {
                     onRowClick={this.handleRowClick}
                     onRowsDelete={this.handleRowsDelete}
                     selectable="single"
-                />
+                /> */}
                 <br />
             </div>
         );
@@ -123,17 +122,11 @@ class DataTableExample extends React.Component {
 
     private handleRowsDelete() {
         return confirm(intl.get('deleteConfirmMessage')).then(() => {
-            // here to call api
-            loading();
-            setTimeout(() => {
-                loading(false);
-            }, 3000);
+            // TODO: here to call api
         });
     }
 
-    private tableDataPromise(
-        args: DataTableRequestParameters,
-    ): Promise<DataTablePageMeta> {
+    private tableDataPromise(args: DataTableRequestParameters): Promise<any> {
         let url = '/datatable.json';
         if (args) {
             url += `?page=${args.page || 1}`;
@@ -147,17 +140,18 @@ class DataTableExample extends React.Component {
             }
         }
 
+        loading();
         const ajax = resourceService.get(url).then((res: any) => {
+            loading(false);
             const result: DataTablePageMeta = {
                 data: res,
                 page: (args && args.page) || 1,
-                count: 112,
+                count: 132,
             };
             return result;
         });
 
-        return utils.deplay<DataTablePageMeta>(3, ajax);
-        // return ajax;
+        return ajax;
     }
 }
 

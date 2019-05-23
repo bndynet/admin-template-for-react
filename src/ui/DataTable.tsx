@@ -8,6 +8,7 @@ export type SortDirection = 'asc' | 'desc';
 export interface DataTableColumn {
     key: string;
     title: string;
+    hint?: string;
     filter?: boolean;
     filterType?: 'checkbox' | 'dropdown' | 'multiselect' | 'textField';
     sort?: boolean;
@@ -85,12 +86,18 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     private data: any[];
     private columns: any[];
     private searchDelayTimer: NodeJS.Timeout;
+    private rowsPerPageOptions: number[];
+    private defaultRowsPerPageOptions: number[] = [10, 20, 50];
 
     public constructor(props: Readonly<DataTableProps>) {
         super(props);
+        this.rowsPerPageOptions =
+            this.props.rowsPerPageOptions || this.defaultRowsPerPageOptions;
         this.state = {
             page: 1,
             isLoading: false,
+            recordCount: 0,
+            pageSize: this.rowsPerPageOptions[0],
         };
     }
 
@@ -170,11 +177,14 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
 
         const finalOptions = _merge(defaultOptions, options, {
             responsive: this.props.scrollable ? 'scroll' : 'stacked',
-            pagination: this.props.pagination,
+            pagination:
+                typeof this.props.pagination === 'undefined'
+                    ? true
+                    : this.props.pagination,
             count: this.state.recordCount,
             page: this.state.page - 1,
             rowsPerPage: this.state.pageSize,
-            rowsPerPageOptions: this.props.rowsPerPageOptions,
+            rowsPerPageOptions: this.rowsPerPageOptions,
             onRowClick: (
                 rowData: string[],
                 rowMeta: { dataIndex: number; rowIndex: number },
@@ -198,9 +208,10 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                     this.props.onRowsDelete(needDeleteRows).then(() => {
                         this.getData();
                     });
+                    // false to prevent the deletion on UI
+                    return false;
                 }
-                // TODO: update package to latest version for fixing the preventing delete issue
-                return false;
+                return true;
             },
             onSearchChange: (searchText: string) => {
                 if (this.searchDelayTimer) {
@@ -223,6 +234,16 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                     {
                         page: 1,
                         searchText: null,
+                    },
+                    () => {
+                        this.getData();
+                    },
+                );
+            },
+            onChangePage: (currentPage: number) => {
+                this.setState(
+                    {
+                        page: currentPage + 1,
                     },
                     () => {
                         this.getData();
@@ -253,16 +274,6 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             },
             onTableChange: (action: string, tableState: MuiDataTableState) => {
                 switch (action) {
-                    case 'changePage':
-                        this.setState(
-                            {
-                                page: tableState.page + 1,
-                            },
-                            () => {
-                                this.getData();
-                            },
-                        );
-                        break;
                     case 'changeRowsPerPage':
                         this.setState(
                             {
@@ -282,9 +293,13 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             finalOptions.serverSide = true;
         }
 
+        // The `key` attribute for fixing count does not refresh in pagination
+        // More info: https://github.com/gregnb/mui-datatables/issues/610
         return (
             <MUIDataTable
+                key={this.state.recordCount}
                 title={title}
+                count={this.state.recordCount}
                 data={this.data}
                 columns={this.columns}
                 options={finalOptions}
@@ -321,6 +336,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
             this.columns.push({
                 name: column.title,
                 label: column.key,
+                hint: column.hint,
                 options: {
                     filter: column.filter,
                     filterType: column.filterType,

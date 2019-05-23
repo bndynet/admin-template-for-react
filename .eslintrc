@@ -24,6 +24,7 @@
                 "endOfLine": "lf"
             }
         ],
+        "no-console": "warn",
         "@typescript-eslint/explicit-function-return-type": [
             0,
             {

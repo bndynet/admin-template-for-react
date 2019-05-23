@@ -21,21 +21,11 @@ const utils = {
      * @param promise The promise to delay
      * @returns A promise
      */
-    deplay<T>(seconds: number, promise: Promise<T>): Promise<T> {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (promise) {
-                    promise.then(
-                        (res: T) => {
-                            resolve(res);
-                        },
-                        (err: any) => {
-                            reject(err);
-                        },
-                    );
-                }
-            }, seconds * 1000);
-        });
+    delay(seconds: number, ...promises: Promise<any>[]): Promise<any[]> {
+        return Promise.all([
+            ...promises,
+            new Promise(presolve => setTimeout(presolve, seconds * 1000)),
+        ]);
     },
 };
 
