@@ -9,6 +9,7 @@ import {
     DataTableRequestParameters,
     DataTablePageMeta,
 } from 'app/ui';
+import utils from 'app/helpers/utils';
 
 class DataTableExample extends React.Component {
     private arrayData = [
@@ -95,7 +96,7 @@ class DataTableExample extends React.Component {
                     onRowsDelete={this.handleRowsDelete}
                 />
                 <br />
-                {/* <DataTable
+                <DataTable
                     title="Array Data"
                     data={this.arrayData}
                     pagination={false}
@@ -110,7 +111,7 @@ class DataTableExample extends React.Component {
                     onRowClick={this.handleRowClick}
                     onRowsDelete={this.handleRowsDelete}
                     selectable="single"
-                /> */}
+                />
                 <br />
             </div>
         );
@@ -140,9 +141,10 @@ class DataTableExample extends React.Component {
             }
         }
 
-        loading();
         const ajax = resourceService.get(url).then((res: any) => {
-            loading(false);
+            res.forEach(item => {
+                item.name = item.name + ' for page #' + args.page;
+            });
             const result: DataTablePageMeta = {
                 data: res,
                 page: (args && args.page) || 1,
@@ -151,7 +153,17 @@ class DataTableExample extends React.Component {
             return result;
         });
 
-        return ajax;
+        const promiseLoading = new Promise(resolve => {
+            loading();
+            setTimeout(() => {
+                loading(false);
+                resolve();
+            }, 3000);
+        });
+
+        return utils
+            .delay(3, ajax, promiseLoading)
+            .then((values: any[]) => values[0]);
     }
 }
 

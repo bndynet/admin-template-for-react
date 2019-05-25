@@ -311,7 +311,6 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
         if (this.props.dataPromise) {
             this.setState({
                 isLoading: true,
-                data: [],
             });
             this.props
                 .dataPromise(this.state)
