@@ -1,5 +1,5 @@
 import { Dashboard, Markdown, DataTableExample } from 'app/pages/admin';
-import { PageNotFound } from 'app/pages/public';
+import { NotFound } from 'app/pages/public';
 
 const routes = [
     {
@@ -23,7 +23,7 @@ const routes = [
         component: DataTableExample,
     },
     {
-        component: PageNotFound,
+        component: NotFound,
     },
 ];
 

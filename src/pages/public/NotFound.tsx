@@ -6,13 +6,13 @@ import { createStyles, withStyles, Typography } from '@material-ui/core';
 const styles = createStyles({
     root: {
         marginTop: 100,
-        width: 400,
+        width: 600,
         margin: 'auto',
         textAlign: 'center',
     },
 });
 
-class PageNotFound extends React.Component<
+class NotFound extends React.Component<
     {
         classes: any;
     },
@@ -39,4 +39,4 @@ class PageNotFound extends React.Component<
 export default connect(
     null,
     null,
-)(withStyles(styles)(PageNotFound));
+)(withStyles(styles)(NotFound));

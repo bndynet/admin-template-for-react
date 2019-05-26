@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import { isAuthorized, getAuthUri } from 'app/service/auth';
-import { Home, PageNotFound } from 'app/pages/public';
+import { Home, NotFound } from 'app/pages/public';
 import { Admin } from 'app/pages/admin';
 import { Login, Logout, Callback } from 'app/pages/auth';
 
@@ -44,7 +44,7 @@ const routes = [
         },
     },
     {
-        component: PageNotFound,
+        component: NotFound,
     },
 ];
 
