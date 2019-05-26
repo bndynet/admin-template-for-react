@@ -10,6 +10,8 @@ import { Url } from 'app/helpers/url';
 import storage from 'app/helpers/storage';
 import utils from 'app/helpers/utils';
 
+export const KEY_TOKEN = 'token';
+
 export const ACTION_AUTH_REQUEST = 'USER_AUTH_REQUEST';
 export const ACTION_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
 export const ACTION_AUTH_FAILURE = 'USER_AUTH_FAILURE';
@@ -135,6 +137,7 @@ export const service = {
                     const token: TokenInfo = {
                         access_token: JSON.stringify(data),
                     };
+                    storage.set(KEY_TOKEN, token);
                     resolve(token);
                 });
 
@@ -175,6 +178,7 @@ export const service = {
     logout: (): AxiosPromise | any => {
         if (config.authType === AuthType.Mock) {
             return new Promise((resolve, reject) => {
+                storage.remove(KEY_TOKEN);
                 resolve('ok');
             });
         }
@@ -270,6 +274,18 @@ export function getState(): AuthState {
 }
 
 export function isAuthorized(): boolean {
+    if (config.authType === AuthType.Mock) {
+        let token: TokenInfo = storage.get(KEY_TOKEN);
+        if (token) {
+            let user = JSON.parse(token.access_token);
+            if (config.userConverter) {
+                user = config.userConverter(user);
+            }
+            const state = getState();
+            state.token = token;
+            state.user = user;
+        }
+    }
     return !!getState().token;
 }
 

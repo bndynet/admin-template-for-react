@@ -19,6 +19,9 @@ const storage = {
             return result;
         }
     },
+    remove: (key: string) => {
+        localStorage.removeItem(key);
+    },
 
     setSession: (key: string, value: any) => {
         sessionStorage.setItem(
