@@ -199,18 +199,23 @@ const styles = (theme: Theme) =>
         },
     });
 
-class Admin extends React.Component<
-    {
-        user: any;
-        classes: any;
-        history: any;
-        isDarkTheme: boolean;
-        width: Breakpoint;
-        push: (path: string) => void;
-        onThemeChange: (toDark: boolean) => void;
-    },
-    { largeMainMenu: boolean; avatarPopupAnchor: any; sidePanelOpen: boolean }
-> {
+interface AdminProps {
+    user: any;
+    classes: any;
+    history: any;
+    isDarkTheme: boolean;
+    width: Breakpoint;
+    push: (path: string) => void;
+    onThemeChange: (toDark: boolean) => void;
+}
+
+interface AdminState {
+    largeMainMenu: boolean;
+    avatarPopupAnchor: any;
+    sidePanelOpen: boolean;
+}
+
+class Admin extends React.Component<AdminProps, AdminState> {
     public constructor(props) {
         super(props);
         this.state = {
