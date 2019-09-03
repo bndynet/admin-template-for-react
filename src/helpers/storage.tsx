@@ -116,8 +116,8 @@ const storage = {
         for (; index < cookies.length; index++) {
             const arr = cookies[index].split('=');
             const name = arr[0];
-            result = arr.slice(1).join('=');
             if (key === name) {
+                result = arr.slice(1).join('=');
                 try {
                     result = JSON.parse(decode(result));
                 } catch (e) {
