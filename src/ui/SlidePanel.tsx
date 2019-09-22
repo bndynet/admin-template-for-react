@@ -19,7 +19,7 @@ const styles = (theme: Theme) =>
         header: {
             display: 'flex',
             alignItems: 'flex-end',
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+            padding: `${theme.spacing()}px ${theme.spacing(2)}px`,
             borderBottom: `solid 1px ${theme.palette.divider}`,
         },
         headerTitle: {
@@ -30,7 +30,7 @@ const styles = (theme: Theme) =>
             textAlign: 'right',
         },
         body: {
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+            padding: `${theme.spacing()}px ${theme.spacing(2)}px`,
         },
     });
 
@@ -42,9 +42,9 @@ class SlidePanel extends React.Component<{
     width: number | string;
     height: number | string;
     open: boolean;
-    closeable: boolean;
-    onClose: () => void;
-    onOpen: () => void;
+    closeable?: boolean;
+    onClose?: () => void;
+    onOpen?: () => void;
 }> {
     public constructor(props) {
         super(props);

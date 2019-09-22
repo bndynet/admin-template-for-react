@@ -32,7 +32,7 @@
     "@bndynet/dialog": "^2.8.1",
     "@bndynet/dialog-themes": "^1.0.0",
     "@bndynet/recharts-wrapper": "^1.2.1",
-    "@material-ui/core": "^3.9.3",
+    "@material-ui/core": "^4.4.3",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.1",
     "classnames": "^2.2.6",
@@ -47,7 +47,7 @@
     "react-markdown": "^4.0.3",
     "react-redux": "^5.1.1",
     "react-router-config": "^5.0.0",
-    "react-router-dom": "^5.0.0",
+    "react-router-dom": "^5.0.1",
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "redux-saga": "^0.16.2"

@@ -28,15 +28,15 @@ const styles = (theme: Theme) =>
             color: theme.palette.common.white,
             fontSize: '1.5em',
             height: '100%',
-            paddingLeft: theme.spacing.unit * 1.5,
-            paddingRight: theme.spacing.unit * 1.5,
+            paddingLeft: theme.spacing(1.5),
+            paddingRight: theme.spacing(1.5),
             borderRadius: 0,
         },
         subMenuWrapper: {
             display: 'flex',
             flexDirection: 'column',
             '& $subMenuWrapper $menuItem': {
-                paddingLeft: theme.spacing.unit * 4,
+                paddingLeft: theme.spacing(4),
             },
         },
         subMenuItem: {
@@ -44,7 +44,7 @@ const styles = (theme: Theme) =>
         },
         text: {
             display: 'inline-block',
-            marginLeft: theme.spacing.unit / 2,
+            marginLeft: theme.spacing() / 2,
         },
     });
 

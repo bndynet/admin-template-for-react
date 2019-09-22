@@ -65,7 +65,7 @@ const styles = (theme: Theme) =>
             width: themeConfig.sidebarWidth,
             overflow: 'hidden',
             minHeight: 'inherit',
-            padding: theme.spacing.unit / 2,
+            padding: theme.spacing() / 2,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -81,7 +81,7 @@ const styles = (theme: Theme) =>
         },
         copyright: {
             flex: 1,
-            paddingLeft: theme.spacing.unit,
+            paddingLeft: theme.spacing(),
         },
         copyrightHidden: {
             display: 'none',

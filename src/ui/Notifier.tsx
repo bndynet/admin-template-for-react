@@ -12,8 +12,8 @@ const notifierContentStyles = (theme: Theme) =>
         ...variantColor(theme),
         common: {
             opacity: 0.9,
-            paddingLeft: theme.spacing.unit * 2,
-            paddingRight: theme.spacing.unit * 5,
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(5),
         },
         info: {
             backgroundColor: ifTheme(
@@ -27,7 +27,7 @@ const notifierContentStyles = (theme: Theme) =>
         },
         iconVariant: {
             opacity: 0.9,
-            marginRight: theme.spacing.unit,
+            marginRight: theme.spacing(),
         },
         message: {
             display: 'flex',
@@ -45,7 +45,8 @@ interface NotifierContentProps {
     className?: string;
     message?: string;
     hasCloseButton?: boolean;
-    onCloseButtonClick?: () => void;
+    onCloseButtonClick?: (event: any) => void;
+    onClose?: (event: any) => void;
     variant?: string;
 }
 
@@ -123,7 +124,7 @@ interface NotifierProps {
     placement?: string;
     open?: boolean;
     hasCloseButton?: boolean;
-    onCloseButtonClick?: (event) => void;
+    onCloseButtonClick?: (event: any) => void;
 }
 
 interface NotifierState {

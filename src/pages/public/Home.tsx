@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
     createStyles({
         '@global': {
             body: {
-                paddingTop: theme.spacing.unit * 4,
+                paddingTop: theme.spacing(4),
                 color: theme.palette.text.primary,
                 backgroundColor: theme.palette.background.default,
             },
@@ -45,8 +45,8 @@ const styles = (theme: Theme) =>
         },
         fab: {
             position: 'fixed',
-            right: theme.spacing.unit * 2,
-            bottom: theme.spacing.unit * 2,
+            right: theme.spacing(2),
+            bottom: theme.spacing(2),
             fontSize: 24,
             fontWeight: 700,
             '&.disabled': {

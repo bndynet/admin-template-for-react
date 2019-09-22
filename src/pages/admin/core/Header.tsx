@@ -27,11 +27,12 @@ import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import { HorizontalMenu } from 'app/ui';
+import { HorizontalMenu, SlidePanel } from 'app/ui';
 import { themeConfig } from 'app/theme';
 import { adminMenus } from 'app/config';
 import { actions as globalActions } from 'app/service/global';
 import { onAppThemeChanged } from '../../../app.events';
+import SidePanelContent from './SidePanelContent';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -43,8 +44,8 @@ const styles = (theme: Theme) =>
             },
         },
         menuButton: {
-            paddingLeft: theme.spacing.unit,
-            paddingRight: theme.spacing.unit,
+            paddingLeft: theme.spacing(),
+            paddingRight: theme.spacing(),
             borderRadius: 0,
             minWidth: 45,
             [theme.breakpoints.down('sm')]: {
@@ -64,8 +65,8 @@ const styles = (theme: Theme) =>
             textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
-            paddingLeft: theme.spacing.unit,
-            paddingRight: theme.spacing.unit,
+            paddingLeft: theme.spacing(),
+            paddingRight: theme.spacing(),
             fontSize: 22,
             justifyContent: 'center',
             [theme.breakpoints.down('sm')]: {
@@ -102,7 +103,7 @@ const styles = (theme: Theme) =>
             maxHeight: '50vh',
         },
         iconButton: {
-            padding: theme.spacing.unit,
+            padding: theme.spacing(),
         },
         badge: {
             fontSize: '11px',
@@ -127,6 +128,7 @@ interface HeaderProps {
 
 interface HeaderState {
     avatarPopupAnchor: any;
+    sidePanelOpen: boolean;
 }
 
 class Header extends React.PureComponent<HeaderProps, HeaderState> {
@@ -134,6 +136,7 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
         super(props);
         this.state = {
             avatarPopupAnchor: null,
+            sidePanelOpen: false,
         };
     }
 
@@ -266,11 +269,21 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
                     <IconButton
                         color="inherit"
                         className={classNames(classes.menuButton)}
-                        onClick={this.handleToggleClick}
+                        onClick={() => this.setState({ sidePanelOpen: true })}
                     >
                         <MoreVertIcon fontSize="large" />
                     </IconButton>
                 </Toolbar>
+                <SlidePanel
+                    width={600}
+                    height={100}
+                    anchor="right"
+                    title="Panel Title"
+                    open={this.state.sidePanelOpen}
+                    onClose={this.handleSidePanelClose}
+                >
+                    <SidePanelContent />
+                </SlidePanel>
             </AppBar>
         );
     }
@@ -279,6 +292,12 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
         if (this.props.onToggleClick) {
             this.props.onToggleClick();
         }
+    };
+
+    private handleSidePanelClose = () => {
+        this.setState({
+            sidePanelOpen: false,
+        });
     };
 
     private handleAvatarClick = e => {

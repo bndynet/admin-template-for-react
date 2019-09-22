@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -76,13 +76,13 @@ const styles = (theme: Theme) =>
         },
         childList: {
             '& $listItem': {
-                paddingLeft: theme.spacing.unit,
+                paddingLeft: theme.spacing(),
             },
             '& $childList $listItem': {
-                paddingLeft: theme.spacing.unit * 2,
+                paddingLeft: theme.spacing(2),
             },
             '& $childList $childList $listItem': {
-                paddingLeft: theme.spacing.unit * 3,
+                paddingLeft: theme.spacing(3),
             },
         },
         expandIcon: {
@@ -154,6 +154,11 @@ class VerticalMenu extends React.Component<
     private renderMenuItem(menu, classes) {
         const menuKey = this.getMenuKey(menu);
         const mini = this.props.mini;
+        const getLink = React.forwardRef<HTMLAnchorElement, Partial<LinkProps>>(
+            (props, ref) => <Link to={menu.link} {...props} ref={ref as any} />,
+        );
+        getLink.displayName = 'ListItemLink';
+        const ListItemComponent = menu.link ? getLink : null;
         return (
             <li
                 key={menuKey}
@@ -164,11 +169,7 @@ class VerticalMenu extends React.Component<
                     button={true}
                     className={classes.listItem}
                     onClick={() => this.handleMenuClick(menu)}
-                    component={
-                        menu.link
-                            ? (props: any) => <Link to={menu.link} {...props} />
-                            : null
-                    }
+                    component={ListItemComponent}
                 >
                     <ListItemIcon
                         className={classes.listItemIcon}

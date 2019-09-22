@@ -12,7 +12,7 @@ const styles = (theme: Theme) =>
     createStyles({
         circularProgressContainer: {
             backgroundColor: theme.palette.background.paper,
-            padding: theme.spacing.unit * 2,
+            padding: theme.spacing(2),
             borderStyle: 'solid',
             borderWidth: 2,
             borderColor: fade(theme.palette.primary.main, 0.2),
@@ -22,7 +22,7 @@ const styles = (theme: Theme) =>
         circularProgressWrapper: {
             position: 'relative',
             display: 'inline-block',
-            margin: theme.spacing.unit * 2,
+            margin: theme.spacing(2),
         },
         circularProgressDeterminate: {
             color: fade(theme.palette.primary.main, 0.2),

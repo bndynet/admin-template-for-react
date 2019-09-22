@@ -15,14 +15,14 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { variantBorderColor } from '../theme';
 
 export const getPanelIconButtonStyle = (theme: Theme) => ({
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing() / 2,
 });
 
 const panelStyles = (theme: Theme) =>
     createStyles({
         ...variantBorderColor(theme),
         root: {
-            marginBottom: theme.spacing.unit * 2,
+            marginBottom: theme.spacing(2),
         },
         rootForBordered: {
             borderTopStyle: 'solid',
@@ -31,11 +31,11 @@ const panelStyles = (theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             borderBottom: `solid 1px ${theme.palette.divider}`,
-            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit +
-                1}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 1.5}px`,
+            padding: `${theme.spacing() / 2}px ${theme.spacing() +
+                1}px ${theme.spacing() / 2}px ${theme.spacing(1.5)}px`,
         },
         headerForNonBordered: {
-            paddingTop: theme.spacing.unit / 2 + 2,
+            paddingTop: theme.spacing() / 2 + 2,
         },
         headerForCollapsed: {
             borderBottom: 'none',
@@ -49,7 +49,7 @@ const panelStyles = (theme: Theme) =>
         },
         headerToolboxButton: getPanelIconButtonStyle(theme),
         body: {
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 1.5}px`,
+            padding: `${theme.spacing()}px ${theme.spacing(1.5)}px`,
         },
     });
 
@@ -57,12 +57,12 @@ class Panel extends React.Component<
     {
         classes: any;
         className?: string;
-        title: string | JSX.Element;
+        title?: string | JSX.Element;
         variant?: string;
-        closeable: boolean;
-        minimizeable: boolean;
+        closeable?: boolean;
+        minimizeable?: boolean;
         bodyPadding?: string;
-        actions: [];
+        actions?: any[];
     },
     { open: boolean; collapsed: boolean; collapsedDone: boolean }
 > {

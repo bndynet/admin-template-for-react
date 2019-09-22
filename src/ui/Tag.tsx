@@ -13,11 +13,11 @@ const styles = (theme: Theme) =>
             display: 'inline-block',
             fontSize: '0.75rem',
             lineHeight: '1em',
-            padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 2}px`,
+            padding: `${theme.spacing() / 2}px ${theme.spacing() / 2}px`,
         },
         spacing: {
-            marginBottom: theme.spacing.unit,
-            marginRight: theme.spacing.unit,
+            marginBottom: theme.spacing(),
+            marginRight: theme.spacing(),
         },
     });
 

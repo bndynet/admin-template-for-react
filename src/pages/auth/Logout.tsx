@@ -22,11 +22,11 @@ import {
 const styles = (theme: Theme) =>
     createStyles({
         panel: {
-            marginTop: theme.spacing.unit * 8,
+            marginTop: theme.spacing(8),
             marginLeft: 'auto',
             marginRight: 'auto',
-            paddingTop: theme.spacing.unit * 4,
-            paddingBottom: theme.spacing.unit * 4,
+            paddingTop: theme.spacing(4),
+            paddingBottom: theme.spacing(4),
             width: 400,
             textAlign: 'center',
         },

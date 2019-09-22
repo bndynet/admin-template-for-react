@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Typography from '@material-ui/core/Typography';
-import { GridSpacing } from '@material-ui/core/Grid';
 import {
     Theme,
     createStyles,
@@ -20,9 +19,9 @@ const styles = (theme: Theme) =>
     createStyles({
         contentHeader: {
             display: 'flex',
-            paddingTop: theme.spacing.unit * 2,
-            paddingBottom: theme.spacing.unit * 2,
-            marginBottom: theme.spacing.unit,
+            paddingTop: theme.spacing(2),
+            paddingBottom: theme.spacing(2),
+            marginBottom: theme.spacing(),
             '& h2': {
                 flex: 1,
             },
@@ -109,7 +108,7 @@ class Dashboard extends React.Component<
                         Dashboard: null,
                     }}
                 />
-                <Grid container={true} spacing={16 as GridSpacing}>
+                <Grid container={true} spacing={2}>
                     {renderCard({ variant: 'info' })}
                     {renderCard({ variant: 'success' })}
                     {renderCard({ variant: 'warning' })}
@@ -122,7 +121,7 @@ class Dashboard extends React.Component<
                 </Typography>
 
                 <PageHeader title="Alerts" />
-                <Grid container={true} spacing={16 as GridSpacing}>
+                <Grid container={true} spacing={2}>
                     {renderAlert({
                         variant: 'info',
                         square: true,
@@ -156,7 +155,7 @@ class Dashboard extends React.Component<
                         </div>
                     }
                 />
-                <Grid container={true} spacing={16 as GridSpacing}>
+                <Grid container={true} spacing={2}>
                     {renderPanel({})}
                     {renderPanel({ variant: 'info' })}
                     {renderPanel({ variant: 'success' })}
