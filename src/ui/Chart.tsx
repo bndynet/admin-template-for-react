@@ -255,6 +255,8 @@ export class Chart extends React.Component<
         offSeries: any;
     }
 > {
+    private _mounted = false;
+
     public constructor(props) {
         super(props);
         this.state = {
@@ -265,6 +267,7 @@ export class Chart extends React.Component<
     }
 
     public componentDidMount() {
+        this._mounted = true;
         if (this.props.dataSource) {
             const promise =
                 typeof this.props.dataSource === 'object'
@@ -275,20 +278,26 @@ export class Chart extends React.Component<
             });
             promise
                 .then(result => {
-                    this.setState({
-                        data: result,
-                        loadingDataSource: false,
-                    });
+                    this._mounted &&
+                        this.setState({
+                            data: result,
+                            loadingDataSource: false,
+                        });
                 })
                 .catch(error => {
-                    this.setState({
-                        loadingDataSource: false,
-                    });
+                    this._mounted &&
+                        this.setState({
+                            loadingDataSource: false,
+                        });
                     if (this.props.onDataSourceError) {
                         this.props.onDataSourceError(error);
                     }
                 });
         }
+    }
+
+    public componentWillUnmount() {
+        this._mounted = false;
     }
 
     public componentWillReceiveProps(props) {
