@@ -1,37 +1,82 @@
 import * as React from 'react';
+import * as intl from 'react-intl-universal';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 import {
     Drawer,
     Divider,
     createStyles,
     withStyles,
-    Theme,
     Typography,
     IconButton,
+    Avatar,
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import { VerticalMenu } from 'app/ui';
-import { themeConfig } from 'app/theme';
-import { adminMenus } from 'app/config';
+import {
+    themeConfig,
+    getCurrentTheme,
+    ifLayout,
+    AppTheme,
+    isPopular,
+} from 'app/theme';
+import { config, adminMenus, userMenus } from 'app/config';
+import { UserInfo } from 'app/service/auth';
+import { MenuItem } from 'app/types/MenuItem';
 
 interface SidebarProps {
     classes: any;
     open?: boolean;
+    user?: UserInfo;
     onToggleClick?: () => void;
 }
 
-const styles = (theme: Theme) =>
-    createStyles({
+const styles = (theme: AppTheme) => {
+    return createStyles({
         root: {
             height: '100vh',
+            '& .MuiIconButton-root': {
+                color: ifLayout(theme, { popular: 'inherit' }),
+            },
+        },
+        brandBlock: {
+            textAlign: 'center',
+            margin: 15,
+            '& img': {
+                width: '100%',
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: '50%',
+            },
+        },
+        brandBlockMini: {
+            margin: '10px 5px 5px 5px',
+        },
+        avatar: {
+            backgroundColor: theme.palette.grey[100],
+            color: theme.palette.primary.main,
+        },
+        avatarMini: {
+            width: 30,
+            height: 30,
         },
         drawerPaper: {
             position: 'relative',
-            paddingTop: themeConfig.headerHeight,
+            paddingTop: ifLayout(theme, {
+                classic: themeConfig.headerHeight,
+                popular: 0,
+            }),
             paddingBottom: 45,
             whiteSpace: 'nowrap',
+            color: ifLayout(theme, {
+                classic: theme.palette.common.black,
+                popular: theme.palette.common.white,
+            }),
+            backgroundColor: ifLayout(theme, {
+                classic: theme.palette.background.paper,
+                popular: theme.palette.primary.main,
+            }),
             width: themeConfig.sidebarWidth + 1, // include right border width
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
@@ -58,7 +103,10 @@ const styles = (theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: ifLayout(theme, {
+                classic: theme.palette.background.paper,
+                popular: theme.palette.primary.dark,
+            }),
             borderTopWidth: 1,
             borderTopColor: theme.palette.divider,
             borderTopStyle: 'solid',
@@ -87,6 +135,7 @@ const styles = (theme: Theme) =>
             display: 'none',
         },
     });
+};
 
 class Sidebar extends React.PureComponent<SidebarProps> {
     public constructor(props: SidebarProps) {
@@ -95,10 +144,12 @@ class Sidebar extends React.PureComponent<SidebarProps> {
 
     public render() {
         const { classes, open } = this.props;
+        const theme = getCurrentTheme();
+        const isPopularTheme = isPopular();
         return (
             <Drawer
                 variant="permanent"
-                className={classes.root}
+                className={classNames(classes.root, theme.layout)}
                 classes={{
                     paper: classNames(
                         classes.drawerPaper,
@@ -107,7 +158,29 @@ class Sidebar extends React.PureComponent<SidebarProps> {
                 }}
                 open={open}
             >
-                <Divider />
+                {isPopularTheme && (
+                    <div>
+                        <div
+                            className={classNames(
+                                classes.brandBlock,
+                                !open && classes.brandBlockMini,
+                            )}
+                        >
+                            <img
+                                title={intl.get(config.title)}
+                                src={config.logoUri}
+                            />
+                        </div>
+                        <Divider />
+                        <VerticalMenu
+                            mini={!open}
+                            width={themeConfig.sidebarWidth}
+                            minWidth={themeConfig.sidebarWidthMini}
+                            data={this.getUserMenus()}
+                        />
+                        <Divider />
+                    </div>
+                )}
                 <VerticalMenu
                     mini={!open}
                     width={themeConfig.sidebarWidth}
@@ -153,6 +226,29 @@ class Sidebar extends React.PureComponent<SidebarProps> {
             this.props.onToggleClick();
         }
     };
+
+    private getUserMenus(): MenuItem[] {
+        return [
+            {
+                icon: (
+                    <Avatar
+                        src={this.props.user.avatar}
+                        className={this.props.classes.avatar}
+                    />
+                ),
+                text: this.props.user.name,
+                description: this.props.user.email,
+                children: userMenus,
+            },
+        ];
+    }
 }
 
-export default withStyles(styles)(Sidebar);
+const mapStateToProps = state => ({
+    user: state.auth.user,
+});
+
+export default connect(
+    mapStateToProps,
+    null,
+)(withStyles(styles)(Sidebar));

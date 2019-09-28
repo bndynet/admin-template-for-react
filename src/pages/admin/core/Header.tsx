@@ -29,7 +29,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { HorizontalMenu, SlidePanel } from 'app/ui';
 import { themeConfig } from 'app/theme';
-import { adminMenus } from 'app/config';
+import { config, adminMenus } from 'app/config';
 import { actions as globalActions } from 'app/service/global';
 import { onAppThemeChanged } from '../../../app.events';
 import SidePanelContent from './SidePanelContent';
@@ -153,10 +153,10 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
                     })}
                 >
                     <img
-                        src="https://static.bndy.net/images/logo_white.svg"
+                        src={config.logoUri}
                         style={{ maxHeight: themeConfig.headerHeight }}
                     />
-                    {intl.get('admin.brand')}
+                    {intl.get(config.title)}
                 </Link>
 
                 <IconButton

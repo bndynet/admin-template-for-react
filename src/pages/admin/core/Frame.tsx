@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { isClassic } from 'app/theme';
 import { default as Header } from './Header';
 import { default as Sidebar } from './Sidebar';
 
@@ -20,12 +20,15 @@ class Frame extends React.Component<FrameProps, FrameState> {
     }
 
     public render() {
+        const hasHeader = isClassic();
         return (
             <div>
-                <Header
-                    hideBrand={!this.state.sidebarOpen}
-                    onToggleClick={this.handleSidebarToggle}
-                />
+                {hasHeader && (
+                    <Header
+                        hideBrand={!this.state.sidebarOpen}
+                        onToggleClick={this.handleSidebarToggle}
+                    />
+                )}
                 <Sidebar
                     open={this.state.sidebarOpen}
                     onToggleClick={this.handleSidebarToggle}

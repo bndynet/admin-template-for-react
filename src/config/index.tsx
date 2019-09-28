@@ -13,6 +13,8 @@ export enum AuthType {
 }
 
 export interface Config {
+    title?: string;
+    logoUri?: string;
     resourceBaseUri?: string;
     defaultLocale?: string;
     locales?: { name: string; value: string; messages?: any }[];
@@ -65,3 +67,4 @@ export const config = getConfig();
 export { default as routes } from './routes';
 export { default as adminRoutes } from './routes.admin';
 export { default as adminMenus } from './menus.admin';
+export { default as userMenus } from './menus.user';

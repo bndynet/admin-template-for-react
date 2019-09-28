@@ -1,6 +1,8 @@
 import { Config } from '.';
 
 const config: Config = {
+    title: 'admin.brand',
+    logoUri: 'https://static.bndy.net/images/logo_white.svg',
     resourceBaseUri: '/',
     defaultLocale: 'zh-CN', // empty to use navigator language
     locales: [

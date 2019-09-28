@@ -4,22 +4,27 @@ import { Link, LinkProps } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {
-    Theme,
-    createStyles,
-    withStyles,
-    List,
-    Collapse,
-} from '@material-ui/core';
+import { createStyles, withStyles, List, Collapse } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { MenuItem } from 'app/types';
-import { themeConfig } from 'app/theme';
+import { themeConfig, AppTheme, ifLayout } from 'app/theme';
 
-const styles = (theme: Theme) =>
+const styles = (theme: AppTheme) =>
     createStyles({
-        root: {},
+        root: {
+            '& .MuiListItemIcon-root': {
+                color: ifLayout(theme, {
+                    popular: 'inherit',
+                }),
+            },
+            '& .MuiTypography-colorTextSecondary': {
+                color: ifLayout(theme, {
+                    popular: 'inherit',
+                }),
+            },
+        },
         rootMini: {
             '& $listItem': {
                 justifyContent: 'center',
@@ -33,7 +38,10 @@ const styles = (theme: Theme) =>
             },
             '& > li:hover': {
                 width: themeConfig.sidebarWidth,
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: ifLayout(theme, {
+                    classic: theme.palette.background.paper,
+                    popular: theme.palette.primary.dark,
+                }),
                 borderTopRightRadius: theme.shape.borderRadius,
                 borderBottomRightRadius: theme.shape.borderRadius,
                 boxShadow: theme.shadows[2],
@@ -87,7 +95,9 @@ const styles = (theme: Theme) =>
         },
         expandIcon: {
             marginRight: 10,
-            color: theme.palette.text.secondary,
+            color: ifLayout(theme, {
+                popular: 'inherit',
+            }),
         },
     });
 

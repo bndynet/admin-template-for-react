@@ -85,7 +85,7 @@ const styles = () => createStyles({});
 class DataTable extends React.Component<DataTableProps, DataTableState> {
     private data: any[];
     private columns: any[];
-    private searchDelayTimer: NodeJS.Timeout;
+    private searchDelayTimer: any;
     private rowsPerPageOptions: number[];
     private defaultRowsPerPageOptions: number[] = [10, 20, 50];
 

@@ -2,18 +2,17 @@ import * as React from 'react';
 import { renderRoutes } from 'react-router-config';
 import {
     withStyles,
-    Theme,
     createStyles,
     withWidth,
     CssBaseline,
 } from '@material-ui/core';
 
-import { themeConfig } from 'app/theme';
+import { themeConfig, isClassic, AppTheme } from 'app/theme';
 import { adminRoutes } from 'app/config';
 
 import { Frame } from './core';
 
-const styles = (theme: Theme) =>
+const styles = (theme: AppTheme) =>
     createStyles({
         '@global': {
             body: {
@@ -28,7 +27,7 @@ const styles = (theme: Theme) =>
         },
         content: {
             flexGrow: 1,
-            paddingTop: themeConfig.headerHeight,
+            paddingTop: isClassic(theme) ? themeConfig.headerHeight : 0,
             paddingBottom: theme.spacing(),
             paddingLeft: theme.spacing(3),
             paddingRight: theme.spacing(3),

@@ -16,15 +16,21 @@ export type AppPalette = Palette & {
     warning: string;
 };
 
-export type AppTheme = Theme & {
+export interface AppTheme extends Theme {
+    layout: 'classic' | 'popular';
     palette: AppPalette;
     headerHeight: number;
     sidebarWidth: number;
     sidebarWidthMini: number;
-};
+}
 
 export const ifTheme = (theme: Theme, lightResult: any, darkResult: any): any =>
     theme.palette.type === 'light' ? lightResult : darkResult;
+
+export const ifLayout = (
+    theme: AppTheme,
+    layoutValues: { [key: string]: any },
+): any => layoutValues[theme.layout];
 
 export const variantIcon = {
     success: CheckCircleIcon,
@@ -86,4 +92,12 @@ export { default as themeConfig } from './config';
 export function getCurrentTheme(): AppTheme {
     const result: AppTheme = { ...themeConfig, ...storage.get(KEY_THEME) };
     return result;
+}
+
+export function isClassic(theme?: AppTheme): boolean {
+    return (theme || getCurrentTheme()).layout === 'classic';
+}
+
+export function isPopular(theme?: AppTheme): boolean {
+    return (theme || getCurrentTheme()).layout === 'popular';
 }

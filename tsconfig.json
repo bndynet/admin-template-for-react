@@ -2,11 +2,14 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "sourceMap": true,
-        "noImplicitAny": false,
         "module": "commonjs",
         "target": "es6",
         "jsx": "react",
         "baseUrl": ".",
+        "lib": ["es6", "dom"],
+        "noImplicitAny": false,
+        "noImplicitThis": true,
+        "strictNullChecks": false,
         "paths": {
             "app/ui": ["src/ui"],
             "app/types": ["src/types"],

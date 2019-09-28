@@ -1,13 +1,14 @@
+import { PaletteType } from '@material-ui/core';
 import indigo from '@material-ui/core/colors/indigo';
 import red from '@material-ui/core/colors/red';
 import pink from '@material-ui/core/colors/pink';
 import green from '@material-ui/core/colors/green';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 import amber from '@material-ui/core/colors/amber';
-import { PaletteType } from '@material-ui/core';
 
 // default theme at https://material-ui.com/customization/default-theme/
 const config = {
+    layout: 'popular',
     typography: {
         useNextVariants: true,
     },
