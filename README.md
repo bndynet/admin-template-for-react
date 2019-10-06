@@ -15,7 +15,11 @@
 
 A starter admin template with React, React Redux, Material UI and TypeScript that packages using Webpack and integrates a minimal project structure.
 
+**Classic Layout**
 ![screenshot](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home.png)
+
+**Popular Layout**
+![screenshot](https://raw.githubusercontent.com/bndynet/admin-template-for-react/master/docs/images/admin-home-minimenu.png)
 
 - AJAX component: **[axios](https://github.com/axios/axios)**
 - UI component: **[material-ui](https://material-ui.com/)**
