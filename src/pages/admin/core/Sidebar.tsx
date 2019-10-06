@@ -82,16 +82,14 @@ const styles = (theme: AppTheme) => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            overflowX: 'hidden',
             [theme.breakpoints.down('sm')]: {
                 position: 'fixed',
             },
         },
         drawerPaperClose: {
+            overflowX: 'visible',
             overflowY: 'inherit',
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
             width: themeConfig.sidebarWidthMini + 1, // include right border width
             [theme.breakpoints.down('sm')]: {
                 width: 0,
@@ -116,7 +114,7 @@ const styles = (theme: AppTheme) => {
             padding: theme.spacing() / 2,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
+                duration: theme.transitions.duration.enteringScreen,
             }),
         },
         drawerPaperFooterClose: {

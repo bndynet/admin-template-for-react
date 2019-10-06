@@ -32,6 +32,17 @@ const styles = (theme: AppTheme) =>
                     overflow: 'hidden',
                 },
             },
+            '& $childList.level-1': {
+                position: 'absolute',
+                width: '100%',
+                marginTop: -5,
+                backgroundColor: ifLayout(theme, {
+                    classic: theme.palette.background.paper,
+                    popular: theme.palette.primary.dark,
+                }),
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: theme.shape.borderRadius,
+            },
             '& > li': {
                 position: 'relative',
                 width: '100%',
@@ -161,13 +172,16 @@ class VerticalMenu extends React.Component<
         }
     }
 
-    private renderMenuItem(menu, classes) {
+    private renderMenuItem(menu, classes, level?) {
         const menuKey = this.getMenuKey(menu);
         const mini = this.props.mini;
         const getLink = React.forwardRef<HTMLAnchorElement, Partial<LinkProps>>(
             (props, ref) => <Link to={menu.link} {...props} ref={ref as any} />,
         );
         getLink.displayName = 'ListItemLink';
+        if (!level) {
+            level = 1;
+        }
         const ListItemComponent = menu.link ? getLink : null;
         return (
             <li
@@ -216,9 +230,14 @@ class VerticalMenu extends React.Component<
                 </ListItem>
                 {menu.children &&
                     (mini ? (
-                        <List className={classes.childList}>
+                        <List
+                            className={classNames(
+                                classes.childList,
+                                `level-${level}`,
+                            )}
+                        >
                             {menu.children.map(child =>
-                                this.renderMenuItem(child, classes),
+                                this.renderMenuItem(child, classes, level + 1),
                             )}
                         </List>
                     ) : (
@@ -226,9 +245,18 @@ class VerticalMenu extends React.Component<
                             in={!!this.state.menuStatusSet[menuKey]}
                             timeout="auto"
                         >
-                            <List className={classes.childList}>
+                            <List
+                                className={classNames(
+                                    classes.childList,
+                                    `level-${level}`,
+                                )}
+                            >
                                 {menu.children.map(child =>
-                                    this.renderMenuItem(child, classes),
+                                    this.renderMenuItem(
+                                        child,
+                                        classes,
+                                        level + 1,
+                                    ),
                                 )}
                             </List>
                         </Collapse>
