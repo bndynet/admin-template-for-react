@@ -128,7 +128,7 @@ class DataTableExample extends React.Component {
     }
 
     private tableDataPromise(args: DataTableRequestParameters): Promise<any> {
-        let url = '/datatable.json';
+        let url = utils.link('datatable.json');
         if (args) {
             url += `?page=${args.page || 1}`;
             url += `&pageSize=${args.pageSize || 10}`;

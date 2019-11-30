@@ -27,6 +27,15 @@ const utils = {
             new Promise(presolve => setTimeout(presolve, seconds * 1000)),
         ]);
     },
+    link(path?: string): string {
+        if (!path) {
+            // eslint-disable-next-line no-undef
+            return APP_ROOT;
+        }
+
+        // eslint-disable-next-line no-undef
+        return `${APP_ROOT}/${path}`.replace(/\/{2}/g, '/');
+    },
 };
 
 export default utils;

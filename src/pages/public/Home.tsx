@@ -23,6 +23,7 @@ import { actions as globalActions } from 'app/service/global';
 
 import { config } from 'app/config';
 import { setLocale } from 'app/service/locales';
+import utils from 'app/helpers/utils';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -130,7 +131,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
                 </a>
                 <main className={classes.main}>
                     <div className="margin-bottom-2">
-                        <Link to="/admin">
+                        <Link to={utils.link('admin')}>
                             <Button variant="outlined">
                                 <Typography>
                                     {intl.get('admin.brand')}
@@ -205,8 +206,10 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
         loading();
         const filename =
             intl.getInitOptions().currentLocale === 'en-US'
-                ? '/README.md'
-                : `/README.${intl.getInitOptions().currentLocale}.md`;
+                ? utils.link('README.md')
+                : utils.link(
+                      `README.${intl.getInitOptions().currentLocale}.md`,
+                  );
         resourceService
             .get(filename)
             .then((res: any) => {

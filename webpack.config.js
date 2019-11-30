@@ -29,6 +29,8 @@ function resolveTsconfigPathsToAlias({
     return aliases;
 }
 
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 module.exports = {
     entry: ['./src/index.tsx'],
     performance: {
@@ -37,7 +39,7 @@ module.exports = {
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
+        publicPath: ASSET_PATH,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', 'css'],
@@ -117,10 +119,12 @@ module.exports = {
             inject: true,
             template: './assets/index.html',
         }),
+        // This makes it possible for us to safely use env vars on our code
         new webpack.DefinePlugin({
             APP_NAME: JSON.stringify(app.name),
             APP_VERSION: JSON.stringify(app.version),
             APP_BUILD: JSON.stringify(Date.now()),
+            APP_ROOT: JSON.stringify(ASSET_PATH),
         }),
         new webpack.ProvidePlugin({
             React: 'react',

@@ -9,6 +9,12 @@ module.exports = merge(globalConfig, {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
-        historyApiFallback: true
-    }
+        historyApiFallback: true,
+        openPage: globalConfig.output.publicPath.startsWith('/')
+            ? globalConfig.output.publicPath.substr(
+                  1,
+                  globalConfig.output.publicPath.length - 1,
+              )
+            : globalConfig.output.publicPath,
+    },
 });
