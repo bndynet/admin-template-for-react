@@ -20,6 +20,7 @@
 - AJAX 组件: **[axios](https://github.com/axios/axios)**
 - UI 组件: **[material-ui](https://material-ui.com/)**
 - React 组件: react, react-dom, react-redux, react-router-config, react-router-dom, redux, redux-saga
+- 你可以在**./src/theme/config.tsx**文件中，定义自己的主题样式
 
 ## 本地启动项目
 

@@ -24,6 +24,7 @@ A starter admin template with React, React Redux, Material UI and TypeScript tha
 - AJAX component: **[axios](https://github.com/axios/axios)**
 - UI component: **[material-ui](https://material-ui.com/)**
 - REACT stack: react, react-dom, react-redux, react-router-config, react-router-dom, redux, redux-saga, react-intl-universal
+- You can custom theme in **./src/theme/config.tsx** file
 
 ## ❯ Getting Started
 
