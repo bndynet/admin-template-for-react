@@ -2,7 +2,6 @@ import * as React from 'react';
 import _merge from 'lodash-es/merge';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
-import { renderRoutes } from 'react-router-config';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
@@ -19,6 +18,7 @@ import { actions as globalActions } from 'app/service/global';
 import { KEY_THEME } from 'app/theme';
 import storage from 'app/helpers/storage';
 import { onAppInit } from './app.events';
+import utils from './helpers/utils';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -91,7 +91,7 @@ class App extends React.Component<AppComponentProps, AppComponentState> {
                         <Overlay open={this.props.loading}>
                             <Loading loadingText={this.props.loadingText} />
                         </Overlay>
-                        {renderRoutes(routes)}
+                        {utils.renderRoutes(routes)}
                     </MuiThemeProvider>
                 </div>
             )

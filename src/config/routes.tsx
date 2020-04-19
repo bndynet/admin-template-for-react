@@ -4,28 +4,28 @@ import { isAuthorized, getAuthUri } from 'app/service/auth';
 import { Home, NotFound } from 'app/pages/public';
 import { Admin } from 'app/pages/admin';
 import { Login, Logout, Callback } from 'app/pages/auth';
-import utils from 'app/helpers/utils';
+import { RouteConfig } from 'react-router-config';
 
-const routes = [
+const routes: RouteConfig[] = [
     {
-        path: utils.link(),
+        path: '/',
         exact: true,
         component: Home,
     },
     {
-        path: utils.link('login'),
+        path: '/login',
         component: Login,
     },
     {
-        path: utils.link('logout'),
+        path: '/logout',
         component: Logout,
     },
     {
-        path: utils.link('auth/callback'),
+        path: '/auth/callback',
         component: Callback,
     },
     {
-        path: utils.link('admin'),
+        path: '/admin',
         // `render()` method support in react-router-config v5.0
         /* eslint-disable */
         render: () => {

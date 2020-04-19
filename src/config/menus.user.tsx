@@ -1,16 +1,15 @@
 import { MenuItem } from 'app/types';
-import utils from 'app/helpers/utils';
 
 const menus: MenuItem[] = [
     {
-        icon: 'fas fa-user-cog',
+        icon: 'fa fa-cogs',
         text: 'Settings',
-        link: utils.link('settings'),
+        link: '/settings',
     },
     {
-        icon: 'fas fa-sign-out-alt',
+        icon: 'fa fa-sign-out',
         text: 'Log out',
-        link: utils.link('logout'),
+        link: '/logout',
     },
 ];
 

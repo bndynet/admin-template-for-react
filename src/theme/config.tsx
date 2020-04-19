@@ -8,7 +8,7 @@ import amber from '@material-ui/core/colors/amber';
 
 // default theme at https://material-ui.com/customization/default-theme/
 const config = {
-    layout: 'popular',
+    layout: 'classic', // popular or classic
     typography: {
         useNextVariants: true,
     },

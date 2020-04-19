@@ -114,7 +114,7 @@ class Logout extends React.Component<
                             <div>
                                 <i
                                     className={classNames(
-                                        'fas fa-exclamation-triangle fa-5x',
+                                        'fa fa-exclamation-triangle fa-5x',
                                         classes.icon,
                                         classes.warning,
                                     )}
@@ -131,7 +131,7 @@ class Logout extends React.Component<
                             <div>
                                 <i
                                     className={classNames(
-                                        'far fa-check-circle fa-5x',
+                                        'fa fa-check-circle fa-5x',
                                         classes.icon,
                                         classes.success,
                                     )}

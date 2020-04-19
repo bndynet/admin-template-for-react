@@ -6,38 +6,37 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import { MenuItem } from 'app/types';
-import utils from 'app/helpers/utils';
 
 const menus: MenuItem[] = [
     {
-        icon: 'fas fa-home',
+        icon: 'fa fa-home',
         text: 'Home',
         description: 'Go to public home',
-        link: utils.link(),
+        link: '',
     },
     {
-        icon: 'fas fa-tachometer-alt',
+        icon: 'fa fa-tachometer',
         text: 'Dashboard',
         description: '',
-        link: utils.link('admin/dashboard'),
+        link: '/admin/dashboard',
     },
     {
-        icon: 'fas fa-edit',
+        icon: 'fa fa-edit',
         text: 'Markdown',
         description: '',
-        link: utils.link('admin/markdown'),
+        link: '/admin/markdown',
     },
     {
-        icon: 'fas fa-table',
+        icon: 'fa fa-table',
         text: 'DataTable',
         description: '',
-        link: utils.link('admin/examples/datatable'),
+        link: '/admin/examples/datatable',
     },
     {
-        icon: 'fas fa-exclamation-triangle',
+        icon: 'fa fa-exclamation-triangle',
         text: '404 Page',
         description: '',
-        link: utils.link('admin/this_page_not_found'),
+        link: '/admin/this_page_not_found',
     },
     {
         icon: <DnsIcon />,

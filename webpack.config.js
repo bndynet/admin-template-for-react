@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
 const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 
 function resolveTsconfigPathsToAlias({
     tsconfigPath = './tsconfig.json',
@@ -29,9 +30,7 @@ function resolveTsconfigPathsToAlias({
     return aliases;
 }
 
-const ASSET_PATH = process.env.ASSET_PATH || '/';
-
-module.exports = {
+module.exports = env => ({
     entry: ['./src/index.tsx'],
     performance: {
         hints: false,
@@ -39,7 +38,6 @@ module.exports = {
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: ASSET_PATH,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', 'css'],
@@ -119,12 +117,17 @@ module.exports = {
             inject: true,
             template: './assets/index.html',
         }),
+        new BaseHrefWebpackPlugin({
+            baseHref: env && env.baseHref,
+        }),
         // This makes it possible for us to safely use env vars on our code
         new webpack.DefinePlugin({
             APP_NAME: JSON.stringify(app.name),
             APP_VERSION: JSON.stringify(app.version),
             APP_BUILD: JSON.stringify(Date.now()),
-            APP_ROOT: JSON.stringify(ASSET_PATH),
+            APP_BASEHREF: JSON.stringify(
+                env && env.baseHref ? env.baseHref : '/',
+            ),
         }),
         new webpack.ProvidePlugin({
             React: 'react',
@@ -168,4 +171,4 @@ module.exports = {
             },
         },
     },
-};
+});

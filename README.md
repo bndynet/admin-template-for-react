@@ -1,8 +1,8 @@
 # Admin Template for React
 
-[DEMO](https://admin-react.bndy.net/) - Type any account to log in
+[DEMO](https://bndynet.github.io/admin-template-for-react/) - Type any account to log in
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f1d6e125-33e2-42a7-a97e-67a912d878af/deploy-status)](https://app.netlify.com/sites/admin-react/deploys)
+![](https://github.com/bndynet/admin-template-for-react/workflows/CI/badge.svg)
 ![](https://img.shields.io/badge/Language-TypeScript-blue.svg)
 ![](https://img.shields.io/badge/Language-SCSS-blue.svg)
 ![](https://img.shields.io/badge/React-16.3-brightgreen.svg?logo=react)

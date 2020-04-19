@@ -1,3 +1,5 @@
+import { renderRoutes, RouteConfig } from 'react-router-config';
+
 const utils = {
     /**
      * Generates a random string.
@@ -27,14 +29,27 @@ const utils = {
             new Promise(presolve => setTimeout(presolve, seconds * 1000)),
         ]);
     },
-    link(path?: string): string {
-        if (!path) {
-            // eslint-disable-next-line no-undef
-            return APP_ROOT;
-        }
+    /**
+     * Overwrites existing method
+     * @param routes The route config
+     */
+    renderRoutes(routes: RouteConfig[]): JSX.Element {
+        // const baseHref = document.querySelector('head > base')
+        //     ? document.querySelector('head > base').getAttribute('href')
+        //     : '';
 
-        // eslint-disable-next-line no-undef
-        return `${APP_ROOT}/${path}`.replace(/\/{2}/g, '/');
+        // routes.forEach((route: RouteConfig) => {
+        //     if (
+        //         typeof route.path === 'string' &&
+        //         baseHref &&
+        //         route.path.indexOf(baseHref) < 0
+        //     ) {
+        //         route.path = baseHref ? baseHref + route.path : route.path;
+        //         route.path = route.path.replace(/\/+/g, '/');
+        //     }
+        // });
+        // console.debug(routes);
+        return renderRoutes(routes);
     },
 };
 

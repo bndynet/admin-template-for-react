@@ -1,25 +1,24 @@
 import { Dashboard, Markdown, DataTableExample } from 'app/pages/admin';
 import { NotFound } from 'app/pages/public';
-import utils from 'app/helpers/utils';
 
 const routes = [
     {
-        path: utils.link('admin'),
+        path: '/admin',
         exact: true,
         component: Dashboard,
     },
     {
-        path: utils.link('admin/dashboard'),
+        path: '/admin/dashboard',
         exact: true,
         component: Dashboard,
     },
     {
-        path: utils.link('admin/markdown'),
+        path: '/admin/markdown',
         exact: true,
         component: Markdown,
     },
     {
-        path: utils.link('admin/examples/datatable'),
+        path: '/admin/examples/datatable',
         exact: true,
         component: DataTableExample,
     },

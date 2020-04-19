@@ -15,7 +15,8 @@
         "jest": true
     },
     "globals": {
-        "Promise": true
+        "Promise": true,
+        "APP_BASEHREF": true
     },
     "rules": {
         "prettier/prettier": [
