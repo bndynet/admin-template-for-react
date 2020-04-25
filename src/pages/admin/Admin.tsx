@@ -9,7 +9,6 @@ import {
 
 import { themeConfig, isClassic, AppTheme } from 'app/theme';
 import { adminRoutes } from 'app/config';
-
 import { Frame } from './core';
 
 const styles = (theme: AppTheme) =>

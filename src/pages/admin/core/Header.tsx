@@ -168,7 +168,7 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
                 >
                     <i
                         className={classNames(
-                            'fas fa-bars animated',
+                            'fa fa-bars animated',
                             hideBrand && 'rotateIn',
                         )}
                     />
