@@ -1,9 +1,10 @@
-import config = require('./app.mock');
-module.exports = config;
+export { config } from './app.mock';
 
 // import _merge from 'lodash-es/merge';
-// import config = require('./app.oauth-code');
-// module.exports = _merge(config, {
+// import { Config } from './types';
+// import { config as oauthCodeConfig } from './app.oauth-code';
+
+// export const config: Config = _merge(oauthCodeConfig, {
 //     authConfig: {
 //         clientId: '188c0da703',
 //         clientSecret: 'f3dd317369ae622113f0',

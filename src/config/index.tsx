@@ -1,41 +1,18 @@
 import _merge from 'lodash-es/merge';
-import { UserInfo, AuthState } from 'app/service/auth';
+import { Config } from './types';
+import { config as commonConfig } from './app.common';
+import { config as prodConfig } from './app.prod';
+import { config as mockConfig } from './app.mock';
 
 // Uncomment or define it in index.html to specify your environment.
 // window.__APP_ENV__ = 'github';
 
-export enum AuthType {
-    OAuth, // alias for OAuthCode
-    OAuthCode,
-    OAuthPassword,
-    Custom,
-    Mock,
-}
+let config: Config;
+export function getConfig(): Config {
+    if (config) {
+        return config;
+    }
 
-export interface Config {
-    title?: string;
-    logoUri?: string;
-    resourceBaseUri?: string;
-    defaultLocale?: string;
-    locales?: { name: string; value: string; messages?: any }[];
-    authType?: AuthType;
-    authConfig?: OAuthConfig;
-    userConverter?: (backendUser: any) => UserInfo;
-    logoutHandler?: (url: string, authState: AuthState) => void;
-}
-
-export interface OAuthConfig {
-    clientId: string;
-    clientSecret: string;
-    authorizationUri: string;
-    accessTokenUri?: string;
-    userProfileUri: string;
-    logoutUri: string;
-    callbackUri?: string;
-    scope?: string;
-}
-
-const getConfig = (): Config => {
     const env = window.__APP_ENV__ || process.env.NODE_ENV;
 
     // eslint-disable-next-line no-console
@@ -43,28 +20,24 @@ const getConfig = (): Config => {
 
     switch (env) {
         case 'production':
-            return (window.__APP_CONF__ = _merge(
-                require('./app.common'),
-                require('./app.dev'),
-                require('./app.prod'),
-            ));
+            config = window.__APP_CONF__ = _merge(commonConfig, prodConfig);
+            break;
 
         case 'development':
-            return (window.__APP_CONF__ = _merge(
-                require('./app.common'),
-                require('./app.dev'),
-            ));
+            config = window.__APP_CONF__ = _merge(commonConfig, mockConfig);
+            break;
 
         default:
-            return (window.__APP_CONF__ = _merge(
+            config = window.__APP_CONF__ = _merge(
                 require('./app.common'),
                 require(`./app.${env}`),
-            ));
+            );
+            break;
     }
-};
+    return config;
+}
 
-export const config = getConfig();
-export { default as routes } from './routes';
+export * from './types';
 export { default as adminRoutes } from './routes.admin';
 export { default as adminMenus } from './menus.admin';
 export { default as userMenus } from './menus.user';

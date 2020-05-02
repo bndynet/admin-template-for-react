@@ -1,3 +1,1 @@
-import config = require('./app.mock');
-
-module.exports = config;
+export { config } from './app.mock';

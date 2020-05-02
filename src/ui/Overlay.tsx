@@ -1,5 +1,5 @@
 import * as React from 'react';
-import classNames = require('classnames');
+import classNames from 'classnames';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 

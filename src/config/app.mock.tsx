@@ -1,6 +1,6 @@
-import { Config, AuthType } from '.';
+import { Config, AuthType } from './types';
 
-const config: Config = {
+export const config: Config = {
     authType: AuthType.Mock,
     userConverter: (mockUser: any) => {
         return {
@@ -11,5 +11,3 @@ const config: Config = {
         };
     },
 };
-
-module.exports = config;

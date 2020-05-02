@@ -1,4 +1,4 @@
-import { Config, AuthType } from '.';
+import { Config, AuthType } from './types';
 
 const config: Config = {
     authType: AuthType.OAuth,

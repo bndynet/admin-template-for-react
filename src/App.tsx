@@ -11,7 +11,7 @@ import {
     LinearProgress,
 } from '@material-ui/core';
 
-import { routes } from 'app/config';
+import { routes } from './routers/routes';
 import { themeConfig } from 'app/theme';
 import { Notifier, NotifierOptions, Overlay, Loading } from 'app/ui';
 import { actions as globalActions } from 'app/service/global';

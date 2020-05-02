@@ -6,7 +6,7 @@ import { Admin } from 'app/pages/admin';
 import { Login, Logout, Callback } from 'app/pages/auth';
 import { RouteConfig } from 'react-router-config';
 
-const routes: RouteConfig[] = [
+export const routes: RouteConfig[] = [
     {
         path: '/',
         exact: true,
@@ -33,6 +33,7 @@ const routes: RouteConfig[] = [
                 return <Admin />;
             } else {
                 if (
+                    getAuthUri() &&
                     !getAuthUri()
                         .toLowerCase()
                         .startsWith('http')
@@ -48,5 +49,3 @@ const routes: RouteConfig[] = [
         component: NotFound,
     },
 ];
-
-export default routes;

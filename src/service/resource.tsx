@@ -1,10 +1,12 @@
 import { notify } from '@bndynet/dialog';
-import { config } from '../config';
+import { getConfig } from '../config';
 import { Ajax } from '../helpers/ajax';
 import { getState } from './auth';
 
 class ResourceService extends Ajax {
     public constructor() {
+        const config = getConfig();
+        console.debug(config);
         super({
             headerAuthorization: () => {
                 if (getState().token) {

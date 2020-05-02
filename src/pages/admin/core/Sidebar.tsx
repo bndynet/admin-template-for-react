@@ -22,7 +22,7 @@ import {
     AppTheme,
     isPopular,
 } from 'app/theme';
-import { config, adminMenus, userMenus } from 'app/config';
+import { getConfig, adminMenus, userMenus } from 'app/config';
 import { UserInfo } from 'app/service/auth';
 import { MenuItem } from 'app/types/MenuItem';
 
@@ -141,6 +141,7 @@ class Sidebar extends React.PureComponent<SidebarProps> {
     }
 
     public render() {
+        const config = getConfig();
         const { classes, open } = this.props;
         const theme = getCurrentTheme();
         const isPopularTheme = isPopular();

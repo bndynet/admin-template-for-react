@@ -29,7 +29,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { HorizontalMenu, SlidePanel } from 'app/ui';
 import { themeConfig } from 'app/theme';
-import { config, adminMenus } from 'app/config';
+import { getConfig, adminMenus } from 'app/config';
 import { actions as globalActions } from 'app/service/global';
 import { onAppThemeChanged } from '../../../app.events';
 import SidePanelContent from './SidePanelContent';
@@ -141,6 +141,7 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
     }
 
     public render() {
+        const config = getConfig();
         const { classes, isDarkTheme, hideBrand } = this.props;
         const { avatarPopupAnchor } = this.state;
         const user = this.props.user || {};

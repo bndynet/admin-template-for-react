@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
 const HeaderInjectionWebpackPlugin = require('@bndynet/header-injection-webpack-plugin');
+// const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 
 function resolveTsconfigPathsToAlias({
@@ -29,6 +30,8 @@ function resolveTsconfigPathsToAlias({
 
     return aliases;
 }
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = env => ({
     entry: ['./src/index.tsx'],
@@ -70,7 +73,7 @@ module.exports = env => ({
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    process.env.NODE_ENV !== 'production'
+                    isDevelopment
                         ? 'style-loader'
                         : MiniCssExtractPlugin.loader,
                     MiniCssExtractPlugin.loader,
@@ -80,26 +83,16 @@ module.exports = env => ({
                 ],
             },
             {
-                test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
-            },
-            {
-                test: /\.tsx?$/,
-                enforce: 'pre',
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    failOnWarning: false,
-                    failOnError: true,
-                },
-            },
-            {
-                test: /\.(js|jsx)$/,
-                enforce: 'pre',
+                test: /\.[jt]sx?$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: 'babel-loader',
+                        // options: {
+                        //     plugins: [
+                        //         isDevelopment && 'react-refresh/babel',
+                        //     ].filter(Boolean),
+                        // },
                     },
                 ],
             },
@@ -149,7 +142,12 @@ module.exports = env => ({
             chunkFilename: '[id].[hash].css',
         }),
         new HeaderInjectionWebpackPlugin(),
+
+        // react refresh
+        // isDevelopment && new webpack.HotModuleReplacementPlugin(),
+        // isDevelopment && new ReactRefreshWebpackPlugin(),
     ],
+    // .filter(Boolean)
     optimization: {
         splitChunks: {
             chunks: 'async',

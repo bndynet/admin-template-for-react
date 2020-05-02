@@ -82,7 +82,10 @@ export interface DataTableState extends DataTableRequestParameters {
 
 const styles = () => createStyles({});
 
-class DataTable extends React.Component<DataTableProps, DataTableState> {
+class DataTableComponent extends React.Component<
+    DataTableProps,
+    DataTableState
+> {
     private data: any[];
     private columns: any[];
     private searchDelayTimer: any;
@@ -373,4 +376,4 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     }
 }
 
-export default withStyles(styles)(DataTable);
+export const DataTable = withStyles(styles)(DataTableComponent);

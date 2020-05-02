@@ -1,9 +1,10 @@
 import * as intl from 'react-intl-universal';
-import { config } from 'app/config';
+import { getConfig } from 'app/config';
 import storage from 'app/helpers/storage';
 import ajax from 'app/helpers/ajax';
 import { onAppLocaleChanged } from '../app.events';
 
+const config = getConfig();
 const KEY_LOCALE = 'locale';
 function getCurrentLocale() {
     return (

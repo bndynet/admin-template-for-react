@@ -1,6 +1,6 @@
-import { Config } from '.';
+import { Config } from './types';
 
-const config: Config = {
+export const config: Config = {
     title: 'admin.brand',
     logoUri: 'https://static.bndy.net/images/logo_white.svg',
     resourceBaseUri: APP_BASEHREF || '/',
@@ -19,5 +19,3 @@ const config: Config = {
         },
     ],
 };
-
-module.exports = config;

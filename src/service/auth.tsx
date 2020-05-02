@@ -2,7 +2,7 @@
 import { AxiosPromise } from 'axios';
 import { Ajax, AjaxError } from '../helpers/ajax';
 import { store } from '../redux';
-import { config, AuthType } from '../config';
+import { getConfig, AuthType } from '../config';
 import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as globalActions } from './global';
@@ -119,6 +119,8 @@ export function reducer(state: AuthState = {}, action): AuthState {
             return state;
     }
 }
+
+const config = getConfig();
 
 export const service = {
     login: (data: LoginData) => {

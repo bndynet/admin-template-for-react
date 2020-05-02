@@ -191,5 +191,4 @@ class NotifierComponent extends React.Component<NotifierProps, NotifierState> {
     };
 }
 
-const Notifier = withStyles(NotifierStyles)(NotifierComponent);
-export default Notifier;
+export const Notifier = withStyles(NotifierStyles)(NotifierComponent);

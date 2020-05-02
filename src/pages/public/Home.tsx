@@ -21,7 +21,7 @@ import { service as resourceService } from 'app/service/resource';
 import { actions as authActions, getState } from 'app/service/auth';
 import { actions as globalActions } from 'app/service/global';
 
-import { config } from 'app/config';
+import { getConfig } from 'app/config';
 import { setLocale } from 'app/service/locales';
 
 const styles = (theme: Theme) =>
@@ -95,6 +95,7 @@ class Home extends React.Component<HomeComponentProps, HomeComponentState> {
     }
 
     public render() {
+        const config = getConfig();
         const { classes } = this.props;
         const btn = this.props.user ? (
             <Tooltip title={this.props.user.name}>

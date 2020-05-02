@@ -1,6 +1,6 @@
-import { Config, AuthType } from '.';
+import { Config, AuthType } from './types';
 
-const config: Config = {
+export const config: Config = {
     authType: AuthType.OAuth,
     authConfig: {
         clientId: 'foo',
@@ -26,5 +26,3 @@ const config: Config = {
         };
     },
 };
-
-module.exports = config;
