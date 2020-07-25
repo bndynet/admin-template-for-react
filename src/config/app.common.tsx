@@ -10,12 +10,12 @@ export const config: Config = {
             name: 'English',
             value: 'en-US',
             // uncomment that will load locale file(file name format: en-US.json) via ajax
-            messages: require('../../assets/locales/en-US.json'),
+            messages: require('../../assets/locales/json/en-US.json'),
         },
         {
             name: '简体中文',
             value: 'zh-CN',
-            messages: require('../../assets/locales/zh-CN.json'),
+            messages: require('../../assets/locales/json/zh-CN.json'),
         },
     ],
 };

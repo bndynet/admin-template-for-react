@@ -42,7 +42,7 @@ export function initLocales(currentLocale?: string, callback?: () => void) {
         initIntl(locales);
     } else {
         // load messages from remote file if the messages not specified in service/locales.tsx
-        ajax.get(`locales/${currentLocale}.json`).then(messages => {
+        ajax.get(`locales/json/${currentLocale}.json`).then(messages => {
             initIntl({
                 [currentLocale]: messages,
             });
