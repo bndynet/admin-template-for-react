@@ -11,6 +11,7 @@
     "format": "prettier --write ./src/**",
     "lint": "eslint ./src/**/*.{ts,tsx} || stylelint ./src/**/*.{scss,css}",
     "precommit": "lint-staged",
+    "pull:i18n": "git subtree pull --prefix=assets/locales https://github.com/bndynet/i18n.git master --squash",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
