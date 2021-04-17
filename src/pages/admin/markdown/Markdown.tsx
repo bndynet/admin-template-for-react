@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import * as ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import {
     Grid,
     Theme,
