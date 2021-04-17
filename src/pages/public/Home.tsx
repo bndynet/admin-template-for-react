@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as intl from 'react-intl-universal';
-import * as ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
